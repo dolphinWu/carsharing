@@ -1,6 +1,10 @@
 package com.ziroom.dao;
 
+import com.ziroom.model.DriverPlanEntity;
 import com.ziroom.model.PassengerOrderEntity;
+
+import java.util.List;
+import java.util.Map;
 
 public interface PassengerOrderEntityMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +18,6 @@ public interface PassengerOrderEntityMapper {
     int updateByPrimaryKeySelective(PassengerOrderEntity record);
 
     int updateByPrimaryKey(PassengerOrderEntity record);
+
+    List<DriverPlanEntity> getAllNearByDriverPlan(Map<String,Object> map);
 }

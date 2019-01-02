@@ -13,9 +13,9 @@ public class UserEntity extends BaseEntity {
 
     private Integer creditScore;
 
-    private String homeAddress;
+    private Integer homeAddressId;
 
-    private String companyAddress;
+    private Integer companyAddressId;
 
     private String employeeNo;
 
@@ -69,20 +69,20 @@ public class UserEntity extends BaseEntity {
         this.creditScore = creditScore;
     }
 
-    public String getHomeAddress() {
-        return homeAddress;
+    public Integer getHomeAddressId() {
+        return homeAddressId;
     }
 
-    public void setHomeAddress(String homeAddress) {
-        this.homeAddress = homeAddress == null ? null : homeAddress.trim();
+    public void setHomeAddressId(Integer homeAddressId) {
+        this.homeAddressId = homeAddressId;
     }
 
-    public String getCompanyAddress() {
-        return companyAddress;
+    public Integer getCompanyAddressId() {
+        return companyAddressId;
     }
 
-    public void setCompanyAddress(String companyAddress) {
-        this.companyAddress = companyAddress == null ? null : companyAddress.trim();
+    public void setCompanyAddressId(Integer companyAddress) {
+        this.companyAddressId = companyAddressId;
     }
 
     public String getEmployeeNo() {

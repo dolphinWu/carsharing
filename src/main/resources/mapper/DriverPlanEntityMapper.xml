@@ -245,4 +245,11 @@
       is_del = #{isDel,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getAllNearByDriverPlan" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from tb_driver_plan
+    where plan_start_time &lt; date_add(now(), interval 1 hour) and plan_start_time &gt; now()
+  </select>
 </mapper>

@@ -5,6 +5,7 @@ import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,6 +18,31 @@ import java.util.Random;
  */
 public class Tools {
     private static final Random random = new Random();
+
+    private static final double EARTH_RADIUS = 6371393; // 平均半径,单位：m
+
+    /**
+     * 通过AB点经纬度获取距离
+     *
+     * @param pointA A点(经，纬)
+     * @param pointB B点(经，纬)
+     * @return 距离(单位：米)
+     */
+    public static double getDistance(Point2D pointA, Point2D pointB) {
+        // 经纬度（角度）转弧度。弧度用作参数，以调用Math.cos和Math.sin
+        double radiansAX = Math.toRadians(pointA.getX()); // A经弧度
+        double radiansAY = Math.toRadians(pointA.getY()); // A纬弧度
+        double radiansBX = Math.toRadians(pointB.getX()); // B经弧度
+        double radiansBY = Math.toRadians(pointB.getY()); // B纬弧度
+        //公式中“cosβ1cosβ2cos（α1-α2）+sinβ1sinβ2”的部分，得到∠AOB的cos值
+        double cos = Math.cos(radiansAY) * Math.cos(radiansBY) * Math.cos(radiansAX - radiansBX)
+                + Math.sin(radiansAY) * Math.sin(radiansBY);
+        //System.out.println("cos = " + cos); // 值域[-1,1]
+        double acos = Math.acos(cos); // 反余弦值
+        //System.out.println("acos = " + acos); // 值域[0,π]
+        //System.out.println("∠AOB = " + Math.toDegrees(acos)); // 球心角 值域[0,180]
+        return EARTH_RADIUS * acos; // 最终结果
+    }
 
     public static void copyFileUsingFileChannels(File source, File dest) throws IOException {
         FileChannel inputChannel = null;
@@ -37,17 +63,17 @@ public class Tools {
         return random.nextInt(max) % (max - min + 1) + min;
     }
 
-	public static String flowAutoShow(double value) {
-		// Math.round 方法接收 float 和 double 类型,如果参数是 int 的话,会强转为 float,这个时候调用该方法无意义
+    public static String flowAutoShow(double value) {
+        // Math.round 方法接收 float 和 double 类型,如果参数是 int 的话,会强转为 float,这个时候调用该方法无意义
         int kb = 1024;
         int mb = 1048576;
         int gb = 1073741824;
-		double abs = Math.abs(value);
-		if (abs > gb) {
+        double abs = Math.abs(value);
+        if (abs > gb) {
             return Math.round(value / gb) + "GB";
-		} else if (abs > mb) {
+        } else if (abs > mb) {
             return Math.round(value / mb) + "MB";
-		} else if (abs > kb) {
+        } else if (abs > kb) {
             return Math.round(value / kb) + "KB";
         }
         return Math.round(value) + "";

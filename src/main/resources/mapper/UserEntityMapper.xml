@@ -8,13 +8,13 @@
     <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
     <result column="car_number" jdbcType="VARCHAR" property="carNumber" />
     <result column="credit_score" jdbcType="INTEGER" property="creditScore" />
-    <result column="home_address" jdbcType="VARCHAR" property="homeAddress" />
-    <result column="company_address" jdbcType="VARCHAR" property="companyAddress" />
+    <result column="home_address_id" jdbcType="INTEGER" property="homeAddressId" />
+    <result column="company_address_id" jdbcType="INTEGER" property="companyAddressId" />
     <result column="employee_no" jdbcType="VARCHAR" property="employeeNo" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, uid, uname, phone_number, car_number, credit_score, home_address, company_address, 
+    id, uid, uname, phone_number, car_number, credit_score, home_address_id, company_address_id,
     employee_no, remark
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -30,11 +30,11 @@
   <insert id="insert" parameterType="com.ziroom.model.UserEntity">
     insert into tb_user (id, uid, uname, 
       phone_number, car_number, credit_score, 
-      home_address, company_address, employee_no, 
+      home_address_id, company_address_id, employee_no,
       remark)
     values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, 
       #{phoneNumber,jdbcType=VARCHAR}, #{carNumber,jdbcType=VARCHAR}, #{creditScore,jdbcType=INTEGER}, 
-      #{homeAddress,jdbcType=VARCHAR}, #{companyAddress,jdbcType=VARCHAR}, #{employeeNo,jdbcType=VARCHAR}, 
+      #{homeAddressId,jdbcType=INTEGER}, #{companyAddressId,jdbcType=INTEGER}, #{employeeNo,jdbcType=VARCHAR},
       #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ziroom.model.UserEntity">
@@ -58,11 +58,11 @@
       <if test="creditScore != null">
         credit_score,
       </if>
-      <if test="homeAddress != null">
-        home_address,
+      <if test="homeAddressId != null">
+        home_address_id,
       </if>
-      <if test="companyAddress != null">
-        company_address,
+      <if test="companyAddressId != null">
+        company_address_id,
       </if>
       <if test="employeeNo != null">
         employee_no,
@@ -90,11 +90,11 @@
       <if test="creditScore != null">
         #{creditScore,jdbcType=INTEGER},
       </if>
-      <if test="homeAddress != null">
-        #{homeAddress,jdbcType=VARCHAR},
+      <if test="homeAddressId != null">
+        #{homeAddressId,jdbcType=INTEGER},
       </if>
-      <if test="companyAddress != null">
-        #{companyAddress,jdbcType=VARCHAR},
+      <if test="companyAddressId != null">
+        #{companyAddressId,jdbcType=INTEGER},
       </if>
       <if test="employeeNo != null">
         #{employeeNo,jdbcType=VARCHAR},
@@ -122,11 +122,11 @@
       <if test="creditScore != null">
         credit_score = #{creditScore,jdbcType=INTEGER},
       </if>
-      <if test="homeAddress != null">
-        home_address = #{homeAddress,jdbcType=VARCHAR},
+      <if test="homeAddressId != null">
+        home_address_id = #{homeAddressId,jdbcType=INTEGER},
       </if>
-      <if test="companyAddress != null">
-        company_address = #{companyAddress,jdbcType=VARCHAR},
+      <if test="companyAddressId != null">
+        company_address_id = #{companyAddressId,jdbcType=INTEGER},
       </if>
       <if test="employeeNo != null">
         employee_no = #{employeeNo,jdbcType=VARCHAR},
@@ -144,8 +144,8 @@
       phone_number = #{phoneNumber,jdbcType=VARCHAR},
       car_number = #{carNumber,jdbcType=VARCHAR},
       credit_score = #{creditScore,jdbcType=INTEGER},
-      home_address = #{homeAddress,jdbcType=VARCHAR},
-      company_address = #{companyAddress,jdbcType=VARCHAR},
+      home_address_id = #{homeAddressId,jdbcType=INTEGER},
+      company_address_id = #{companyAddressId,jdbcType=INTEGER},
       employee_no = #{employeeNo,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
