@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ziroom.dao.PassengerOrderEntityMapper">
+  <resultMap id="BaseResultMap" type="com.ziroom.model.PassengerOrderEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="passenger_no" jdbcType="VARCHAR" property="passenger_no" />
+    <result column="driver_order_no" jdbcType="VARCHAR" property="driver_order_no" />
+    <result column="passenger_count" jdbcType="INTEGER" property="passenger_count" />
+    <result column="start_name" jdbcType="VARCHAR" property="start_name" />
+    <result column="end_name" jdbcType="VARCHAR" property="end_name" />
+    <result column="actual_amount" jdbcType="INTEGER" property="actual_amount" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="actual_start_time" jdbcType="TIMESTAMP" property="actual_start_time" />
+    <result column="actual_end_time" jdbcType="TIMESTAMP" property="actual_end_time" />
+    <result column="passenger_uid" jdbcType="VARCHAR" property="passenger_uid" />
+    <result column="start_xpoint" jdbcType="VARCHAR" property="start_xpoint" />
+    <result column="start_ypoint" jdbcType="VARCHAR" property="start_ypoint" />
+    <result column="end_xpoint" jdbcType="VARCHAR" property="end_xpoint" />
+    <result column="end_ypoint" jdbcType="VARCHAR" property="end_ypoint" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, passenger_no, driver_order_no, passenger_count, start_name, end_name, actual_amount, 
+    status, actual_start_time, actual_end_time, passenger_uid, start_xpoint, start_ypoint, 
+    end_xpoint, end_ypoint, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_passenger_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_passenger_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ziroom.model.PassengerOrderEntity">
+    insert into tb_passenger_order (id, passenger_no, driver_order_no, 
+      passenger_count, start_name, end_name, 
+      actual_amount, status, actual_start_time, 
+      actual_end_time, passenger_uid, start_xpoint, 
+      start_ypoint, end_xpoint, end_ypoint, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{passenger_no,jdbcType=VARCHAR}, #{driver_order_no,jdbcType=VARCHAR}, 
+      #{passenger_count,jdbcType=INTEGER}, #{start_name,jdbcType=VARCHAR}, #{end_name,jdbcType=VARCHAR}, 
+      #{actual_amount,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{actual_start_time,jdbcType=TIMESTAMP}, 
+      #{actual_end_time,jdbcType=TIMESTAMP}, #{passenger_uid,jdbcType=VARCHAR}, #{start_xpoint,jdbcType=VARCHAR}, 
+      #{start_ypoint,jdbcType=VARCHAR}, #{end_xpoint,jdbcType=VARCHAR}, #{end_ypoint,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ziroom.model.PassengerOrderEntity">
+    insert into tb_passenger_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="passenger_no != null">
+        passenger_no,
+      </if>
+      <if test="driver_order_no != null">
+        driver_order_no,
+      </if>
+      <if test="passenger_count != null">
+        passenger_count,
+      </if>
+      <if test="start_name != null">
+        start_name,
+      </if>
+      <if test="end_name != null">
+        end_name,
+      </if>
+      <if test="actual_amount != null">
+        actual_amount,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="actual_start_time != null">
+        actual_start_time,
+      </if>
+      <if test="actual_end_time != null">
+        actual_end_time,
+      </if>
+      <if test="passenger_uid != null">
+        passenger_uid,
+      </if>
+      <if test="start_xpoint != null">
+        start_xpoint,
+      </if>
+      <if test="start_ypoint != null">
+        start_ypoint,
+      </if>
+      <if test="end_xpoint != null">
+        end_xpoint,
+      </if>
+      <if test="end_ypoint != null">
+        end_ypoint,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="passenger_no != null">
+        #{passenger_no,jdbcType=VARCHAR},
+      </if>
+      <if test="driver_order_no != null">
+        #{driver_order_no,jdbcType=VARCHAR},
+      </if>
+      <if test="passenger_count != null">
+        #{passenger_count,jdbcType=INTEGER},
+      </if>
+      <if test="start_name != null">
+        #{start_name,jdbcType=VARCHAR},
+      </if>
+      <if test="end_name != null">
+        #{end_name,jdbcType=VARCHAR},
+      </if>
+      <if test="actual_amount != null">
+        #{actual_amount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="actual_start_time != null">
+        #{actual_start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actual_end_time != null">
+        #{actual_end_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="passenger_uid != null">
+        #{passenger_uid,jdbcType=VARCHAR},
+      </if>
+      <if test="start_xpoint != null">
+        #{start_xpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="start_ypoint != null">
+        #{start_ypoint,jdbcType=VARCHAR},
+      </if>
+      <if test="end_xpoint != null">
+        #{end_xpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="end_ypoint != null">
+        #{end_ypoint,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ziroom.model.PassengerOrderEntity">
+    update tb_passenger_order
+    <set>
+      <if test="passenger_no != null">
+        passenger_no = #{passenger_no,jdbcType=VARCHAR},
+      </if>
+      <if test="driver_order_no != null">
+        driver_order_no = #{driver_order_no,jdbcType=VARCHAR},
+      </if>
+      <if test="passenger_count != null">
+        passenger_count = #{passenger_count,jdbcType=INTEGER},
+      </if>
+      <if test="start_name != null">
+        start_name = #{start_name,jdbcType=VARCHAR},
+      </if>
+      <if test="end_name != null">
+        end_name = #{end_name,jdbcType=VARCHAR},
+      </if>
+      <if test="actual_amount != null">
+        actual_amount = #{actual_amount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="actual_start_time != null">
+        actual_start_time = #{actual_start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actual_end_time != null">
+        actual_end_time = #{actual_end_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="passenger_uid != null">
+        passenger_uid = #{passenger_uid,jdbcType=VARCHAR},
+      </if>
+      <if test="start_xpoint != null">
+        start_xpoint = #{start_xpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="start_ypoint != null">
+        start_ypoint = #{start_ypoint,jdbcType=VARCHAR},
+      </if>
+      <if test="end_xpoint != null">
+        end_xpoint = #{end_xpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="end_ypoint != null">
+        end_ypoint = #{end_ypoint,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ziroom.model.PassengerOrderEntity">
+    update tb_passenger_order
+    set passenger_no = #{passenger_no,jdbcType=VARCHAR},
+      driver_order_no = #{driver_order_no,jdbcType=VARCHAR},
+      passenger_count = #{passenger_count,jdbcType=INTEGER},
+      start_name = #{start_name,jdbcType=VARCHAR},
+      end_name = #{end_name,jdbcType=VARCHAR},
+      actual_amount = #{actual_amount,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      actual_start_time = #{actual_start_time,jdbcType=TIMESTAMP},
+      actual_end_time = #{actual_end_time,jdbcType=TIMESTAMP},
+      passenger_uid = #{passenger_uid,jdbcType=VARCHAR},
+      start_xpoint = #{start_xpoint,jdbcType=VARCHAR},
+      start_ypoint = #{start_ypoint,jdbcType=VARCHAR},
+      end_xpoint = #{end_xpoint,jdbcType=VARCHAR},
+      end_ypoint = #{end_ypoint,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

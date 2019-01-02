@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ziroom.dao.UserEntityMapper">
+  <resultMap id="BaseResultMap" type="com.ziroom.model.UserEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="uname" jdbcType="VARCHAR" property="uname" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phone_number" />
+    <result column="car_number" jdbcType="VARCHAR" property="car_number" />
+    <result column="credit_score" jdbcType="INTEGER" property="credit_score" />
+    <result column="home_address" jdbcType="VARCHAR" property="home_address" />
+    <result column="company_address" jdbcType="VARCHAR" property="company_address" />
+    <result column="employee_no" jdbcType="VARCHAR" property="employee_no" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, uname, phone_number, car_number, credit_score, home_address, company_address, 
+    employee_no, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ziroom.model.UserEntity">
+    insert into tb_user (id, uid, uname, 
+      phone_number, car_number, credit_score, 
+      home_address, company_address, employee_no, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, 
+      #{phone_number,jdbcType=VARCHAR}, #{car_number,jdbcType=VARCHAR}, #{credit_score,jdbcType=INTEGER}, 
+      #{home_address,jdbcType=VARCHAR}, #{company_address,jdbcType=VARCHAR}, #{employee_no,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ziroom.model.UserEntity">
+    insert into tb_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="uname != null">
+        uname,
+      </if>
+      <if test="phone_number != null">
+        phone_number,
+      </if>
+      <if test="car_number != null">
+        car_number,
+      </if>
+      <if test="credit_score != null">
+        credit_score,
+      </if>
+      <if test="home_address != null">
+        home_address,
+      </if>
+      <if test="company_address != null">
+        company_address,
+      </if>
+      <if test="employee_no != null">
+        employee_no,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone_number != null">
+        #{phone_number,jdbcType=VARCHAR},
+      </if>
+      <if test="car_number != null">
+        #{car_number,jdbcType=VARCHAR},
+      </if>
+      <if test="credit_score != null">
+        #{credit_score,jdbcType=INTEGER},
+      </if>
+      <if test="home_address != null">
+        #{home_address,jdbcType=VARCHAR},
+      </if>
+      <if test="company_address != null">
+        #{company_address,jdbcType=VARCHAR},
+      </if>
+      <if test="employee_no != null">
+        #{employee_no,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ziroom.model.UserEntity">
+    update tb_user
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone_number != null">
+        phone_number = #{phone_number,jdbcType=VARCHAR},
+      </if>
+      <if test="car_number != null">
+        car_number = #{car_number,jdbcType=VARCHAR},
+      </if>
+      <if test="credit_score != null">
+        credit_score = #{credit_score,jdbcType=INTEGER},
+      </if>
+      <if test="home_address != null">
+        home_address = #{home_address,jdbcType=VARCHAR},
+      </if>
+      <if test="company_address != null">
+        company_address = #{company_address,jdbcType=VARCHAR},
+      </if>
+      <if test="employee_no != null">
+        employee_no = #{employee_no,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ziroom.model.UserEntity">
+    update tb_user
+    set uid = #{uid,jdbcType=VARCHAR},
+      uname = #{uname,jdbcType=VARCHAR},
+      phone_number = #{phone_number,jdbcType=VARCHAR},
+      car_number = #{car_number,jdbcType=VARCHAR},
+      credit_score = #{credit_score,jdbcType=INTEGER},
+      home_address = #{home_address,jdbcType=VARCHAR},
+      company_address = #{company_address,jdbcType=VARCHAR},
+      employee_no = #{employee_no,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

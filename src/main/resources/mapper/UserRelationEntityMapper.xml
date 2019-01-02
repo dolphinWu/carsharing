@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ziroom.dao.UserRelationEntityMapper">
+  <resultMap id="BaseResultMap" type="com.ziroom.model.UserRelationEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid1" jdbcType="VARCHAR" property="uid1" />
+    <result column="uid2" jdbcType="VARCHAR" property="uid2" />
+    <result column="friendship_score" jdbcType="INTEGER" property="friendship_score" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid1, uid2, friendship_score
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user_relation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_user_relation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ziroom.model.UserRelationEntity">
+    insert into tb_user_relation (id, uid1, uid2, 
+      friendship_score)
+    values (#{id,jdbcType=INTEGER}, #{uid1,jdbcType=VARCHAR}, #{uid2,jdbcType=VARCHAR}, 
+      #{friendship_score,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ziroom.model.UserRelationEntity">
+    insert into tb_user_relation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid1 != null">
+        uid1,
+      </if>
+      <if test="uid2 != null">
+        uid2,
+      </if>
+      <if test="friendship_score != null">
+        friendship_score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid1 != null">
+        #{uid1,jdbcType=VARCHAR},
+      </if>
+      <if test="uid2 != null">
+        #{uid2,jdbcType=VARCHAR},
+      </if>
+      <if test="friendship_score != null">
+        #{friendship_score,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ziroom.model.UserRelationEntity">
+    update tb_user_relation
+    <set>
+      <if test="uid1 != null">
+        uid1 = #{uid1,jdbcType=VARCHAR},
+      </if>
+      <if test="uid2 != null">
+        uid2 = #{uid2,jdbcType=VARCHAR},
+      </if>
+      <if test="friendship_score != null">
+        friendship_score = #{friendship_score,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ziroom.model.UserRelationEntity">
+    update tb_user_relation
+    set uid1 = #{uid1,jdbcType=VARCHAR},
+      uid2 = #{uid2,jdbcType=VARCHAR},
+      friendship_score = #{friendship_score,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

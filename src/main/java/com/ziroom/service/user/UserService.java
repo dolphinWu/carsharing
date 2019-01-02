@@ -8,6 +8,4 @@ public interface UserService {
 
     UserEntity getUserInfoById(Integer uId);
 
-    UserEntity login(String username, String password);
-
 }
