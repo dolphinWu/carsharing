@@ -66,7 +66,7 @@ pagehelper:
 
 logging:
   level:
-    cn.luischen.dao : DEBUG
+    com.ziroom.dao : DEBUG
 
 swagger:
   show: true

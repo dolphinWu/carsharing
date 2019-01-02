@@ -1,25 +1,25 @@
 package com.ziroom.model;
 
-public class UserEntity {
-
-    /** 主键编号 */
+public class UserEntity extends BaseEntity {
     private Integer id;
-    /** 用户名 */
-    private String username;
-    /** 密码 */
-    private String password;
-    /** email */
-    private String email;
-    /**  用户显示的名称 */
-    private String screenName;
-    /** 用户注册时的GMT unix时间戳 */
-    private Integer created;
-    /** 最后活动时间 */
-    private Integer activated;
-    /** 上次登录最后活跃时间 */
-    private Integer logged;
-    /** 用户组 */
-    private String groupName;
+
+    private String uid;
+
+    private String uname;
+
+    private String phone_number;
+
+    private String car_number;
+
+    private Integer credit_score;
+
+    private String home_address;
+
+    private String company_address;
+
+    private String employee_no;
+
+    private String remark;
 
     public Integer getId() {
         return id;
@@ -29,67 +29,75 @@ public class UserEntity {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUid() {
+        return uid;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUid(String uid) {
+        this.uid = uid == null ? null : uid.trim();
     }
 
-    public String getPassword() {
-        return password;
+    public String getUname() {
+        return uname;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUname(String uname) {
+        this.uname = uname == null ? null : uname.trim();
     }
 
-    public String getEmail() {
-        return email;
+    public String getPhone_number() {
+        return phone_number;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number == null ? null : phone_number.trim();
     }
 
-    public String getScreenName() {
-        return screenName;
+    public String getCar_number() {
+        return car_number;
     }
 
-    public void setScreenName(String screenName) {
-        this.screenName = screenName;
+    public void setCar_number(String car_number) {
+        this.car_number = car_number == null ? null : car_number.trim();
     }
 
-    public Integer getCreated() {
-        return created;
+    public Integer getCredit_score() {
+        return credit_score;
     }
 
-    public void setCreated(Integer created) {
-        this.created = created;
+    public void setCredit_score(Integer credit_score) {
+        this.credit_score = credit_score;
     }
 
-    public Integer getActivated() {
-        return activated;
+    public String getHome_address() {
+        return home_address;
     }
 
-    public void setActivated(Integer activated) {
-        this.activated = activated;
+    public void setHome_address(String home_address) {
+        this.home_address = home_address == null ? null : home_address.trim();
     }
 
-    public Integer getLogged() {
-        return logged;
+    public String getCompany_address() {
+        return company_address;
     }
 
-    public void setLogged(Integer logged) {
-        this.logged = logged;
+    public void setCompany_address(String company_address) {
+        this.company_address = company_address == null ? null : company_address.trim();
     }
 
-    public String getGroupName() {
-        return groupName;
+    public String getEmployee_no() {
+        return employee_no;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public void setEmployee_no(String employee_no) {
+        this.employee_no = employee_no == null ? null : employee_no.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 }
