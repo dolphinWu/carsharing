@@ -252,4 +252,13 @@
     from tb_driver_plan
     where plan_start_time &lt; date_add(now(), interval 1 hour) and plan_start_time &gt; now()
   </select>
+
+  <!-- 根据司机uid查询 -->
+  <select id="selectByUid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_driver_plan
+    where driver_uid = #{driverUid,jdbcType=VARCHAR} AND status = #{status,jdbcType=INTEGER}
+  </select>
+
 </mapper>
