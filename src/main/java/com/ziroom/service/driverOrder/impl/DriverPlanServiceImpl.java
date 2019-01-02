@@ -1,5 +1,6 @@
 package com.ziroom.service.driverOrder.impl;
 
+import com.ziroom.constant.DriverPlanStatus;
 import com.ziroom.dao.DriverPlanEntityMapper;
 import com.ziroom.model.DriverPlanEntity;
 import com.ziroom.service.driverOrder.DriverPlanService;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,31 +26,47 @@ public class DriverPlanServiceImpl implements DriverPlanService {
 
     //查询历史记录
     @Override
-    public APIResponse getHistoryPlan(String driverUid) {
-        List<DriverPlanEntity> list = driverPlanEntityMapper.selectByUid(driverUid);
+    public APIResponse getHistoryPlan(String driverUid,Integer status) {
+        List<DriverPlanEntity> list = driverPlanEntityMapper.selectByUid(driverUid,status);
+        for (DriverPlanEntity driverPlanEntity : list) {
 
+        }
         return APIResponse.success(list);
     }
 
     //创建拼车单
     @Override
     public APIResponse createDriverPlan(DriverPlanEntity driverPlan) {
-        //driverPlan.setStatus();
+        //状态
+        driverPlan.setStatus(DriverPlanStatus.WAITING.getCode());
+        driverPlan.setCreateTime(new Date());
+        driverPlan.setUpdateTime(new Date());
+        driverPlan.setIsDel(0);
         driverPlanEntityMapper.insert(driverPlan);
         return APIResponse.success();
     }
 
-    //开始行程
+    //开始行程，返回起点终点的经纬度（导航）
     @Override
     public APIResponse beginPlan(DriverPlanEntity driverPlan) {
-        return APIResponse.success();
+        //修改行程单状态
+        driverPlan.setStatus(DriverPlanStatus.DRIVING.getCode());
+        driverPlanEntityMapper.updateByPrimaryKey(driverPlan);
+        return APIResponse.success(driverPlan);
     }
 
+    //取消行程单
     @Override
     public APIResponse cancelPlan(DriverPlanEntity driverPlan) {
+        //1.行程单的状态
+
+        //2.订单的状态
+
+        //3.
         return APIResponse.success();
     }
 
+    //确认结束，完成行程
     @Override
     public APIResponse finishPlan(DriverPlanEntity driverPlan) {
         return APIResponse.success();

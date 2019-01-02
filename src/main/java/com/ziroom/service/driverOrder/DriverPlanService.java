@@ -15,7 +15,7 @@ public interface DriverPlanService {
      * @param driverUid
      * @return
      */
-   APIResponse getHistoryPlan(String driverUid);
+   APIResponse getHistoryPlan(String driverUid,Integer status);
 
    /**
     * @author codey

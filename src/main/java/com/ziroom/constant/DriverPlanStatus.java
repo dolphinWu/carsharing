@@ -46,11 +46,11 @@ public enum DriverPlanStatus {
         this.name = name;
     }
 
-    public static final Map<Integer,String> AFASTATUS = new HashMap<>();
+    public static final Map<Integer,String> lookup = new HashMap<>();
 
     static {
-        for (AfaStatus s : EnumSet.allOf(AfaStatus.class)) {
-            AFASTATUS.put(s.getCode(),s.getName());
+        for (DriverPlanStatus s : EnumSet.allOf(DriverPlanStatus.class)) {
+            lookup.put(s.getCode(),s.getName());
         }
     }
 }

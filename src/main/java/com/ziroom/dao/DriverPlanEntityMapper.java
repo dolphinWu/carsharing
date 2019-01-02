@@ -1,6 +1,7 @@
 package com.ziroom.dao;
 
 import com.ziroom.model.DriverPlanEntity;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,5 +25,6 @@ public interface DriverPlanEntityMapper {
      * @param
      * @return
      */
-    List<DriverPlanEntity> selectByUid(String driverUid);
+    List<DriverPlanEntity> selectByUid(@Param("driverUid") String driverUid,@Param("status") Integer status);
+
 }
