@@ -245,4 +245,13 @@
       is_del = #{isDel,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!-- 根据司机uid查询 -->
+  <select id="selectByUid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_driver_plan
+    where driver_uid = #{driverUid,jdbcType=VARCHAR}
+  </select>
+
 </mapper>
