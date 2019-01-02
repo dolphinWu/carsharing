@@ -1,12 +1,9 @@
 package com.ziroom.service.user.impl;
 
-import com.ziroom.constant.ErrorConstant;
 import com.ziroom.dao.UserDao;
 import com.ziroom.exception.BusinessException;
 import com.ziroom.model.UserEntity;
 import com.ziroom.service.user.UserService;
-import com.ziroom.utils.TaleUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

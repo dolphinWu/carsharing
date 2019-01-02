@@ -7,17 +7,17 @@ public class UserEntity extends BaseEntity {
 
     private String uname;
 
-    private String phone_number;
+    private String phoneNumber;
 
-    private String car_number;
+    private String carNumber;
 
-    private Integer credit_score;
+    private Integer creditScore;
 
-    private String home_address;
+    private String homeAddress;
 
-    private String company_address;
+    private String companyAddress;
 
-    private String employee_no;
+    private String employeeNo;
 
     private String remark;
 
@@ -45,52 +45,52 @@ public class UserEntity extends BaseEntity {
         this.uname = uname == null ? null : uname.trim();
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number == null ? null : phone_number.trim();
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber == null ? null : phoneNumber.trim();
     }
 
-    public String getCar_number() {
-        return car_number;
+    public String getCarNumber() {
+        return carNumber;
     }
 
-    public void setCar_number(String car_number) {
-        this.car_number = car_number == null ? null : car_number.trim();
+    public void setCarNumber(String carNumber) {
+        this.carNumber = carNumber == null ? null : carNumber.trim();
     }
 
-    public Integer getCredit_score() {
-        return credit_score;
+    public Integer getCreditScore() {
+        return creditScore;
     }
 
-    public void setCredit_score(Integer credit_score) {
-        this.credit_score = credit_score;
+    public void setCreditScore(Integer creditScore) {
+        this.creditScore = creditScore;
     }
 
-    public String getHome_address() {
-        return home_address;
+    public String getHomeAddress() {
+        return homeAddress;
     }
 
-    public void setHome_address(String home_address) {
-        this.home_address = home_address == null ? null : home_address.trim();
+    public void setHomeAddress(String homeAddress) {
+        this.homeAddress = homeAddress == null ? null : homeAddress.trim();
     }
 
-    public String getCompany_address() {
-        return company_address;
+    public String getCompanyAddress() {
+        return companyAddress;
     }
 
-    public void setCompany_address(String company_address) {
-        this.company_address = company_address == null ? null : company_address.trim();
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress == null ? null : companyAddress.trim();
     }
 
-    public String getEmployee_no() {
-        return employee_no;
+    public String getEmployeeNo() {
+        return employeeNo;
     }
 
-    public void setEmployee_no(String employee_no) {
-        this.employee_no = employee_no == null ? null : employee_no.trim();
+    public void setEmployeeNo(String employeeNo) {
+        this.employeeNo = employeeNo == null ? null : employeeNo.trim();
     }
 
     public String getRemark() {

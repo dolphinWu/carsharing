@@ -5,31 +5,31 @@ import java.util.Date;
 public class DriverOrderEntity extends BaseEntity {
     private Integer id;
 
-    private String order_no;
+    private String orderNo;
 
     private String remark;
 
     private Integer status;
 
-    private Date actual_start_time;
+    private Date actualStartTime;
 
-    private Date actual_end_time;
+    private Date actualEndTime;
 
-    private String driver_no;
+    private String driverNo;
 
-    private Integer actual_amount;
+    private Integer actualAmount;
 
-    private Integer passenger_count;
+    private Integer passengerCount;
 
-    private Date create_time;
+    private Date createTime;
 
-    private Date update_time;
+    private Date updateTime;
 
     private String creator;
 
     private String updator;
 
-    private Integer is_del;
+    private Integer isDel;
 
     public Integer getId() {
         return id;
@@ -39,12 +39,12 @@ public class DriverOrderEntity extends BaseEntity {
         this.id = id;
     }
 
-    public String getOrder_no() {
-        return order_no;
+    public String getOrderNo() {
+        return orderNo;
     }
 
-    public void setOrder_no(String order_no) {
-        this.order_no = order_no == null ? null : order_no.trim();
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo == null ? null : orderNo.trim();
     }
 
     public String getRemark() {
@@ -63,60 +63,60 @@ public class DriverOrderEntity extends BaseEntity {
         this.status = status;
     }
 
-    public Date getActual_start_time() {
-        return actual_start_time;
+    public Date getActualStartTime() {
+        return actualStartTime;
     }
 
-    public void setActual_start_time(Date actual_start_time) {
-        this.actual_start_time = actual_start_time;
+    public void setActualStartTime(Date actualStartTime) {
+        this.actualStartTime = actualStartTime;
     }
 
-    public Date getActual_end_time() {
-        return actual_end_time;
+    public Date getActualEndTime() {
+        return actualEndTime;
     }
 
-    public void setActual_end_time(Date actual_end_time) {
-        this.actual_end_time = actual_end_time;
+    public void setActualEndTime(Date actualEndTime) {
+        this.actualEndTime = actualEndTime;
     }
 
-    public String getDriver_no() {
-        return driver_no;
+    public String getDriverNo() {
+        return driverNo;
     }
 
-    public void setDriver_no(String driver_no) {
-        this.driver_no = driver_no == null ? null : driver_no.trim();
+    public void setDriverNo(String driverNo) {
+        this.driverNo = driverNo == null ? null : driverNo.trim();
     }
 
-    public Integer getActual_amount() {
-        return actual_amount;
+    public Integer getActualAmount() {
+        return actualAmount;
     }
 
-    public void setActual_amount(Integer actual_amount) {
-        this.actual_amount = actual_amount;
+    public void setActualAmount(Integer actualAmount) {
+        this.actualAmount = actualAmount;
     }
 
-    public Integer getPassenger_count() {
-        return passenger_count;
+    public Integer getPassengerCount() {
+        return passengerCount;
     }
 
-    public void setPassenger_count(Integer passenger_count) {
-        this.passenger_count = passenger_count;
+    public void setPassengerCount(Integer passengerCount) {
+        this.passengerCount = passengerCount;
     }
 
-    public Date getCreate_time() {
-        return create_time;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Date getUpdate_time() {
-        return update_time;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdate_time(Date update_time) {
-        this.update_time = update_time;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public String getCreator() {
@@ -135,11 +135,11 @@ public class DriverOrderEntity extends BaseEntity {
         this.updator = updator == null ? null : updator.trim();
     }
 
-    public Integer getIs_del() {
-        return is_del;
+    public Integer getIsDel() {
+        return isDel;
     }
 
-    public void setIs_del(Integer is_del) {
-        this.is_del = is_del;
+    public void setIsDel(Integer isDel) {
+        this.isDel = isDel;
     }
 }
