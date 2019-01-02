@@ -4,8 +4,8 @@
   <resultMap id="BaseResultMap" type="com.ziroom.model.AddressEntity">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="uid" jdbcType="VARCHAR" property="uid" />
-    <result column="name_short" jdbcType="VARCHAR" property="name_short" />
-    <result column="name_full" jdbcType="VARCHAR" property="name_full" />
+    <result column="name_short" jdbcType="VARCHAR" property="nameShort" />
+    <result column="name_full" jdbcType="VARCHAR" property="nameFull" />
     <result column="longitude" jdbcType="VARCHAR" property="longitude" />
     <result column="latitude" jdbcType="VARCHAR" property="latitude" />
   </resultMap>
@@ -26,8 +26,8 @@
     insert into tb_address (id, uid, name_short, 
       name_full, longitude, latitude
       )
-    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{name_short,jdbcType=VARCHAR}, 
-      #{name_full,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{nameShort,jdbcType=VARCHAR}, 
+      #{nameFull,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ziroom.model.AddressEntity">
@@ -39,10 +39,10 @@
       <if test="uid != null">
         uid,
       </if>
-      <if test="name_short != null">
+      <if test="nameShort != null">
         name_short,
       </if>
-      <if test="name_full != null">
+      <if test="nameFull != null">
         name_full,
       </if>
       <if test="longitude != null">
@@ -59,11 +59,11 @@
       <if test="uid != null">
         #{uid,jdbcType=VARCHAR},
       </if>
-      <if test="name_short != null">
-        #{name_short,jdbcType=VARCHAR},
+      <if test="nameShort != null">
+        #{nameShort,jdbcType=VARCHAR},
       </if>
-      <if test="name_full != null">
-        #{name_full,jdbcType=VARCHAR},
+      <if test="nameFull != null">
+        #{nameFull,jdbcType=VARCHAR},
       </if>
       <if test="longitude != null">
         #{longitude,jdbcType=VARCHAR},
@@ -79,11 +79,11 @@
       <if test="uid != null">
         uid = #{uid,jdbcType=VARCHAR},
       </if>
-      <if test="name_short != null">
-        name_short = #{name_short,jdbcType=VARCHAR},
+      <if test="nameShort != null">
+        name_short = #{nameShort,jdbcType=VARCHAR},
       </if>
-      <if test="name_full != null">
-        name_full = #{name_full,jdbcType=VARCHAR},
+      <if test="nameFull != null">
+        name_full = #{nameFull,jdbcType=VARCHAR},
       </if>
       <if test="longitude != null">
         longitude = #{longitude,jdbcType=VARCHAR},
@@ -97,8 +97,8 @@
   <update id="updateByPrimaryKey" parameterType="com.ziroom.model.AddressEntity">
     update tb_address
     set uid = #{uid,jdbcType=VARCHAR},
-      name_short = #{name_short,jdbcType=VARCHAR},
-      name_full = #{name_full,jdbcType=VARCHAR},
+      name_short = #{nameShort,jdbcType=VARCHAR},
+      name_full = #{nameFull,jdbcType=VARCHAR},
       longitude = #{longitude,jdbcType=VARCHAR},
       latitude = #{latitude,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

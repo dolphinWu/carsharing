@@ -5,33 +5,33 @@ import java.util.Date;
 public class PassengerOrderEntity extends BaseEntity {
     private Integer id;
 
-    private String passenger_no;
+    private String passengerNo;
 
-    private String driver_order_no;
+    private String driverOrderNo;
 
-    private Integer passenger_count;
+    private Integer passengerCount;
 
-    private String start_name;
+    private String startName;
 
-    private String end_name;
+    private String endName;
 
-    private Integer actual_amount;
+    private Integer actualAmount;
 
     private Integer status;
 
-    private Date actual_start_time;
+    private Date actualStartTime;
 
-    private Date actual_end_time;
+    private Date actualEndTime;
 
-    private String passenger_uid;
+    private String passengerUid;
 
-    private String start_xpoint;
+    private String startXpoint;
 
-    private String start_ypoint;
+    private String startYpoint;
 
-    private String end_xpoint;
+    private String endXpoint;
 
-    private String end_ypoint;
+    private String endYpoint;
 
     private String remark;
 
@@ -43,52 +43,52 @@ public class PassengerOrderEntity extends BaseEntity {
         this.id = id;
     }
 
-    public String getPassenger_no() {
-        return passenger_no;
+    public String getPassengerNo() {
+        return passengerNo;
     }
 
-    public void setPassenger_no(String passenger_no) {
-        this.passenger_no = passenger_no == null ? null : passenger_no.trim();
+    public void setPassengerNo(String passengerNo) {
+        this.passengerNo = passengerNo == null ? null : passengerNo.trim();
     }
 
-    public String getDriver_order_no() {
-        return driver_order_no;
+    public String getDriverOrderNo() {
+        return driverOrderNo;
     }
 
-    public void setDriver_order_no(String driver_order_no) {
-        this.driver_order_no = driver_order_no == null ? null : driver_order_no.trim();
+    public void setDriverOrderNo(String driverOrderNo) {
+        this.driverOrderNo = driverOrderNo == null ? null : driverOrderNo.trim();
     }
 
-    public Integer getPassenger_count() {
-        return passenger_count;
+    public Integer getPassengerCount() {
+        return passengerCount;
     }
 
-    public void setPassenger_count(Integer passenger_count) {
-        this.passenger_count = passenger_count;
+    public void setPassengerCount(Integer passengerCount) {
+        this.passengerCount = passengerCount;
     }
 
-    public String getStart_name() {
-        return start_name;
+    public String getStartName() {
+        return startName;
     }
 
-    public void setStart_name(String start_name) {
-        this.start_name = start_name == null ? null : start_name.trim();
+    public void setStartName(String startName) {
+        this.startName = startName == null ? null : startName.trim();
     }
 
-    public String getEnd_name() {
-        return end_name;
+    public String getEndName() {
+        return endName;
     }
 
-    public void setEnd_name(String end_name) {
-        this.end_name = end_name == null ? null : end_name.trim();
+    public void setEndName(String endName) {
+        this.endName = endName == null ? null : endName.trim();
     }
 
-    public Integer getActual_amount() {
-        return actual_amount;
+    public Integer getActualAmount() {
+        return actualAmount;
     }
 
-    public void setActual_amount(Integer actual_amount) {
-        this.actual_amount = actual_amount;
+    public void setActualAmount(Integer actualAmount) {
+        this.actualAmount = actualAmount;
     }
 
     public Integer getStatus() {
@@ -99,60 +99,60 @@ public class PassengerOrderEntity extends BaseEntity {
         this.status = status;
     }
 
-    public Date getActual_start_time() {
-        return actual_start_time;
+    public Date getActualStartTime() {
+        return actualStartTime;
     }
 
-    public void setActual_start_time(Date actual_start_time) {
-        this.actual_start_time = actual_start_time;
+    public void setActualStartTime(Date actualStartTime) {
+        this.actualStartTime = actualStartTime;
     }
 
-    public Date getActual_end_time() {
-        return actual_end_time;
+    public Date getActualEndTime() {
+        return actualEndTime;
     }
 
-    public void setActual_end_time(Date actual_end_time) {
-        this.actual_end_time = actual_end_time;
+    public void setActualEndTime(Date actualEndTime) {
+        this.actualEndTime = actualEndTime;
     }
 
-    public String getPassenger_uid() {
-        return passenger_uid;
+    public String getPassengerUid() {
+        return passengerUid;
     }
 
-    public void setPassenger_uid(String passenger_uid) {
-        this.passenger_uid = passenger_uid == null ? null : passenger_uid.trim();
+    public void setPassengerUid(String passengerUid) {
+        this.passengerUid = passengerUid == null ? null : passengerUid.trim();
     }
 
-    public String getStart_xpoint() {
-        return start_xpoint;
+    public String getStartXpoint() {
+        return startXpoint;
     }
 
-    public void setStart_xpoint(String start_xpoint) {
-        this.start_xpoint = start_xpoint == null ? null : start_xpoint.trim();
+    public void setStartXpoint(String startXpoint) {
+        this.startXpoint = startXpoint == null ? null : startXpoint.trim();
     }
 
-    public String getStart_ypoint() {
-        return start_ypoint;
+    public String getStartYpoint() {
+        return startYpoint;
     }
 
-    public void setStart_ypoint(String start_ypoint) {
-        this.start_ypoint = start_ypoint == null ? null : start_ypoint.trim();
+    public void setStartYpoint(String startYpoint) {
+        this.startYpoint = startYpoint == null ? null : startYpoint.trim();
     }
 
-    public String getEnd_xpoint() {
-        return end_xpoint;
+    public String getEndXpoint() {
+        return endXpoint;
     }
 
-    public void setEnd_xpoint(String end_xpoint) {
-        this.end_xpoint = end_xpoint == null ? null : end_xpoint.trim();
+    public void setEndXpoint(String endXpoint) {
+        this.endXpoint = endXpoint == null ? null : endXpoint.trim();
     }
 
-    public String getEnd_ypoint() {
-        return end_ypoint;
+    public String getEndYpoint() {
+        return endYpoint;
     }
 
-    public void setEnd_ypoint(String end_ypoint) {
-        this.end_ypoint = end_ypoint == null ? null : end_ypoint.trim();
+    public void setEndYpoint(String endYpoint) {
+        this.endYpoint = endYpoint == null ? null : endYpoint.trim();
     }
 
     public String getRemark() {

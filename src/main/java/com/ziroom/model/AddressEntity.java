@@ -5,9 +5,9 @@ public class AddressEntity extends BaseEntity {
 
     private String uid;
 
-    private String name_short;
+    private String nameShort;
 
-    private String name_full;
+    private String nameFull;
 
     private String longitude;
 
@@ -29,20 +29,20 @@ public class AddressEntity extends BaseEntity {
         this.uid = uid == null ? null : uid.trim();
     }
 
-    public String getName_short() {
-        return name_short;
+    public String getNameShort() {
+        return nameShort;
     }
 
-    public void setName_short(String name_short) {
-        this.name_short = name_short == null ? null : name_short.trim();
+    public void setNameShort(String nameShort) {
+        this.nameShort = nameShort == null ? null : nameShort.trim();
     }
 
-    public String getName_full() {
-        return name_full;
+    public String getNameFull() {
+        return nameFull;
     }
 
-    public void setName_full(String name_full) {
-        this.name_full = name_full == null ? null : name_full.trim();
+    public void setNameFull(String nameFull) {
+        this.nameFull = nameFull == null ? null : nameFull.trim();
     }
 
     public String getLongitude() {

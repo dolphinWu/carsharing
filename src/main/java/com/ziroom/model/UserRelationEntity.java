@@ -7,7 +7,7 @@ public class UserRelationEntity extends BaseEntity {
 
     private String uid2;
 
-    private Integer friendship_score;
+    private Integer friendshipScore;
 
     public Integer getId() {
         return id;
@@ -33,11 +33,11 @@ public class UserRelationEntity extends BaseEntity {
         this.uid2 = uid2 == null ? null : uid2.trim();
     }
 
-    public Integer getFriendship_score() {
-        return friendship_score;
+    public Integer getFriendshipScore() {
+        return friendshipScore;
     }
 
-    public void setFriendship_score(Integer friendship_score) {
-        this.friendship_score = friendship_score;
+    public void setFriendshipScore(Integer friendshipScore) {
+        this.friendshipScore = friendshipScore;
     }
 }

@@ -5,39 +5,39 @@ import java.util.Date;
 public class DriverPlanEntity extends BaseEntity {
     private Integer id;
 
-    private Date plan_start_time;
+    private Date planStartTime;
 
-    private Integer car_capacity;
+    private Integer carCapacity;
 
     private String remark;
 
-    private Integer plan_amount;
+    private Integer planAmount;
 
     private Integer status;
 
-    private String driver_uid;
+    private String driverUid;
 
-    private String drvier_no;
+    private String drvierNo;
 
-    private String start_xpoint;
+    private String startXpoint;
 
-    private String start_ypoint;
+    private String startYpoint;
 
-    private String end_xpoint;
+    private String endXpoint;
 
-    private String end_ypoint;
+    private String endYpoint;
 
-    private Integer accounting_rules;
+    private Integer accountingRules;
 
-    private Date create_time;
+    private Date createTime;
 
-    private Date update_time;
+    private Date updateTime;
 
     private String creator;
 
     private String updator;
 
-    private Integer is_del;
+    private Integer isDel;
 
     public Integer getId() {
         return id;
@@ -47,20 +47,20 @@ public class DriverPlanEntity extends BaseEntity {
         this.id = id;
     }
 
-    public Date getPlan_start_time() {
-        return plan_start_time;
+    public Date getPlanStartTime() {
+        return planStartTime;
     }
 
-    public void setPlan_start_time(Date plan_start_time) {
-        this.plan_start_time = plan_start_time;
+    public void setPlanStartTime(Date planStartTime) {
+        this.planStartTime = planStartTime;
     }
 
-    public Integer getCar_capacity() {
-        return car_capacity;
+    public Integer getCarCapacity() {
+        return carCapacity;
     }
 
-    public void setCar_capacity(Integer car_capacity) {
-        this.car_capacity = car_capacity;
+    public void setCarCapacity(Integer carCapacity) {
+        this.carCapacity = carCapacity;
     }
 
     public String getRemark() {
@@ -71,12 +71,12 @@ public class DriverPlanEntity extends BaseEntity {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public Integer getPlan_amount() {
-        return plan_amount;
+    public Integer getPlanAmount() {
+        return planAmount;
     }
 
-    public void setPlan_amount(Integer plan_amount) {
-        this.plan_amount = plan_amount;
+    public void setPlanAmount(Integer planAmount) {
+        this.planAmount = planAmount;
     }
 
     public Integer getStatus() {
@@ -87,76 +87,76 @@ public class DriverPlanEntity extends BaseEntity {
         this.status = status;
     }
 
-    public String getDriver_uid() {
-        return driver_uid;
+    public String getDriverUid() {
+        return driverUid;
     }
 
-    public void setDriver_uid(String driver_uid) {
-        this.driver_uid = driver_uid == null ? null : driver_uid.trim();
+    public void setDriverUid(String driverUid) {
+        this.driverUid = driverUid == null ? null : driverUid.trim();
     }
 
-    public String getDrvier_no() {
-        return drvier_no;
+    public String getDrvierNo() {
+        return drvierNo;
     }
 
-    public void setDrvier_no(String drvier_no) {
-        this.drvier_no = drvier_no == null ? null : drvier_no.trim();
+    public void setDrvierNo(String drvierNo) {
+        this.drvierNo = drvierNo == null ? null : drvierNo.trim();
     }
 
-    public String getStart_xpoint() {
-        return start_xpoint;
+    public String getStartXpoint() {
+        return startXpoint;
     }
 
-    public void setStart_xpoint(String start_xpoint) {
-        this.start_xpoint = start_xpoint == null ? null : start_xpoint.trim();
+    public void setStartXpoint(String startXpoint) {
+        this.startXpoint = startXpoint == null ? null : startXpoint.trim();
     }
 
-    public String getStart_ypoint() {
-        return start_ypoint;
+    public String getStartYpoint() {
+        return startYpoint;
     }
 
-    public void setStart_ypoint(String start_ypoint) {
-        this.start_ypoint = start_ypoint == null ? null : start_ypoint.trim();
+    public void setStartYpoint(String startYpoint) {
+        this.startYpoint = startYpoint == null ? null : startYpoint.trim();
     }
 
-    public String getEnd_xpoint() {
-        return end_xpoint;
+    public String getEndXpoint() {
+        return endXpoint;
     }
 
-    public void setEnd_xpoint(String end_xpoint) {
-        this.end_xpoint = end_xpoint == null ? null : end_xpoint.trim();
+    public void setEndXpoint(String endXpoint) {
+        this.endXpoint = endXpoint == null ? null : endXpoint.trim();
     }
 
-    public String getEnd_ypoint() {
-        return end_ypoint;
+    public String getEndYpoint() {
+        return endYpoint;
     }
 
-    public void setEnd_ypoint(String end_ypoint) {
-        this.end_ypoint = end_ypoint == null ? null : end_ypoint.trim();
+    public void setEndYpoint(String endYpoint) {
+        this.endYpoint = endYpoint == null ? null : endYpoint.trim();
     }
 
-    public Integer getAccounting_rules() {
-        return accounting_rules;
+    public Integer getAccountingRules() {
+        return accountingRules;
     }
 
-    public void setAccounting_rules(Integer accounting_rules) {
-        this.accounting_rules = accounting_rules;
+    public void setAccountingRules(Integer accountingRules) {
+        this.accountingRules = accountingRules;
     }
 
-    public Date getCreate_time() {
-        return create_time;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Date getUpdate_time() {
-        return update_time;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdate_time(Date update_time) {
-        this.update_time = update_time;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public String getCreator() {
@@ -175,11 +175,11 @@ public class DriverPlanEntity extends BaseEntity {
         this.updator = updator == null ? null : updator.trim();
     }
 
-    public Integer getIs_del() {
-        return is_del;
+    public Integer getIsDel() {
+        return isDel;
     }
 
-    public void setIs_del(Integer is_del) {
-        this.is_del = is_del;
+    public void setIsDel(Integer isDel) {
+        this.isDel = isDel;
     }
 }
