@@ -5,11 +5,11 @@ package com.ziroom.utils;
  */
 public class APIResponse <T> {
 
-    private static final String CODE_SUCCESS = "success";
+    private static final Integer CODE_SUCCESS = 0;
 
-    private static final String CODE_FAIL = "fail";
+    private static final Integer CODE_FAIL = -1;
 
-    private String code;
+    private Integer code;
     private T data;
     private String msg;
 
@@ -17,16 +17,16 @@ public class APIResponse <T> {
 
     }
 
-    public APIResponse(String code){
+    public APIResponse(Integer code){
         this.code = code;
     }
 
-    public APIResponse(String code, T data){
+    public APIResponse(Integer code, T data){
         this.code = code;
         this.data = data;
     }
 
-    public APIResponse(String code, String msg){
+    public APIResponse(Integer code, String msg){
         this.code = code;
         this.msg = msg;
     }
@@ -43,7 +43,7 @@ public class APIResponse <T> {
         return new APIResponse(CODE_FAIL, msg);
     }
 
-    public static APIResponse widthCode(String errorCode) {
+    public static APIResponse widthCode(Integer errorCode) {
         return new APIResponse(errorCode);
     }
 
@@ -55,11 +55,11 @@ public class APIResponse <T> {
         this.msg = msg;
     }
 
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 

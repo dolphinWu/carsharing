@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
 
         String msg = "请求错误";
         if (e instanceof BusinessException){
-            msg = ((BusinessException) e).getErrorCode();
+            msg = ((BusinessException) e).getErrorMsg();
         }
         logger.error("find exception:e={}",e.getMessage());
         e.printStackTrace();
