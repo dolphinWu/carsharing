@@ -1,6 +1,6 @@
 package com.ziroom.service.user.impl;
 
-import com.ziroom.dao.UserDao;
+import com.ziroom.dao.UserEntityMapper;
 import com.ziroom.exception.BusinessException;
 import com.ziroom.model.UserEntity;
 import com.ziroom.service.user.UserService;
@@ -12,19 +12,27 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserDao userDao;//这里会报错，但是并不会影响
+    private UserEntityMapper userEntityMapper;
 
     @Transactional
     @Override
-    public int updateUserInfo(UserEntity user) {
-        if (null == user.getId())
-            throw BusinessException.withErrorMsg("用户编号不可能为空");
-        return userDao.updateUserInfo(user);
+    public int insertUserInfo(UserEntity user) {
+//        if (null == user.getId())
+//            throw BusinessException.withErrorMsg("用户编号不可能为空");
+        return userEntityMapper.insertSelective(user);
     }
 
     @Override
-    public UserEntity getUserInfoById(Integer uId) {
-        return userDao.getUserInfoById(uId);
+    public UserEntity getUserInfoById(Integer Id) {
+        return userEntityMapper.selectByPrimaryKey(Id);
     }
 
+
+    public int updateCarNoByEmployeeNo(UserEntity user){
+        return userEntityMapper.updateByPrimaryKey(user);
+    }
+
+   public UserEntity getUserInfoByEmployeeNo(String employeeNo){
+       return userEntityMapper.getUserInfoByEmployeeNo(employeeNo);
+    }
 }

@@ -104,4 +104,12 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+
+  <select id="selectListByUid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_address
+    where uid = #{uid,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

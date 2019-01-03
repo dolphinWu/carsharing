@@ -137,7 +137,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ziroom.model.UserEntity">
+  <update id="updateByPrimaryKey"  parameterType="com.ziroom.model.UserEntity">
     update tb_user
     set uid = #{uid,jdbcType=VARCHAR},
       uname = #{uname,jdbcType=VARCHAR},
@@ -150,4 +150,13 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getUserInfoByEmployeeNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from tb_user
+    where employee_no = #{employeeNo,jdbcType=VARCHAR}
+  </select>
+
+
 </mapper>

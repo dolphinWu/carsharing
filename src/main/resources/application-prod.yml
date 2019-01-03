@@ -66,3 +66,13 @@ logging:
 
 swagger:
   show: true
+
+cas:
+  url:
+   getToken: http://cas.ziroom.com/CAS/api/authentication
+   authToken: http://cas.ziroom.com/CAS/api/auth/token
+
+
+ehr:
+  url:
+    userDetil:  http://ehrnew.t.ziroom.com/api/ehr/getUserSimple.action

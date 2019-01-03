@@ -14,4 +14,6 @@ public interface UserEntityMapper {
     int updateByPrimaryKeySelective(UserEntity record);
 
     int updateByPrimaryKey(UserEntity record);
+
+    UserEntity getUserInfoByEmployeeNo(String employeeNo);
 }
