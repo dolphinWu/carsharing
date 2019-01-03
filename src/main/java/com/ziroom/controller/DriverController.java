@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +34,9 @@ public class DriverController {
      * @return com.ziroom.utils.APIResponse
      */
     @PostMapping(value = "/historyPlan",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public APIResponse historyPlan(String driverUid,Integer status){
+    public APIResponse historyPlan(@RequestBody DriverPlanRequest driverPlanRequest){
+        String driverUid = driverPlanRequest.getDriverUid();
+        Integer status = driverPlanRequest.getStatus();
         return driverPlanService.getHistoryPlan(driverUid,status);
     }
 
@@ -45,7 +48,7 @@ public class DriverController {
      * @return
      */
     @PostMapping(value = "/createDriverPlan",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public APIResponse createDriverPlan(DriverPlanRequest driverPlanRequest){
+    public APIResponse createDriverPlan(@RequestBody DriverPlanRequest driverPlanRequest){
         return driverPlanService.createDriverPlan(driverPlanRequest);
     }
 
@@ -57,7 +60,7 @@ public class DriverController {
      * @return
      */
     @PostMapping(value = "/beginPlan",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public APIResponse beginPlan(DriverPlanRequest driverPlanRequest){
+    public APIResponse beginPlan(@RequestBody DriverPlanRequest driverPlanRequest){
         return driverPlanService.beginPlan(driverPlanRequest);
     }
 
@@ -69,7 +72,7 @@ public class DriverController {
      * @return
      */
     @PostMapping(value = "/cancelPlan",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public APIResponse cancelPlan(DriverPlanRequest driverPlanRequest){
+    public APIResponse cancelPlan(@RequestBody DriverPlanRequest driverPlanRequest){
         return driverPlanService.cancelPlan(driverPlanRequest);
     }
 
@@ -81,7 +84,7 @@ public class DriverController {
      * @return
      */
     @PostMapping(value = "/finishPlan",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public APIResponse finishPlan(DriverPlanRequest driverPlanRequest){
+    public APIResponse finishPlan(@RequestBody DriverPlanRequest driverPlanRequest){
         return driverPlanService.cancelPlan(driverPlanRequest);
     }
 

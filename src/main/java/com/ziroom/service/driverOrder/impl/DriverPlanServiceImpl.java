@@ -58,6 +58,8 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         BeanUtils.copyProperties(driverPlanReq,driverPlan);
         //状态
         driverPlan.setStatus(DriverPlanStatus.WAITING.getCode());
+        //单号
+        driverPlan.setDriverNo("DP"+System.currentTimeMillis());
         driverPlan.setCreateTime(new Date());
         driverPlan.setUpdateTime(new Date());
         driverPlan.setIsDel(0);
