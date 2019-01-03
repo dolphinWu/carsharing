@@ -11,13 +11,13 @@ public class DriverPlanEntity extends BaseEntity {
 
     private String remark;
 
-    private Integer planAmount;
+    private Integer planAmount;//单位分
 
     private Integer status;
 
     private String driverUid;
 
-    private String drvierNo;
+    private String driverNo;
 
     private String startXpoint;
 
@@ -38,6 +38,10 @@ public class DriverPlanEntity extends BaseEntity {
     private String updator;
 
     private Integer isDel;
+
+    private String startName;
+
+    private String endName;
 
     public Integer getId() {
         return id;
@@ -68,7 +72,7 @@ public class DriverPlanEntity extends BaseEntity {
     }
 
     public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
+        this.remark = remark;
     }
 
     public Integer getPlanAmount() {
@@ -92,15 +96,15 @@ public class DriverPlanEntity extends BaseEntity {
     }
 
     public void setDriverUid(String driverUid) {
-        this.driverUid = driverUid == null ? null : driverUid.trim();
+        this.driverUid = driverUid;
     }
 
-    public String getDrvierNo() {
-        return drvierNo;
+    public String getDriverNo() {
+        return driverNo;
     }
 
-    public void setDrvierNo(String drvierNo) {
-        this.drvierNo = drvierNo == null ? null : drvierNo.trim();
+    public void setDriverNo(String driverNo) {
+        this.driverNo = driverNo;
     }
 
     public String getStartXpoint() {
@@ -108,7 +112,7 @@ public class DriverPlanEntity extends BaseEntity {
     }
 
     public void setStartXpoint(String startXpoint) {
-        this.startXpoint = startXpoint == null ? null : startXpoint.trim();
+        this.startXpoint = startXpoint;
     }
 
     public String getStartYpoint() {
@@ -116,7 +120,7 @@ public class DriverPlanEntity extends BaseEntity {
     }
 
     public void setStartYpoint(String startYpoint) {
-        this.startYpoint = startYpoint == null ? null : startYpoint.trim();
+        this.startYpoint = startYpoint;
     }
 
     public String getEndXpoint() {
@@ -124,7 +128,7 @@ public class DriverPlanEntity extends BaseEntity {
     }
 
     public void setEndXpoint(String endXpoint) {
-        this.endXpoint = endXpoint == null ? null : endXpoint.trim();
+        this.endXpoint = endXpoint;
     }
 
     public String getEndYpoint() {
@@ -132,7 +136,7 @@ public class DriverPlanEntity extends BaseEntity {
     }
 
     public void setEndYpoint(String endYpoint) {
-        this.endYpoint = endYpoint == null ? null : endYpoint.trim();
+        this.endYpoint = endYpoint;
     }
 
     public Integer getAccountingRules() {
@@ -164,7 +168,7 @@ public class DriverPlanEntity extends BaseEntity {
     }
 
     public void setCreator(String creator) {
-        this.creator = creator == null ? null : creator.trim();
+        this.creator = creator;
     }
 
     public String getUpdator() {
@@ -172,7 +176,7 @@ public class DriverPlanEntity extends BaseEntity {
     }
 
     public void setUpdator(String updator) {
-        this.updator = updator == null ? null : updator.trim();
+        this.updator = updator;
     }
 
     public Integer getIsDel() {
@@ -181,5 +185,21 @@ public class DriverPlanEntity extends BaseEntity {
 
     public void setIsDel(Integer isDel) {
         this.isDel = isDel;
+    }
+
+    public String getStartName() {
+        return startName;
+    }
+
+    public void setStartName(String startName) {
+        this.startName = startName;
+    }
+
+    public String getEndName() {
+        return endName;
+    }
+
+    public void setEndName(String endName) {
+        this.endName = endName;
     }
 }

@@ -9,7 +9,7 @@
     <result column="plan_amount" jdbcType="INTEGER" property="planAmount" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="driver_uid" jdbcType="VARCHAR" property="driverUid" />
-    <result column="drvier_no" jdbcType="VARCHAR" property="drvierNo" />
+    <result column="driver_no" jdbcType="VARCHAR" property="driverNo" />
     <result column="start_xpoint" jdbcType="VARCHAR" property="startXpoint" />
     <result column="start_ypoint" jdbcType="VARCHAR" property="startYpoint" />
     <result column="end_xpoint" jdbcType="VARCHAR" property="endXpoint" />
@@ -20,11 +20,13 @@
     <result column="creator" jdbcType="VARCHAR" property="creator" />
     <result column="updator" jdbcType="VARCHAR" property="updator" />
     <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="start_name" jdbcType="VARCHAR" property="startName" />
+    <result column="end_name" jdbcType="VARCHAR" property="endName" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, plan_start_time, car_capacity, remark, plan_amount, status, driver_uid, drvier_no, 
+    id, plan_start_time, car_capacity, remark, plan_amount, status, driver_uid, driver_no,
     start_xpoint, start_ypoint, end_xpoint, end_ypoint, accounting_rules, create_time, 
-    update_time, creator, updator, is_del
+    update_time, creator, updator, is_del, start_name, end_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -39,17 +41,17 @@
   <insert id="insert" parameterType="com.ziroom.model.DriverPlanEntity">
     insert into tb_driver_plan (id, plan_start_time, car_capacity, 
       remark, plan_amount, status, 
-      driver_uid, drvier_no, start_xpoint, 
+      driver_uid, driver_no, start_xpoint,
       start_ypoint, end_xpoint, end_ypoint, 
       accounting_rules, create_time, update_time, 
-      creator, updator, is_del
+      creator, updator, is_del, start_name, end_name
       )
     values (#{id,jdbcType=INTEGER}, #{planStartTime,jdbcType=TIMESTAMP}, #{carCapacity,jdbcType=INTEGER}, 
       #{remark,jdbcType=VARCHAR}, #{planAmount,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{driverUid,jdbcType=VARCHAR}, #{drvierNo,jdbcType=VARCHAR}, #{startXpoint,jdbcType=VARCHAR}, 
+      #{driverUid,jdbcType=VARCHAR}, #{driverNo,jdbcType=VARCHAR}, #{startXpoint,jdbcType=VARCHAR},
       #{startYpoint,jdbcType=VARCHAR}, #{endXpoint,jdbcType=VARCHAR}, #{endYpoint,jdbcType=VARCHAR}, 
       #{accountingRules,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{creator,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER}
+      #{creator,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER}, #{startName,jdbcType=VARCHAR}, #{endName,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ziroom.model.DriverPlanEntity">
@@ -76,8 +78,8 @@
       <if test="driverUid != null">
         driver_uid,
       </if>
-      <if test="drvierNo != null">
-        drvier_no,
+      <if test="driverNo != null">
+        driver_no,
       </if>
       <if test="startXpoint != null">
         start_xpoint,
@@ -109,6 +111,12 @@
       <if test="isDel != null">
         is_del,
       </if>
+      <if test="startName != null">
+        start_name,
+      </if>
+      <if test="endName != null">
+        end_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -132,8 +140,8 @@
       <if test="driverUid != null">
         #{driverUid,jdbcType=VARCHAR},
       </if>
-      <if test="drvierNo != null">
-        #{drvierNo,jdbcType=VARCHAR},
+      <if test="driverNo != null">
+        #{driverNo,jdbcType=VARCHAR},
       </if>
       <if test="startXpoint != null">
         #{startXpoint,jdbcType=VARCHAR},
@@ -165,6 +173,12 @@
       <if test="isDel != null">
         #{isDel,jdbcType=INTEGER},
       </if>
+      <if test="startName != null">
+        #{startName,jdbcType=VARCHAR},
+      </if>
+      <if test="endName != null">
+        #{endName,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.ziroom.model.DriverPlanEntity">
@@ -188,8 +202,8 @@
       <if test="driverUid != null">
         driver_uid = #{driverUid,jdbcType=VARCHAR},
       </if>
-      <if test="drvierNo != null">
-        drvier_no = #{drvierNo,jdbcType=VARCHAR},
+      <if test="driverNo != null">
+        driver_no = #{driverNo,jdbcType=VARCHAR},
       </if>
       <if test="startXpoint != null">
         start_xpoint = #{startXpoint,jdbcType=VARCHAR},
@@ -221,6 +235,12 @@
       <if test="isDel != null">
         is_del = #{isDel,jdbcType=INTEGER},
       </if>
+      <if test="startName != null">
+        start_name = #{startName,jdbcType=VARCHAR},
+      </if>
+      <if test="endName != null">
+        end_name = #{endName,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -232,7 +252,7 @@
       plan_amount = #{planAmount,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       driver_uid = #{driverUid,jdbcType=VARCHAR},
-      drvier_no = #{drvierNo,jdbcType=VARCHAR},
+      driver_no = #{driverNo,jdbcType=VARCHAR},
       start_xpoint = #{startXpoint,jdbcType=VARCHAR},
       start_ypoint = #{startYpoint,jdbcType=VARCHAR},
       end_xpoint = #{endXpoint,jdbcType=VARCHAR},
@@ -242,7 +262,9 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       creator = #{creator,jdbcType=VARCHAR},
       updator = #{updator,jdbcType=VARCHAR},
-      is_del = #{isDel,jdbcType=INTEGER}
+      is_del = #{isDel,jdbcType=INTEGER},
+      start_name = #{startName,jdbcType=VARCHAR},
+      end_name = #{endName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
