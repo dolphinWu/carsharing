@@ -58,13 +58,15 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         BeanUtils.copyProperties(driverPlanReq,driverPlan);
         //状态
         driverPlan.setStatus(DriverPlanStatus.WAITING.getCode());
+        //转换金额
+        driverPlan.setPlanAmount(new BigDecimal(driverPlanReq.getPlanAmount()).multiply(new BigDecimal("100")).intValue());
         //单号
         driverPlan.setDriverNo("DP"+System.currentTimeMillis());
         driverPlan.setCreateTime(new Date());
         driverPlan.setUpdateTime(new Date());
         driverPlan.setIsDel(0);
         driverPlanEntityMapper.insert(driverPlan);
-        return APIResponse.success();
+        return APIResponse.success(driverPlan);
     }
 
     //开始行程，返回起点终点的经纬度（导航）
@@ -80,6 +82,8 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         driverPlan.setStatus(DriverPlanStatus.DRIVING.getCode());
         driverPlanEntityMapper.updateByPrimaryKey(driverPlan);
         //修改订单状态
+
+        //修改订单实际出发时间
 
         return APIResponse.success(driverPlan);
     }

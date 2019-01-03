@@ -46,6 +46,9 @@ spring:
           multipart:
             max-file-size: 10Mb
             max-request-size: 100Mb
+    jackson:
+              date-format: yyyy-MM-dd HH:mm:ss
+              time-zone: GMT+8
 
 
 mybatis:
