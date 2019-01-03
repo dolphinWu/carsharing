@@ -7,7 +7,6 @@ import com.ziroom.dto.request.PassengerRequest;
 import com.ziroom.dto.response.PassengerIndexResponse;
 import com.ziroom.model.DriverPlanEntity;
 import com.ziroom.service.passenger.PassengerOrderService;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
