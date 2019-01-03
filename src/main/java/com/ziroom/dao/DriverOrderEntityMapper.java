@@ -15,8 +15,6 @@ public interface DriverOrderEntityMapper {
 
     int updateByPrimaryKey(DriverOrderEntity record);
 
-    DriverOrderEntity selectByDriverNo(String driverNo);
-
     /**
      * @author codey
      * @description 根据行程单号查询订单

@@ -45,7 +45,7 @@ public class PassengerOrderServiceImpl implements PassengerOrderService{
     @Override
     @Transactional
     public synchronized APIResponse joinJourney(DriverPlanEntity driverPlanEntity) {
-        String driverNo = driverPlanEntity.getDrvierNo();
+        String driverNo = driverPlanEntity.getDriverNo();
         DriverOrderEntity driverOrderEntity = driverOrderEntityMapper.selectByDriverNo(driverNo);
         if (driverOrderEntity == null) {
             driverOrderEntity = new DriverOrderEntity();

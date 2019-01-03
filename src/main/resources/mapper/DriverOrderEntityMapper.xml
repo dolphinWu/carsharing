@@ -197,13 +197,6 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByDriverNo" parameterType="java.lang.String" resultMap="BaseResultMap" >
-    select
-    <include refid="Base_Column_List" />
-    from tb_driver_order
-    where driver_no = #{driverNo}
-  </select>
-
   <!-- 通过行程单号查询订单 -->
   <select id="selectByDriverNo" parameterType="java.lang.String" resultMap="BaseResultMap">
     select

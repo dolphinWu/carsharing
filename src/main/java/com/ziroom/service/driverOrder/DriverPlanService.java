@@ -1,6 +1,7 @@
 package com.ziroom.service.driverOrder;
 
 import com.ziroom.dto.request.DriverPlanRequest;
+import com.ziroom.model.DriverPlanEntity;
 import com.ziroom.utils.APIResponse;
 
 /**
