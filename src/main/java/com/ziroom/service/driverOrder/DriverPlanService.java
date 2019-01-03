@@ -1,10 +1,10 @@
 package com.ziroom.service.driverOrder;
 
-import com.ziroom.model.DriverPlanEntity;
+import com.ziroom.dto.request.DriverPlanRequest;
 import com.ziroom.utils.APIResponse;
 
 /**
- * Created by lenovo on 2019/1/2.
+ * Created by codey on 2019/1/2.
  */
 public interface DriverPlanService {
 
@@ -24,7 +24,7 @@ public interface DriverPlanService {
     * @param
     * @return
     */
-   APIResponse createDriverPlan(DriverPlanEntity driverPlan);
+   APIResponse createDriverPlan(DriverPlanRequest driverPlanReq);
 
    /**
     * @author codey
@@ -33,7 +33,7 @@ public interface DriverPlanService {
     * @param 
     * @return 
     */
-   APIResponse beginPlan(DriverPlanEntity driverPlan);
+   APIResponse beginPlan(DriverPlanRequest driverPlanReq);
 
    /**
     * @author codey
@@ -42,7 +42,7 @@ public interface DriverPlanService {
     * @param
     * @return
     */
-   APIResponse cancelPlan(DriverPlanEntity driverPlan);
+   APIResponse cancelPlan(DriverPlanRequest driverPlanReq);
 
    /**
     * @author codey
@@ -51,6 +51,6 @@ public interface DriverPlanService {
     * @param
     * @return
     */
-   APIResponse finishPlan(DriverPlanEntity driverPlan);
+   APIResponse finishPlan(DriverPlanRequest driverPlanReq);
 
 }
