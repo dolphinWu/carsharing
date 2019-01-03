@@ -26,6 +26,11 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
@@ -106,6 +111,12 @@
             <version>1.1.9</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
+        </dependency>
+
         <!--过滤emoji字符-->
         <dependency>
             <groupId>com.vdurmont</groupId>
@@ -158,6 +169,16 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>springloaded</artifactId>
+                        <version>1.2.7.RELEASE</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
             </plugin>
 
             <plugin>

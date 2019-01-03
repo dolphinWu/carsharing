@@ -9,4 +9,9 @@ public interface BaseConst {
         static final Integer PASSENGER = 1;
     }
 
+
+    interface TrueOrFalse {
+        static final Integer TRUE = 1;
+        static final Integer FALSE = 0;
+    }
 }

@@ -43,7 +43,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, 
       #{updator,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.ziroom.model.DriverOrderEntity">
+  <insert id="insertSelective" parameterType="com.ziroom.model.DriverOrderEntity" useGeneratedKeys="true" keyProperty="id">
     insert into tb_driver_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -196,4 +196,11 @@
       is_del = #{isDel,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectByDriverNo" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_driver_order
+    where driver_no = #{driverNo}
+  </select>
 </mapper>

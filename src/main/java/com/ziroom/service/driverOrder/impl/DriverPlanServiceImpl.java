@@ -71,4 +71,9 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     public APIResponse finishPlan(DriverPlanEntity driverPlan) {
         return APIResponse.success();
     }
+
+    @Override
+    public DriverPlanEntity findDriverPlanById(Integer id) {
+        return driverPlanEntityMapper.selectByPrimaryKey(id);
+    }
 }

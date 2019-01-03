@@ -250,7 +250,14 @@
     select
     <include refid="Base_Column_List" />
     from tb_driver_plan
-    where plan_start_time &lt; date_add(now(), interval 1 hour) and plan_start_time &gt; now()
+    where
+    <if test="departTime != null and departTime != ''">
+      plan_start_time <![CDATA[<=]]> ${departTime}
+    </if>
+    <if test="departTime == null">
+      plan_start_time <![CDATA[<=]]> date_add(now(), interval 1 hour)
+    </if>
+    and plan_start_time <![CDATA[>=]]>  now()
   </select>
 
   <!-- 根据司机uid查询 -->

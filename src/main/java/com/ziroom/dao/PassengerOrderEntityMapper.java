@@ -19,5 +19,5 @@ public interface PassengerOrderEntityMapper {
 
     int updateByPrimaryKey(PassengerOrderEntity record);
 
-    List<DriverPlanEntity> getAllNearByDriverPlan(Map<String,Object> map);
+    List<DriverPlanEntity> getAllDriverPlanInManyHours(Map<String,Object> map);
 }

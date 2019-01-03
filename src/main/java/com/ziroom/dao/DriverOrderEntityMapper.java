@@ -14,4 +14,6 @@ public interface DriverOrderEntityMapper {
     int updateByPrimaryKeySelective(DriverOrderEntity record);
 
     int updateByPrimaryKey(DriverOrderEntity record);
+
+    DriverOrderEntity selectByDriverNo(String driverNo);
 }

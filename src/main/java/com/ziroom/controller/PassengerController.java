@@ -1,12 +1,14 @@
 package com.ziroom.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.ziroom.dto.request.PassengerRequest;
 import com.ziroom.dto.response.PassengerIndexResponse;
 import com.ziroom.model.AddressEntity;
 import com.ziroom.model.DriverPlanEntity;
 import com.ziroom.model.UserEntity;
 import com.ziroom.service.Address.AddressService;
+import com.ziroom.service.driverOrder.DriverPlanService;
 import com.ziroom.service.passenger.PassengerOrderService;
 import com.ziroom.utils.APIResponse;
 import com.ziroom.utils.Tools;
@@ -16,14 +18,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Api("乘客端")
@@ -39,8 +39,11 @@ public class PassengerController extends BaseController {
     @Autowired
     private AddressService addressService;
 
-    @GetMapping(value = "/index", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public APIResponse<PassengerIndexResponse> index(PassengerRequest passengerRequest,
+    @Autowired
+    private DriverPlanService driverPlanService;
+
+    @PostMapping(value = "/index", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public APIResponse index(PassengerRequest passengerRequest,
                                                            @RequestParam(value = "radius", required = false, defaultValue = "2000") double radius) {
         UserEntity userEntity = new UserEntity();
         Integer homeAddressId = userEntity.getHomeAddressId();
@@ -57,15 +60,41 @@ public class PassengerController extends BaseController {
         String latitude = addressEntity.getLatitude();
         Point2D homeAddress = new Point2D.Double(NumberUtils.toDouble(longitude), NumberUtils.toDouble(latitude));
         PassengerIndexResponse passengerIndexResponse = new PassengerIndexResponse();
-        List<DriverPlanEntity> driverPlanEntityList = passengerOrderService.getAllNearByDriverPlan(passengerRequest);
+
+        //查询最近时间的行程单
+        List<DriverPlanEntity> driverPlanEntityList = passengerOrderService.getAllDriverPlanInManyHours(passengerRequest);
         driverPlanEntityList = driverPlanEntityList.stream().filter(driverPlanEntity -> {
-            String endXpoint = driverPlanEntity.getEndXpoint();
-            String endYpoint = driverPlanEntity.getEndYpoint();
-            return Tools.getDistance(homeAddress, new Point2D.Double(NumberUtils.toDouble(endXpoint), NumberUtils.toDouble(endYpoint))) <= radius ;
+            //过滤距离小于指定值的行程单
+            String endXPoint = driverPlanEntity.getEndXpoint();
+            String endYPoint = driverPlanEntity.getEndYpoint();
+            return Tools.getDistance(homeAddress, new Point2D.Double(NumberUtils.toDouble(endXPoint), NumberUtils.toDouble(endYPoint))) <= radius ;
         }).collect(Collectors.toList());
 
         passengerIndexResponse.setDriverPlanEntityList(driverPlanEntityList);
         return APIResponse.success(passengerIndexResponse);
     }
 
+    @PostMapping(value = "/viewDriverPlan/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public APIResponse viewDriverPlan(@PathVariable("id") int id) {
+        DriverPlanEntity driverPlanEntity = driverPlanService.findDriverPlanById(id);
+        if (driverPlanEntity == null) {
+            return APIResponse.fail("行程单不存在，请刷新重试！");
+        }
+        return APIResponse.success(driverPlanEntity);
+    }
+
+    @PostMapping(value = "/joinJourney/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public APIResponse joinJourney(@PathVariable("id") Integer id) {
+        DriverPlanEntity driverPlanEntity = driverPlanService.findDriverPlanById(id);
+        if (driverPlanEntity == null) {
+            return APIResponse.fail("行程单已取消！");
+        }
+
+        return passengerOrderService.joinJourney(driverPlanEntity);
+    }
+
+    @PostMapping(value = "/cancelJourney/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public APIResponse cancelJourney(@PathVariable("id") Integer id) {
+        return passengerOrderService.cancelJourney(id);
+    }
 }

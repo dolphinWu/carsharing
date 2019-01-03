@@ -53,4 +53,5 @@ public interface DriverPlanService {
     */
    APIResponse finishPlan(DriverPlanEntity driverPlan);
 
+    DriverPlanEntity findDriverPlanById(Integer id);
 }
