@@ -83,10 +83,10 @@ public class BusinessException extends RuntimeException {
             return this.apiResponse;
         } else {
             this.apiResponse = APIResponse.widthCode(this.getErrorCode());
-            this.apiResponse.setMsg(this.errorMsg);
+            this.apiResponse.setMessage(this.errorMsg);
             if(this.getErrorMessageArguments() != null && this.getErrorMessageArguments().length > 0) {
                 try {
-                    this.apiResponse.setMsg(MessageFormat.format(this.apiResponse.getMsg(), this.getErrorMessageArguments()));
+                    this.apiResponse.setMessage(MessageFormat.format(this.apiResponse.getMessage(), this.getErrorMessageArguments()));
                 } catch (Exception var2) {
                     logger.error(var2.getMessage());
                 }

@@ -29,4 +29,6 @@ public class UserResponse {
     private Integer homeAddressId;
 
     private Integer companyAddressId;
+
+    private String token;
 }

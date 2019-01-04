@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ziroom.config.CasConfig;
 import com.ziroom.config.EhrConfig;
-import com.ziroom.dao.UserEntityMapper;
+import com.ziroom.dto.response.UserDetail;
 import com.ziroom.dto.response.UserResponse;
 import com.ziroom.http.HttpRequestClient;
 import com.ziroom.model.UserEntity;
@@ -13,6 +13,7 @@ import com.ziroom.utils.APIResponse;
 import io.swagger.annotations.Api;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,8 +78,7 @@ public class UserController {
                 LOGGER.info("CasLogin 返回的结果为==>" + s);
                 JSONObject jsonResult = JSONObject.parseObject(s);
                 //登录成功   获取用户信息
-                queryUserDetail(jsonResult.getString("employeeId"), userName);
-                return APIResponse.success(token);
+                return queryUserDetail(jsonResult.getString("employeeId"), token);
             } else {
                 throw new RuntimeException();
             }
@@ -106,13 +106,13 @@ public class UserController {
 
 
     /**
-     * 查询用户信息
+     * 通过ehr查询用户信息
      * @param  employeeId 系统号
      * @return
      */
     @PostMapping(value="/queryUserDetail", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public APIResponse queryUserDetail(String employeeId, String username){
+    public APIResponse queryUserDetail(String employeeId, String token){
         Map<String, String> paramMap = new HashMap<String, String>();
         paramMap.put("userCode",employeeId);
         paramMap.put("page","1");
@@ -137,12 +137,18 @@ public class UserController {
             //同步信息到数据库
             user.setUname(response.getName());
             user.setEmployeeNo(response.getEmplid());
-            user.setUid(username);
+            user.setUid(response.getEmplid());
             user.setPhoneNumber(response.getPhone());
+            user.setCreditScore(100);//信用分
             userService.insertUserInfo(user);
         }
-
-        return  APIResponse.success(user);
+        try {
+            BeanUtils.copyProperties(response, user);
+        } catch (Exception e) {
+            LOGGER.info("调用copyProperties结果:{}", e.getMessage());
+        }
+        response.setToken(token);
+        return  APIResponse.success(response);
     }
 
 
@@ -163,4 +169,27 @@ public class UserController {
         userService.updateCarNoByEmployeeNo(userEntity);
         return  APIResponse.success();
     }
+
+
+    /**
+     * 查询用户信息
+     * @param  employeeNo 系统号
+     * @return
+     */
+    @PostMapping(value="/getUserDetail", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public APIResponse getUserDetail(String employeeNo){
+        UserDetail response=new UserDetail();
+        UserEntity user = userService.getUserInfoByEmployeeNo(employeeNo);
+        try {
+            BeanUtils.copyProperties(response, user);
+        } catch (Exception e) {
+            LOGGER.info("调用copyProperties结果:{}", e.getMessage());
+        }
+        //查询累计手收益
+        int amount = 0;
+        response.setAmount(amount);
+        return  APIResponse.success(user);
+    }
+
 }

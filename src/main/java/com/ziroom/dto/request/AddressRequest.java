@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserRequest  extends AddressEntity {
+public class AddressRequest  extends AddressEntity {
 
     private String employeeNo;
     private String uid;

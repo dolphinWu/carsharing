@@ -1,9 +1,7 @@
 package com.ziroom.controller;
 
-import com.ziroom.dao.AddressEntityMapper;
-import com.ziroom.dto.request.UserRequest;
+import com.ziroom.dto.request.AddressRequest;
 import com.ziroom.model.AddressEntity;
-import com.ziroom.model.UserEntity;
 import com.ziroom.service.Address.AddressService;
 import com.ziroom.utils.APIResponse;
 import io.swagger.annotations.Api;
@@ -15,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @Api("地址管理类")
@@ -33,9 +30,10 @@ public class UserAddressController {
      */
     @GetMapping(value="/addAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public APIResponse addAddress(@RequestBody UserRequest request)throws Exception {
+    public APIResponse addAddress(@RequestBody AddressRequest request)throws Exception {
         AddressEntity address = new AddressEntity();
         BeanUtils.copyProperties(address, request);
+        address.setUid(request.getEmployeeNo());
 
         int i = addressService.insertAddress(address);
         if(i!=1){
@@ -51,7 +49,7 @@ public class UserAddressController {
      */
     @GetMapping(value="/updateAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public APIResponse updateAddress(@RequestBody UserRequest request)  throws Exception {
+    public APIResponse updateAddress(@RequestBody AddressRequest request)  throws Exception {
         Integer addressId = request.getId();
         if(addressId==0){
             return APIResponse.fail("用户id不能为空");
@@ -78,7 +76,7 @@ public class UserAddressController {
      * @return
      */
     @PostMapping(value="/queryAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public APIResponse queryAddress(@RequestBody UserRequest request){
+    public APIResponse queryAddress(@RequestBody AddressRequest request){
         String uid = request.getUid();
         if(uid==null){
             return APIResponse.fail("用户uid不能为空");
@@ -95,7 +93,7 @@ public class UserAddressController {
      */
     @GetMapping(value="/deleteAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public APIResponse deleteAddress(@RequestBody UserRequest request){
+    public APIResponse deleteAddress(@RequestBody AddressRequest request){
 
         Integer addressId = request.getId();
         if(addressId==0){

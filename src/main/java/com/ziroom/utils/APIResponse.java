@@ -11,7 +11,7 @@ public class APIResponse <T> {
 
     private Integer code;
     private T data;
-    private String msg;
+    private String message;
 
     public APIResponse(){
 
@@ -26,9 +26,9 @@ public class APIResponse <T> {
         this.data = data;
     }
 
-    public APIResponse(Integer code, String msg){
+    public APIResponse(Integer code, String message){
         this.code = code;
-        this.msg = msg;
+        this.message = message;
     }
 
     public static APIResponse success(){
@@ -47,12 +47,12 @@ public class APIResponse <T> {
         return new APIResponse(errorCode);
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public Integer getCode() {
