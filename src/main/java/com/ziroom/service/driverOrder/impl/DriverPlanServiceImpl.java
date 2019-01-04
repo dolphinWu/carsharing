@@ -7,6 +7,7 @@ import com.ziroom.dao.DriverOrderEntityMapper;
 import com.ziroom.dao.DriverPlanEntityMapper;
 import com.ziroom.dao.PassengerOrderEntityMapper;
 import com.ziroom.dto.request.DriverPlanRequest;
+import com.ziroom.dto.request.PassengerRequest;
 import com.ziroom.dto.response.DriverPlanResponse;
 import com.ziroom.model.DriverOrderEntity;
 import com.ziroom.model.DriverPlanEntity;
@@ -21,9 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by codey on 2019/1/2.
@@ -39,6 +38,13 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     private DriverOrderEntityMapper driverOrderEntityMapper;
     @Autowired
     private PassengerOrderEntityMapper passengerOrderEntityMapper;
+
+    @Override
+    public List<DriverPlanEntity> getAllDriverPlanInManyHours(PassengerRequest passengerRequest) {
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("departTime",passengerRequest.getDepartTime());
+        return driverPlanEntityMapper.getAllDriverPlanInManyHours(paramMap);
+    }
 
     //1.查询历史记录;2.行程单发布后需要查询分布的行程单（状态为拼车中）
     @Override

@@ -37,13 +37,6 @@ public class PassengerOrderServiceImpl implements PassengerOrderService{
     private DriverOrderEntityMapper driverOrderEntityMapper;
 
     @Override
-    public List<DriverPlanEntity> getAllDriverPlanInManyHours(PassengerRequest passengerRequest) {
-        Map<String,Object> paramMap = new HashMap<>();
-        paramMap.put("departTime",passengerRequest.getDepartTime());
-        return passengerOrderEntityMapper.getAllDriverPlanInManyHours(paramMap);
-    }
-
-    @Override
     @Transactional
     public synchronized APIResponse joinJourney(DriverPlanEntity driverPlanEntity) {
         String driverNo = driverPlanEntity.getDriverNo();

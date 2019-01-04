@@ -268,7 +268,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="getAllNearByDriverPlan" resultMap="BaseResultMap" parameterType="map">
+  <select id="getAllDriverPlanInManyHours" resultMap="BaseResultMap" parameterType="map">
     select
     <include refid="Base_Column_List" />
     from tb_driver_plan
@@ -277,7 +277,7 @@
       plan_start_time <![CDATA[<=]]> ${departTime}
     </if>
     <if test="departTime == null">
-      plan_start_time <![CDATA[<=]]> date_add(now(), interval 1 hour)
+      plan_start_time <![CDATA[<=]]> date_add(now(), interval 2 hour)
     </if>
     and plan_start_time <![CDATA[>=]]>  now()
   </select>

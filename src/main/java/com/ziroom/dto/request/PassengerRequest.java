@@ -11,8 +11,6 @@ public class PassengerRequest {
 
     private String latitude;
 
-    private Integer userId;
-
     public Date getDepartTime() {
         return departTime;
     }
@@ -37,11 +35,4 @@ public class PassengerRequest {
         this.latitude = latitude;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 }

@@ -4,6 +4,7 @@ import com.ziroom.model.DriverPlanEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DriverPlanEntityMapper {
     int deleteByPrimaryKey(Integer id);
@@ -44,4 +45,6 @@ public interface DriverPlanEntityMapper {
      * @return 
      */
     DriverPlanEntity selectByNo(String driverNo);
+
+    List<DriverPlanEntity> getAllDriverPlanInManyHours(Map<String, Object> paramMap);
 }
