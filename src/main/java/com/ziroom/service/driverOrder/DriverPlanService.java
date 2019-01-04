@@ -34,7 +34,7 @@ public interface DriverPlanService {
     * @param 
     * @return 
     */
-   APIResponse beginPlan(DriverPlanRequest driverPlanReq);
+   APIResponse beginPlan(String driverNo);
 
    /**
     * @author codey
@@ -43,7 +43,7 @@ public interface DriverPlanService {
     * @param
     * @return
     */
-   APIResponse cancelPlan(DriverPlanRequest driverPlanReq);
+   APIResponse cancelPlan(String driverNo);
 
    /**
     * @author codey
@@ -54,5 +54,5 @@ public interface DriverPlanService {
     */
    APIResponse finishPlan(DriverPlanRequest driverPlanReq);
 
-    DriverPlanEntity findDriverPlanById(Integer id);
+   DriverPlanEntity findDriverPlanById(Integer id);
 }

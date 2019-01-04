@@ -39,6 +39,10 @@ public class APIResponse <T> {
         return new APIResponse(CODE_SUCCESS, data);
     }
 
+    public static APIResponse success(String msg){
+        return new APIResponse(CODE_SUCCESS, msg);
+    }
+
     public static APIResponse fail(String msg){
         return new APIResponse(CODE_FAIL, msg);
     }

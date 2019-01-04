@@ -9,15 +9,17 @@ import java.util.Map;
  *
  *
  */
-public enum DriverPlanStatus {
+public enum DriverOrderStatus {
 
-    WAITING(0,"拼车中"),
+    WAIT_DEPART(0,"待发车"),
 
-    DRIVING(1,"已出发"),
+    READY(1,"已满员"),
 
-    FINISH(2,"完成"),
+    TRAVELING(2,"行驶中"),
 
-    CANCEL(3,"取消")
+    FINISH(3,"完成"),
+
+    CANCEL(4,"取消")
     ;
     private Integer code;
     private String name;
@@ -39,7 +41,7 @@ public enum DriverPlanStatus {
         this.code = code;
     }
 
-    DriverPlanStatus(Integer code, String name) {
+    DriverOrderStatus(Integer code, String name) {
         this.code = code;
         this.name = name;
     }
@@ -47,7 +49,7 @@ public enum DriverPlanStatus {
     public static final Map<Integer,String> lookup = new HashMap<>();
 
     static {
-        for (DriverPlanStatus s : EnumSet.allOf(DriverPlanStatus.class)) {
+        for (DriverOrderStatus s : EnumSet.allOf(DriverOrderStatus.class)) {
             lookup.put(s.getCode(),s.getName());
         }
     }

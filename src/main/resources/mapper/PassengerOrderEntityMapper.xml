@@ -221,4 +221,12 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 根据司机订单号查询乘客订单 -->
+  <select id="selectByDriverOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_passenger_order
+    where driver_order_no = #{driverOrderNo,jdbcType=VARCHAR}
+  </select>
 </mapper>
