@@ -29,4 +29,6 @@ public interface PassengerOrderEntityMapper {
      * @return
      */
     List<PassengerOrderEntity> selectByDriverOrderNo(String orderNo);
+
+    List<PassengerOrderEntity> findList(Map<String, Object> paramsMap);
 }

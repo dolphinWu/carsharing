@@ -8,9 +8,14 @@
     <result column="name_full" jdbcType="VARCHAR" property="nameFull" />
     <result column="longitude" jdbcType="VARCHAR" property="longitude" />
     <result column="latitude" jdbcType="VARCHAR" property="latitude" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="last_modify_user" jdbcType="VARCHAR" property="lastModifyUser" />
+    <result column="last_modify_date" jdbcType="TIMESTAMP" property="lastModifyDate" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, uid, name_short, name_full, longitude, latitude
+    id, uid, name_short, name_full, longitude, latitude, create_user,create_date,last_modify_user,last_modify_date,is_del
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,10 +29,12 @@
   </delete>
   <insert id="insert" parameterType="com.ziroom.model.AddressEntity">
     insert into tb_address (id, uid, name_short, 
-      name_full, longitude, latitude
+      name_full, longitude, latitude, create_user,create_date,last_modify_user,last_modify_date,is_del
       )
     values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{nameShort,jdbcType=VARCHAR}, 
-      #{nameFull,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}
+      #{nameFull,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR},
+      #{createUser,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{lastModifyUser,jdbcType=VARCHAR},
+      #{lastModifyDate,jdbcType=TIMESTAMP},#{isDel,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ziroom.model.AddressEntity">
@@ -51,6 +58,21 @@
       <if test="latitude != null">
         latitude,
       </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="lastModifyUser != null">
+        last_modify_user,
+      </if>
+      <if test="lastModifyDate != null">
+        last_modify_date,
+      </if>
+      <if test="isDel != null">
+        is_del
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -70,6 +92,21 @@
       </if>
       <if test="latitude != null">
         #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyUser != null">
+        #{lastModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyDate != null">
+        #{lastModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER}
       </if>
     </trim>
   </insert>
@@ -91,6 +128,21 @@
       <if test="latitude != null">
         latitude = #{latitude,jdbcType=VARCHAR},
       </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyUser != null">
+        last_modify_user = #{lastModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyDate != null">
+        last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER}
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -100,7 +152,12 @@
       name_short = #{nameShort,jdbcType=VARCHAR},
       name_full = #{nameFull,jdbcType=VARCHAR},
       longitude = #{longitude,jdbcType=VARCHAR},
-      latitude = #{latitude,jdbcType=VARCHAR}
+      latitude = #{latitude,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_modify_user = #{lastModifyUser,jdbcType=VARCHAR},
+      last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

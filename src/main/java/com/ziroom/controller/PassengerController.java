@@ -1,6 +1,8 @@
 package com.ziroom.controller;
 
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.github.pagehelper.PageInfo;
 import com.ziroom.dto.request.PassengerRequest;
 import com.ziroom.dto.response.PassengerIndexResponse;
 import com.ziroom.model.AddressEntity;
@@ -49,11 +51,11 @@ public class PassengerController extends BaseController {
 
     @PostMapping(value = "/index", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "乘客首页信息", notes = "乘客登录之后获取相关所需信息")
-    @ApiImplicitParams({@ApiImplicitParam(name = "uid", value = "用户id", dataType = "int", required = true),
+    @ApiImplicitParams({@ApiImplicitParam(name = "uid", value = "用户id", dataType = "Integer", required = true),
             @ApiImplicitParam(name = "departTime", value = "发车时间", dataType = "Date"),
             @ApiImplicitParam(name = "longitude", value = "经度", dataType = "String"),
             @ApiImplicitParam(name = "latitude", value = "纬度", dataType = "String"),
-            @ApiImplicitParam(name = "radius", value = "终点距离半径", defaultValue = "2000", dataType = "double")})
+            @ApiImplicitParam(name = "radius", value = "终点距离半径", defaultValue = "2000", dataType = "Double")})
     public APIResponse index(PassengerRequest passengerRequest, @RequestParam("uid") int uid,
                              @RequestParam(value = "radius", required = false, defaultValue = "2000") double radius) {
         UserEntity userEntity = userService.getUserInfoById(uid);
@@ -97,6 +99,8 @@ public class PassengerController extends BaseController {
     }
 
     @PostMapping(value = "/viewDriverPlan/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "查看行程单详情")
+    @ApiImplicitParam(name = "id", value = "行程单id", dataType = "Path", required = true)
     public APIResponse viewDriverPlan(@PathVariable("id") int id) {
         DriverPlanEntity driverPlanEntity = driverPlanService.findDriverPlanById(id);
         if (driverPlanEntity == null) {
@@ -106,6 +110,8 @@ public class PassengerController extends BaseController {
     }
 
     @PostMapping(value = "/joinJourney/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "加入行程单")
+    @ApiImplicitParam(name = "id", value = "行程单id", dataType = "Path", required = true)
     public APIResponse joinJourney(@PathVariable("id") Integer id) {
         DriverPlanEntity driverPlanEntity = driverPlanService.findDriverPlanById(id);
         if (driverPlanEntity == null) {
@@ -118,5 +124,13 @@ public class PassengerController extends BaseController {
     @PostMapping(value = "/cancelJourney/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public APIResponse cancelJourney(@PathVariable("id") Integer id) {
         return passengerOrderService.cancelJourney(id);
+    }
+
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public APIResponse findPassengerOrderForPage(@RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+                                                 @RequestParam(value = "pageNumber", required = false, defaultValue = "1") Integer pageNumber,
+                                                 @RequestParam(value = "uid") Integer uid) {
+        PageInfo pageInfo = passengerOrderService.findPassengerOrderForPage(uid, pageSize, pageNumber);
+        return APIResponse.success(pageInfo);
     }
 }

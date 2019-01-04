@@ -1,8 +1,10 @@
 package com.ziroom.model;
 
+
 import java.util.Date;
 
 public class DriverPlanEntity extends BaseEntity {
+
     private Integer id;
 
     private Date planStartTime;
@@ -11,7 +13,8 @@ public class DriverPlanEntity extends BaseEntity {
 
     private String remark;
 
-    private Integer planAmount;//单位分
+    //单位分
+    private Integer planAmount;
 
     private Integer status;
 
@@ -28,16 +31,6 @@ public class DriverPlanEntity extends BaseEntity {
     private String endYpoint;
 
     private Integer accountingRules;
-
-    private Date createTime;
-
-    private Date updateTime;
-
-    private String creator;
-
-    private String updator;
-
-    private Integer isDel;
 
     private String startName;
 
@@ -145,46 +138,6 @@ public class DriverPlanEntity extends BaseEntity {
 
     public void setAccountingRules(Integer accountingRules) {
         this.accountingRules = accountingRules;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
-    public String getUpdator() {
-        return updator;
-    }
-
-    public void setUpdator(String updator) {
-        this.updator = updator;
-    }
-
-    public Integer getIsDel() {
-        return isDel;
-    }
-
-    public void setIsDel(Integer isDel) {
-        this.isDel = isDel;
     }
 
     public String getStartName() {

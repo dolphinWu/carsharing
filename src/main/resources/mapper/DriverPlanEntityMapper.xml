@@ -15,18 +15,18 @@
     <result column="end_xpoint" jdbcType="VARCHAR" property="endXpoint" />
     <result column="end_ypoint" jdbcType="VARCHAR" property="endYpoint" />
     <result column="accounting_rules" jdbcType="INTEGER" property="accountingRules" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="updator" jdbcType="VARCHAR" property="updator" />
-    <result column="is_del" jdbcType="INTEGER" property="isDel" />
     <result column="start_name" jdbcType="VARCHAR" property="startName" />
     <result column="end_name" jdbcType="VARCHAR" property="endName" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="last_modify_user" jdbcType="VARCHAR" property="lastModifyUser" />
+    <result column="last_modify_date" jdbcType="TIMESTAMP" property="lastModifyDate" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
   </resultMap>
   <sql id="Base_Column_List">
     id, plan_start_time, car_capacity, remark, plan_amount, status, driver_uid, driver_no,
-    start_xpoint, start_ypoint, end_xpoint, end_ypoint, accounting_rules, create_time, 
-    update_time, creator, updator, is_del, start_name, end_name
+    start_xpoint, start_ypoint, end_xpoint, end_ypoint, accounting_rules, start_name, end_name,
+    create_user,create_date,last_modify_user,last_modify_date,is_del
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -43,15 +43,16 @@
       remark, plan_amount, status, 
       driver_uid, driver_no, start_xpoint,
       start_ypoint, end_xpoint, end_ypoint, 
-      accounting_rules, create_time, update_time, 
-      creator, updator, is_del, start_name, end_name
+      accounting_rules, start_name, end_name,
+       create_user,create_date,last_modify_user,last_modify_date,is_del
       )
     values (#{id,jdbcType=INTEGER}, #{planStartTime,jdbcType=TIMESTAMP}, #{carCapacity,jdbcType=INTEGER}, 
       #{remark,jdbcType=VARCHAR}, #{planAmount,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{driverUid,jdbcType=VARCHAR}, #{driverNo,jdbcType=VARCHAR}, #{startXpoint,jdbcType=VARCHAR},
       #{startYpoint,jdbcType=VARCHAR}, #{endXpoint,jdbcType=VARCHAR}, #{endYpoint,jdbcType=VARCHAR}, 
-      #{accountingRules,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{creator,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER}, #{startName,jdbcType=VARCHAR}, #{endName,jdbcType=VARCHAR}
+      #{accountingRules,jdbcType=INTEGER}, #{startName,jdbcType=VARCHAR}, #{endName,jdbcType=VARCHAR},
+      #{createUser,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{lastModifyUser,jdbcType=VARCHAR},
+      #{lastModifyDate,jdbcType=TIMESTAMP},#{isDel,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ziroom.model.DriverPlanEntity">
@@ -96,26 +97,26 @@
       <if test="accountingRules != null">
         accounting_rules,
       </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="creator != null">
-        creator,
-      </if>
-      <if test="updator != null">
-        updator,
-      </if>
-      <if test="isDel != null">
-        is_del,
-      </if>
       <if test="startName != null">
         start_name,
       </if>
       <if test="endName != null">
         end_name,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="lastModifyUser != null">
+        last_modify_user,
+      </if>
+      <if test="lastModifyDate != null">
+        last_modify_date,
+      </if>
+      <if test="isDel != null">
+        is_del
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -158,26 +159,26 @@
       <if test="accountingRules != null">
         #{accountingRules,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="creator != null">
-        #{creator,jdbcType=VARCHAR},
-      </if>
-      <if test="updator != null">
-        #{updator,jdbcType=VARCHAR},
-      </if>
-      <if test="isDel != null">
-        #{isDel,jdbcType=INTEGER},
-      </if>
       <if test="startName != null">
         #{startName,jdbcType=VARCHAR},
       </if>
       <if test="endName != null">
         #{endName,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyUser != null">
+        #{lastModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyDate != null">
+        #{lastModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER}
       </if>
     </trim>
   </insert>
@@ -220,26 +221,26 @@
       <if test="accountingRules != null">
         accounting_rules = #{accountingRules,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="creator != null">
-        creator = #{creator,jdbcType=VARCHAR},
-      </if>
-      <if test="updator != null">
-        updator = #{updator,jdbcType=VARCHAR},
-      </if>
-      <if test="isDel != null">
-        is_del = #{isDel,jdbcType=INTEGER},
-      </if>
       <if test="startName != null">
         start_name = #{startName,jdbcType=VARCHAR},
       </if>
       <if test="endName != null">
         end_name = #{endName,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyUser != null">
+        last_modify_user = #{lastModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyDate != null">
+        last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER}
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -258,13 +259,13 @@
       end_xpoint = #{endXpoint,jdbcType=VARCHAR},
       end_ypoint = #{endYpoint,jdbcType=VARCHAR},
       accounting_rules = #{accountingRules,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      creator = #{creator,jdbcType=VARCHAR},
-      updator = #{updator,jdbcType=VARCHAR},
-      is_del = #{isDel,jdbcType=INTEGER},
       start_name = #{startName,jdbcType=VARCHAR},
-      end_name = #{endName,jdbcType=VARCHAR}
+      end_name = #{endName,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_modify_user = #{lastModifyUser,jdbcType=VARCHAR},
+      last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

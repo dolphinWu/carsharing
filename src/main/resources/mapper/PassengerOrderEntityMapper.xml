@@ -18,11 +18,16 @@
     <result column="end_xpoint" jdbcType="VARCHAR" property="endXpoint" />
     <result column="end_ypoint" jdbcType="VARCHAR" property="endYpoint" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="last_modify_user" jdbcType="VARCHAR" property="lastModifyUser" />
+    <result column="last_modify_date" jdbcType="TIMESTAMP" property="lastModifyDate" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
   </resultMap>
   <sql id="Base_Column_List">
     id, passenger_no, driver_order_no, passenger_count, start_name, end_name, actual_amount, 
     status, actual_start_time, actual_end_time, passenger_uid, start_xpoint, start_ypoint, 
-    end_xpoint, end_ypoint, remark
+    end_xpoint, end_ypoint, remark, create_user,create_date,last_modify_user,last_modify_date,is_del
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -40,13 +45,14 @@
       actual_amount, status, actual_start_time, 
       actual_end_time, passenger_uid, start_xpoint, 
       start_ypoint, end_xpoint, end_ypoint, 
-      remark)
+      remark, create_user,create_date,last_modify_user,last_modify_date,is_del)
     values (#{id,jdbcType=INTEGER}, #{passengerNo,jdbcType=VARCHAR}, #{driverOrderNo,jdbcType=VARCHAR}, 
       #{passengerCount,jdbcType=INTEGER}, #{startName,jdbcType=VARCHAR}, #{endName,jdbcType=VARCHAR}, 
       #{actualAmount,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{actualStartTime,jdbcType=TIMESTAMP}, 
       #{actualEndTime,jdbcType=TIMESTAMP}, #{passengerUid,jdbcType=VARCHAR}, #{startXpoint,jdbcType=VARCHAR}, 
       #{startYpoint,jdbcType=VARCHAR}, #{endXpoint,jdbcType=VARCHAR}, #{endYpoint,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR})
+      #{remark,jdbcType=VARCHAR},#{createUser,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{lastModifyUser,jdbcType=VARCHAR},
+      #{lastModifyDate,jdbcType=TIMESTAMP},#{isDel,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.ziroom.model.PassengerOrderEntity">
     insert into tb_passenger_order
@@ -99,6 +105,21 @@
       <if test="remark != null">
         remark,
       </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="lastModifyUser != null">
+        last_modify_user,
+      </if>
+      <if test="lastModifyDate != null">
+        last_modify_date,
+      </if>
+      <if test="isDel != null">
+        is_del
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -148,6 +169,21 @@
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyUser != null">
+        #{lastModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyDate != null">
+        #{lastModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER}
       </if>
     </trim>
   </insert>
@@ -199,6 +235,21 @@
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyUser != null">
+        last_modify_user = #{lastModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyDate != null">
+        last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER}
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -218,7 +269,12 @@
       start_ypoint = #{startYpoint,jdbcType=VARCHAR},
       end_xpoint = #{endXpoint,jdbcType=VARCHAR},
       end_ypoint = #{endYpoint,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR}
+      remark = #{remark,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_modify_user = #{lastModifyUser,jdbcType=VARCHAR},
+      last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
   
@@ -228,5 +284,13 @@
     <include refid="Base_Column_List" />
     from tb_passenger_order
     where driver_order_no = #{driverOrderNo,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findList" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from tb_passenger_order
+    where passenger_uid = #{uid}
+    order by create_date DESC
   </select>
 </mapper>

@@ -85,8 +85,8 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         driverPlan.setPlanAmount(new BigDecimal(driverPlanReq.getPlanAmount()).multiply(new BigDecimal("100")).intValue());
         //单号
         driverPlan.setDriverNo("DP"+System.currentTimeMillis());
-        driverPlan.setCreateTime(new Date());
-        driverPlan.setUpdateTime(new Date());
+        driverPlan.setCreateDate(new Date());
+        driverPlan.setLastModifyDate(new Date());
         driverPlan.setIsDel(0);
         driverPlanEntityMapper.insert(driverPlan);
         return APIResponse.success(driverPlan);
