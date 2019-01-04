@@ -13,6 +13,7 @@ import com.ziroom.service.passenger.PassengerOrderService;
 import com.ziroom.utils.APIResponse;
 import com.ziroom.utils.Tools;
 import io.swagger.annotations.Api;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,19 +46,24 @@ public class PassengerController extends BaseController {
     @PostMapping(value = "/index", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public APIResponse index(PassengerRequest passengerRequest,
                                                            @RequestParam(value = "radius", required = false, defaultValue = "2000") double radius) {
-        UserEntity userEntity = new UserEntity();
-        Integer homeAddressId = userEntity.getHomeAddressId();
-        if (homeAddressId == null) {
-            return APIResponse.fail("未维护常用地址");
+        String longitude = passengerRequest.getLongitude();
+        String latitude = passengerRequest.getLatitude();
+        if (StringUtils.isBlank(longitude) && StringUtils.isBlank(latitude)) {
+            UserEntity userEntity = new UserEntity();
+            Integer homeAddressId = userEntity.getHomeAddressId();
+            if (homeAddressId == null) {
+                return APIResponse.fail("未维护常用地址");
+            }
+
+            AddressEntity addressEntity = addressService.findAddressById(homeAddressId);
+            if (addressEntity == null) {
+                return APIResponse.fail("家庭地址已失效");
+            }
+
+            longitude = addressEntity.getLongitude();
+            latitude = addressEntity.getLatitude();
         }
 
-        AddressEntity addressEntity = addressService.findAddressById(homeAddressId);
-        if (addressEntity == null) {
-            return APIResponse.fail("家庭地址已失效");
-        }
-
-        String longitude = addressEntity.getLongitude();
-        String latitude = addressEntity.getLatitude();
         Point2D homeAddress = new Point2D.Double(NumberUtils.toDouble(longitude), NumberUtils.toDouble(latitude));
         PassengerIndexResponse passengerIndexResponse = new PassengerIndexResponse();
 
@@ -71,6 +77,8 @@ public class PassengerController extends BaseController {
         }).collect(Collectors.toList());
 
         passengerIndexResponse.setDriverPlanEntityList(driverPlanEntityList);
+        passengerIndexResponse.setLatitude(latitude);
+        passengerIndexResponse.setLongitude(longitude);
         return APIResponse.success(passengerIndexResponse);
     }
 
