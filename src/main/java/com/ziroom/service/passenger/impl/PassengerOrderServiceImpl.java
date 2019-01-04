@@ -1,6 +1,7 @@
 package com.ziroom.service.passenger.impl;
 
 import com.ziroom.constant.BaseConst;
+import com.ziroom.constant.PassengerOrderStatus;
 import com.ziroom.dao.AddressEntityMapper;
 import com.ziroom.dao.DriverOrderEntityMapper;
 import com.ziroom.dao.PassengerOrderEntityMapper;
@@ -71,8 +72,12 @@ public class PassengerOrderServiceImpl implements PassengerOrderService{
     }
 
     @Override
+    @Transactional
     public APIResponse cancelJourney(Integer id) {
-        int count = passengerOrderEntityMapper.deleteByPrimaryKey(id);
+        PassengerOrderEntity passengerOrderEntity = new PassengerOrderEntity();
+        passengerOrderEntity.setId(id);
+        passengerOrderEntity.setStatus(PassengerOrderStatus.CANCEL.getStatusCode());
+        int count = passengerOrderEntityMapper.updateByPrimaryKeySelective(passengerOrderEntity);
         if (count > 0) {
             return APIResponse.success("取消成功");
         }
