@@ -67,6 +67,7 @@ public class DriverPlanServiceImpl implements DriverPlanService {
             return APIResponse.success();
         }
         DriverPlanResponse response = new DriverPlanResponse();
+        BeanUtils.copyProperties(driverPlanEntity,response);
         //查询该行程单的订单
         DriverOrderEntity driverOrderEntity = driverOrderEntityMapper.selectByDriverNo(driverPlanEntity.getDriverNo());
         if(driverOrderEntity != null){
