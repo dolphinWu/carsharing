@@ -1,6 +1,6 @@
 package com.ziroom;
 
-import com.ziroom.dto.PPointDistance;
+import com.ziroom.dto.request.PPointDistance;
 import com.ziroom.utils.GsonUtils;
 import com.ziroom.utils.MathUtil;
 import org.junit.Test;

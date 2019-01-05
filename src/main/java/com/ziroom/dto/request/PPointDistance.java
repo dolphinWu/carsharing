@@ -1,7 +1,11 @@
-package com.ziroom.dto;
+package com.ziroom.dto.request;
 
 import com.ziroom.utils.MathUtil;
 import com.ziroom.utils.PointCalculateUtil;
+import com.ziroom.utils.Tools;
+import org.apache.commons.lang3.math.NumberUtils;
+
+import java.awt.geom.Point2D;
 
 /**
  * @Date:2019/1/2 21:26
@@ -14,7 +18,6 @@ public class PPointDistance {
     private	String startYpoint;
     private	String endXpoint;
     private	String endYpoint;
-
 
     private String unitPrice="1.00";
 
