@@ -13,10 +13,10 @@ package com.ziroom.constant;
 public enum PriceDiscountType {
 
 
-    DISCOUNT_1("1一个人全价",1,"1.00"),
-    DISCOUNT_2("2个人6折",2,"1.20"),
-    DISCOUNT_3("3个人5折",3,"1.50"),
-    DISCOUNT_4("4个人4折",4,"1.60");
+    DISCOUNT_1("1.00",1,"1一个人全价"),
+    DISCOUNT_2("1.20",2,"2个人6折"),
+    DISCOUNT_3("1.50",3,"3个人5折"),
+    DISCOUNT_4("1.60",4,"4个人4折");
 
     private String name;
     private int index;

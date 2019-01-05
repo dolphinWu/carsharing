@@ -158,5 +158,34 @@ public class MathUtil {
         }
         return true;
     }
+    
+    /**
+     * @author liuzh
+     * @description:
+     * @date 2019/1/5 20:50
+     * @param
+     * @return 
+     */
+
+    public static String formatFloatNumber(double value) {
+        if(value != 0.00){
+            java.text.DecimalFormat df = new java.text.DecimalFormat("########.00");
+            return df.format(value);
+        }else{
+            return "0.00";
+        }
+
+    }
+    public static String formatFloatNumber(Double value) {
+        if(value != null){
+            if(value.doubleValue() != 0.00){
+                java.text.DecimalFormat df = new java.text.DecimalFormat("########.00");
+                return df.format(value.doubleValue());
+            }else{
+                return "0.00";
+            }
+        }
+        return "";
+    }
 
 }
