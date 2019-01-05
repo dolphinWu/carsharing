@@ -272,7 +272,7 @@
   <sql id="Response_Column_List">
     tdp.id, tdp.plan_start_time planStartTime, tdp.car_capacity carCapacity, tdp.remark, tdp.plan_amount planAmount, tdp.status, tdp.driver_uid driverUid, tdp.driver_no driverNo,
     tdp.start_xpoint startXpoint, tdp.start_ypoint startYpoint, tdp.end_xpoint endXpoint, tdp.end_ypoint endYpoint, tdp.accounting_rules accountingRules, tdp.start_name startName, tdp.end_name endName,
-    tdp.create_user createUser,tdp.create_date createDate,tdp.last_modify_user lastModifyUser,tdp.last_modify_date lastModifyDate,tdp.is_del isDel, tu.uname,tu.phone_number driverPhoneNumber
+    tdp.create_user createUser,tdp.create_date createDate,tdp.last_modify_user lastModifyUser,tdp.last_modify_date lastModifyDate,tdp.is_del isDel, tu.uname driverName,tu.phone_number driverPhoneNumber
   </sql>
 
   <select id="getAllDriverPlanInManyHours" resultType="com.ziroom.dto.response.DriverPlanResponse" parameterType="map">
