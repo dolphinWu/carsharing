@@ -5,10 +5,7 @@ import com.ziroom.dto.response.NameAndCodeModel;
 import com.ziroom.service.price.PriceCalculatorService;
 import com.ziroom.utils.APIResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,7 +15,7 @@ import java.util.List;
  * @Description:
  */
 
-@Controller
+@RestController
 @RequestMapping("priceCalculator")
 public class PriceCalculatorController {
 
@@ -28,9 +25,8 @@ public class PriceCalculatorController {
     /**
      * 获取标准价
      */
-    @RequestMapping("averagePrice")
-    @ResponseBody
-    public APIResponse averagePrice(@RequestBody PPointDistance pPointDistance) {
+    @PostMapping("averagePrice")
+    public APIResponse averagePrice(PPointDistance pPointDistance) {
         List<NameAndCodeModel> nameAndCodeModels = priceCalculatorService.priceList(pPointDistance);
         return APIResponse.success(nameAndCodeModels);
     }

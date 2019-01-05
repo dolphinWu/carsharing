@@ -67,6 +67,7 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
         passengerOrderEntity.setEndYpoint(driverPlanEntity.getEndYpoint());
         passengerOrderEntity.setEndName(driverPlanEntity.getEndName());
         passengerOrderEntity.setStartName(driverPlanEntity.getStartName());
+        passengerOrderEntity.setPassengerNo("PN-" + System.currentTimeMillis());
         passengerOrderEntityMapper.insertSelective(passengerOrderEntity);
         return APIResponse.success("成功加入行程");
     }

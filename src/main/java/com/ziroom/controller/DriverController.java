@@ -31,7 +31,7 @@ public class DriverController {
      * @return com.ziroom.utils.APIResponse
      */
     @PostMapping(value = "/historyPlan",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public APIResponse historyPlan(@RequestBody DriverPlanRequest driverPlanRequest){
+    public APIResponse historyPlan(DriverPlanRequest driverPlanRequest){
         String driverUid = driverPlanRequest.getDriverUid();
         Integer status = driverPlanRequest.getStatus();
         return driverPlanService.getHistoryPlan(driverUid,status);
@@ -45,7 +45,7 @@ public class DriverController {
      * @return
      */
     @PostMapping(value = "/createDriverPlan",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public APIResponse createDriverPlan(@RequestBody DriverPlanRequest driverPlanRequest){
+    public APIResponse createDriverPlan(DriverPlanRequest driverPlanRequest){
         return driverPlanService.createDriverPlan(driverPlanRequest);
     }
 
@@ -81,7 +81,7 @@ public class DriverController {
      * @return
      */
     @PostMapping(value = "/finishPlan",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public APIResponse finishPlan(@RequestBody DriverPlanRequest driverPlanRequest){
+    public APIResponse finishPlan(DriverPlanRequest driverPlanRequest){
         return driverPlanService.finishPlan(driverPlanRequest);
     }
 

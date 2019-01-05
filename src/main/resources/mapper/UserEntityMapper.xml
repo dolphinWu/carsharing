@@ -214,5 +214,11 @@
     where employee_no = #{employeeNo,jdbcType=VARCHAR}
   </select>
 
+  <!-- 增加用户信用分 -->
+  <update id="addUserCreditScore" parameterType="java.lang.String">
+    UPDATE tb_user
+    SET credit_score = credit_score + 1 WHERE uid = #{uid,jdbcType=VARCHAR}
+  </update>
+
 
 </mapper>
