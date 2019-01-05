@@ -17,4 +17,8 @@ public class DriverPlanRequest extends DriverPlanEntity {
 
     private String currentYpoint;
 
+    private Integer pageSize;
+
+    private Integer pageNumber;
+
 }

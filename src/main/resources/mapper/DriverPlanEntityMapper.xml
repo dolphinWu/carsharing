@@ -296,7 +296,7 @@
     select
     <include refid="Base_Column_List" />
     from tb_driver_plan
-    where driver_uid = #{driverUid,jdbcType=VARCHAR} AND status = 0 OR status = 1
+    where driver_uid = #{driverUid,jdbcType=VARCHAR} AND ( status = 0 OR status = 1 )
   </select>
 
   <!-- 根据行程单号查询 -->

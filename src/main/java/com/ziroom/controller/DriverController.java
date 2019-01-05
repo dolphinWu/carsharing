@@ -34,7 +34,7 @@ public class DriverController {
     public APIResponse historyPlan(DriverPlanRequest driverPlanRequest){
         String driverUid = driverPlanRequest.getDriverUid();
         Integer status = driverPlanRequest.getStatus();
-        return driverPlanService.getHistoryPlan(driverUid,status);
+        return driverPlanService.getHistoryPlan(driverUid,status,driverPlanRequest.getPageSize(),driverPlanRequest.getPageNumber());
     }
 
     /**

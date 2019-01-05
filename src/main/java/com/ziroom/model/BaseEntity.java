@@ -1,7 +1,15 @@
 package com.ziroom.model;
 
+import lombok.*;
+
 import java.util.Date;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
 public class BaseEntity {
 
     private String createUser;

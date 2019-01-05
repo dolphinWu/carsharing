@@ -1,5 +1,7 @@
 package com.ziroom.service.driverOrder.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ziroom.constant.DriverOrderStatus;
 import com.ziroom.constant.DriverPlanStatus;
 import com.ziroom.constant.PassengerOrderStatus;
@@ -13,6 +15,7 @@ import com.ziroom.model.DriverOrderEntity;
 import com.ziroom.model.DriverPlanEntity;
 import com.ziroom.model.PassengerOrderEntity;
 import com.ziroom.service.driverOrder.DriverPlanService;
+import com.ziroom.service.user.UserRelationService;
 import com.ziroom.service.user.UserService;
 import com.ziroom.utils.APIResponse;
 import com.ziroom.utils.DateKit;
@@ -44,6 +47,8 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     private PassengerOrderEntityMapper passengerOrderEntityMapper;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRelationService userRelationService;
 
     @Override
     public List<DriverPlanEntity> getAllDriverPlanInManyHours(PassengerRequest passengerRequest) {
@@ -54,7 +59,7 @@ public class DriverPlanServiceImpl implements DriverPlanService {
 
     //1.查询历史记录;2.行程单发布后需要查询分布的行程单（状态为拼车中）
     @Override
-    public APIResponse getHistoryPlan(String driverUid,Integer status) {
+    public APIResponse getHistoryPlan(String driverUid,Integer status,Integer pageSize,Integer pageNumber) {
         List<DriverPlanEntity> list = driverPlanEntityMapper.selectByUid(driverUid,status);
         List<DriverPlanResponse> responselist = new ArrayList<>();
         for (DriverPlanEntity driverPlanEntity : list) {
@@ -71,7 +76,8 @@ public class DriverPlanServiceImpl implements DriverPlanService {
             }
             responselist.add(response);
         }
-        return APIResponse.success(responselist);
+        PageHelper.startPage(pageNumber, pageSize, true);
+        return APIResponse.success(new PageInfo<>(responselist));
     }
 
     //创建行程单
@@ -211,7 +217,7 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         //增加司机和乘客的信用分
         userService.addUserCreditScore(uidList);
         //增加亲密度
-
+        userRelationService.addUserFriendshipScore(uidList);
 
         return APIResponse.success();
     }
