@@ -3,6 +3,7 @@ package com.ziroom.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.github.pagehelper.PageInfo;
+import com.ziroom.constant.BaseConst;
 import com.ziroom.dto.request.PassengerRequest;
 import com.ziroom.dto.response.PassengerIndexResponse;
 import com.ziroom.model.AddressEntity;
@@ -52,12 +53,13 @@ public class PassengerController extends BaseController {
     @PostMapping(value = "/index", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "乘客首页信息", notes = "乘客登录之后获取相关所需信息")
     @ApiImplicitParams({@ApiImplicitParam(name = "uid", value = "用户id", dataType = "Integer", required = true),
-            @ApiImplicitParam(name = "departTime", value = "发车时间", dataType = "Date"),
-            @ApiImplicitParam(name = "longitude", value = "经度", dataType = "String"),
-            @ApiImplicitParam(name = "latitude", value = "纬度", dataType = "String"),
             @ApiImplicitParam(name = "radius", value = "终点距离半径", defaultValue = "2000", dataType = "Double")})
-    public APIResponse index(PassengerRequest passengerRequest, @RequestParam("uid") int uid,
-                             @RequestParam(value = "radius", required = false, defaultValue = "2000") double radius) {
+    public APIResponse index(@RequestBody PassengerRequest passengerRequest) {
+        Integer uid = passengerRequest.getUid();
+        if (uid == null) {
+            return APIResponse.fail("uid必传");
+        }
+
         UserEntity userEntity = userService.getUserInfoById(uid);
         if (userEntity == null) {
             return APIResponse.fail("当前用户不存在");
@@ -89,7 +91,11 @@ public class PassengerController extends BaseController {
             //过滤距离小于指定值的行程单
             String endXPoint = driverPlanEntity.getEndXpoint();
             String endYPoint = driverPlanEntity.getEndYpoint();
-            return Tools.getDistance(homeAddress, new Point2D.Double(NumberUtils.toDouble(endXPoint), NumberUtils.toDouble(endYPoint))) <= radius;
+            if (BaseConst.UseType.ON_DUTY.equals(passengerRequest.getUseType())) {
+                endXPoint = driverPlanEntity.getStartXpoint();
+                endYPoint = driverPlanEntity.getStartYpoint();
+            }
+            return Tools.getDistance(homeAddress, new Point2D.Double(NumberUtils.toDouble(endXPoint, 0), NumberUtils.toDouble(endYPoint, 0))) <= passengerRequest.getRadius();
         }).collect(Collectors.toList());
 
         passengerIndexResponse.setDriverPlanEntityList(driverPlanEntityList);

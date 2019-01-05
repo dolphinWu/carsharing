@@ -1,5 +1,6 @@
 package com.ziroom.dto.request;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class PassengerRequest {
@@ -10,6 +11,13 @@ public class PassengerRequest {
     private String longitude;
 
     private String latitude;
+
+    private Integer uid;
+
+    //0下班，1上班
+    private Integer useType;
+
+    private Double radius = 2000D;
 
     public Date getDepartTime() {
         return departTime;
@@ -35,4 +43,27 @@ public class PassengerRequest {
         this.latitude = latitude;
     }
 
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
+    public Double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(Double radius) {
+        this.radius = radius;
+    }
+
+    public Integer getUseType() {
+        return useType;
+    }
+
+    public void setUseType(Integer useType) {
+        this.useType = useType;
+    }
 }
