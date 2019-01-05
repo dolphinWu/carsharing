@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Api("地址管理类")
@@ -31,9 +32,16 @@ public class UserAddressController {
     @GetMapping(value="/addAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public APIResponse addAddress(@RequestBody AddressRequest request)throws Exception {
+        if(request.getUid()==null){
+            return APIResponse.fail("uid不能为空");
+        }
         AddressEntity address = new AddressEntity();
         BeanUtils.copyProperties(address, request);
         address.setUid(request.getUid());
+        address.setCreateUser(request.getUid());
+        address.setCreateDate(new Date());
+        address.setLastModifyDate(new Date());
+        address.setLastModifyUser(request.getUid());
 
         int i = addressService.insertAddress(address);
         if(i!=1){

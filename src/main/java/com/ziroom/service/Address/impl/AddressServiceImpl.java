@@ -29,7 +29,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
    public int updateAddressById(AddressEntity addressEntity){
-       return addressEntityMapper.updateByPrimaryKey(addressEntity);
+       return addressEntityMapper.updateByPrimaryKeySelective(addressEntity);
     }
 
     public int insertAddress(AddressEntity address){
