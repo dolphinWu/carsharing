@@ -8,6 +8,8 @@ import com.ziroom.dto.response.UserDetail;
 import com.ziroom.dto.response.UserResponse;
 import com.ziroom.http.HttpRequestClient;
 import com.ziroom.model.UserEntity;
+import com.ziroom.service.Address.AddressService;
+import com.ziroom.service.driverOrder.DriverPlanService;
 import com.ziroom.service.user.UserService;
 import com.ziroom.utils.APIResponse;
 import io.swagger.annotations.Api;
@@ -43,6 +45,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AddressService addressService;
+
+    @Autowired
+    private DriverPlanService driverPlanService;
 
     @GetMapping("/Hello")
     @ResponseBody
@@ -154,42 +162,46 @@ public class UserController {
 
 
     /**
-     * 修改车牌号
-     * @param  employNo 系统号
+     * 修改信息
+     * @param  userRequest
      * @return
      */
-    @PostMapping(value="/modifyOrAddCarNo", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/modifyUser", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public APIResponse modifyOrAddCarNo(String employNo,String carNumber){
-       UserEntity userEntity =  userService.getUserInfoByEmployeeNo(employNo);
+    public APIResponse modifyUser(UserEntity userRequest){
+       UserEntity userEntity =  userService.getUserInfoByEmployeeNo(userRequest.getUid());
        if(userEntity==null){
            return  APIResponse.fail("该用户不存在");
        }
-        userEntity.setCarNumber(carNumber);
-        userService.updateCarNoByEmployeeNo(userEntity);
-        return  APIResponse.success();
+       userRequest.setId(userEntity.getId());
+       userService.updateCarNoByEmployeeNo(userRequest);
+       return  APIResponse.success();
     }
 
 
     /**
      * 查询用户信息
-     * @param  employeeNo 系统号
+     * @param  uid 系统号
      * @return
      */
-    @PostMapping(value="/getUserDetail", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/queryUserDetail", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public APIResponse getUserDetail(String employeeNo){
+    public APIResponse queryUserDetail(String uid){
         UserDetail response=new UserDetail();
-        UserEntity user = userService.getUserInfoByEmployeeNo(employeeNo);
+        UserEntity user = userService.getUserInfoByEmployeeNo(uid);
         try {
             BeanUtils.copyProperties(response, user);
         } catch (Exception e) {
             LOGGER.info("调用copyProperties结果:{}", e.getMessage());
         }
+
         //查询累计手收益
-        int amount = 0;
+        int amount = driverPlanService.sumMoney(uid);
         response.setAmount(amount);
-        return  APIResponse.success(user);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("userDetail",response);
+        return  APIResponse.success(jsonObject);
     }
 
 }

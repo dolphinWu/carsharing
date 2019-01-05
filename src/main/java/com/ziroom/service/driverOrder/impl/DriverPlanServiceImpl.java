@@ -246,4 +246,12 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     public DriverPlanEntity findDriverPlanById(Integer id) {
         return driverPlanEntityMapper.selectByPrimaryKey(id);
     }
+
+    public Integer sumMoney(String uid){
+        DriverPlanEntity driverPlanEntity= driverPlanEntityMapper.selectByUidAndStatus(uid,3);
+       if(driverPlanEntity==null){
+           return 0;
+       }
+        return driverOrderEntityMapper.selectTotalAmountByDriverNo(driverPlanEntity.getDriverUid());
+    }
 }
