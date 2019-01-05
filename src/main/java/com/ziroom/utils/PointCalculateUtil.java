@@ -81,8 +81,8 @@ public class PointCalculateUtil {
      * @param startPoint 起始点
      * @param endPoint   终点
      * @param midPoint   途经点
-     * @Param range     途径点到起始点和终点之间的距离范围,单位m, 默认2000m
      * @return
+     * @Param range     途径点到起始点和终点之间的距离范围,单位m, 默认2000m
      */
     public static boolean calculateIsInRange(Point2D startPoint, Point2D endPoint, Point2D midPoint, Double range) {
         double startToEndDistance = Tools.getDistance(startPoint, endPoint);
@@ -103,6 +103,10 @@ public class PointCalculateUtil {
             return true;
         }
 
+        if (hasObtuseAngle(startToEndDistance, startToMidDistance, midToEndDistance)) {
+            return false;
+        }
+
         double area = calculateTriangleArea(startToEndDistance, startToMidDistance, midToEndDistance);
         if (area == 0) {
             return false;
@@ -114,11 +118,12 @@ public class PointCalculateUtil {
 
         double distance = area / startToEndDistance;
         log.info("途径点到起始点和终点之间的距离：{}", distance);
-        return  distance<= range;
+        return distance <= range;
     }
 
     /**
      * 计算三角形面积
+     *
      * @param a
      * @param b
      * @param c
@@ -130,5 +135,19 @@ public class PointCalculateUtil {
         }
 
         return 0;
+    }
+
+    public static boolean hasObtuseAngle(double a, double b, double c) {
+        double bAngle = Math.toDegrees(Math.acos((a * a + c * c - b * b) / (2 * a * c)));
+        log.info("三边距离：{},{},{}-bAngle:{}", a, b, c, bAngle);
+        if (bAngle > 90) {
+            return true;
+        }
+        double cAngle = Math.toDegrees(Math.acos((b * b + a * a - c * c) / (2 * b * a)));
+        log.info("三边距离：{},{},{}-cAngle:{}", a, b, c, cAngle);
+        if (cAngle > 90) {
+            return true;
+        }
+        return false;
     }
 }
