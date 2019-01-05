@@ -34,4 +34,6 @@ public class UserEntity extends BaseEntity {
 
     private String companyLatitude;
 
+    private String jobTitle;
+
 }

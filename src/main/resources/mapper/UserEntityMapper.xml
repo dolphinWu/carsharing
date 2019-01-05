@@ -15,6 +15,7 @@
     <result column="company_longitude" jdbcType="VARCHAR" property="companyLongitude" />
     <result column="company_latitude" jdbcType="VARCHAR" property="companyLatitude" />
     <result column="employee_no" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="job_title" jdbcType="VARCHAR" property="jobTitle" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
@@ -25,7 +26,7 @@
   <sql id="Base_Column_List">
     id, uid, uname, phone_number, car_number, credit_score,
     home_address_name,home_longitude, home_latitude, company_address_name,company_longitude, company_latitude,
-    employee_no, remark, create_user,create_date,last_modify_user,last_modify_date,is_del
+    employee_no,job_title, remark, create_user,create_date,last_modify_user,last_modify_date,is_del
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -41,11 +42,11 @@
     insert into tb_user (id, uid, uname, 
       phone_number, car_number, credit_score, 
      home_address_name,home_longitude, home_latitude, company_address_name,company_longitude, company_latitude,
-      employee_no, remark, create_user,create_date,last_modify_user,last_modify_date,is_del)
+      employee_no,job_title, remark, create_user,create_date,last_modify_user,last_modify_date,is_del)
     values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, 
       #{phoneNumber,jdbcType=VARCHAR}, #{carNumber,jdbcType=VARCHAR}, #{creditScore,jdbcType=INTEGER}, 
-      #{homeAddressName,jdbcType=VARCHAR}, #{homeLongitude,jdbcType=VARCHAR}, #{homeLatitude,jdbcType=VARCHAR},
-      #{companyAddressName,jdbcType=VARCHAR}, #{companyLongitude,jdbcType=VARCHAR}, #{companyLatitude,jdbcType=VARCHAR},
+      #{homeAddressName,jdbcType=VARCHAR}, #{hameLongitude,jdbcType=VARCHAR}, #{homeLatitude,jdbcType=VARCHAR},
+      #{companyAddressName,jdbcType=VARCHAR}, #{companyLongitude,jdbcType=VARCHAR}, #{companyLatitude,jdbcType=VARCHAR}, #{jobTitle,jdbcType=VARCHAR},
       #{employeeNo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{lastModifyUser,jdbcType=VARCHAR},
       #{lastModifyDate,jdbcType=TIMESTAMP},#{isDel,jdbcType=INTEGER})
   </insert>
@@ -91,6 +92,9 @@
       </if>
       <if test="employeeNo != null">
         employee_no,
+      </if>
+      <if test="jobTitle != null">
+        job_title,
       </if>
       <if test="remark != null">
         remark,
@@ -151,6 +155,9 @@
       <if test="employeeNo != null">
         #{employeeNo,jdbcType=VARCHAR},
       </if>
+      <if test="jobTitle != null">
+        #{jobTitle,jdbcType=VARCHAR},
+      </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
@@ -210,6 +217,9 @@
       <if test="employeeNo != null">
         employee_no = #{employeeNo,jdbcType=VARCHAR},
       </if>
+      <if test="jobTitle != null">
+        job_title =  #{jobTitle,jdbcType=VARCHAR},
+      </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
@@ -245,6 +255,7 @@
       company_longitude = #{companyLongitude,jdbcType=VARCHAR},
       company_latitude =  #{companyLatitude,jdbcType=VARCHAR},
       employee_no = #{employeeNo,jdbcType=VARCHAR},
+      job_title =  #{jobTitle,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       create_user = #{createUser,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},
