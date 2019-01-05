@@ -78,4 +78,4 @@ cas:
 
 ehr:
   url:
-    userDetil:  http://ehrnew.t.ziroom.com/api/ehr/getUserSimple.action
+    userDetil:  http://ehrnew.ziroom.com/api/ehr/getUserSimple.action

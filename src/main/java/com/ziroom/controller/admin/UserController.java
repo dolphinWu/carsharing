@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -171,6 +172,13 @@ public class UserController {
     @PostMapping(value="/modifyUser", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public APIResponse modifyUser(UserEntity userRequest){
+        //数据检验
+        String regx = "^[\\u4E00-\\u9FA5][\\da-zA-Z]{6}$";
+        if(userRequest.getCarNumber()!=null){
+            if(!userRequest.getCarNumber().matches(regx)){
+                return APIResponse.fail("车牌号不符合规则");
+            }
+        }
        UserEntity userEntity =  userService.getUserInfoByEmployeeNo(userRequest.getUid());
        if(userEntity==null){
            return  APIResponse.fail("该用户不存在");
@@ -196,10 +204,14 @@ public class UserController {
         } catch (Exception e) {
             LOGGER.info("调用copyProperties结果:{}", e.getMessage());
         }
-
         //查询累计手收益
         int amount = driverPlanService.sumMoney(uid);
-        response.setAmount(amount);
+        //金额格式化
+        if (amount == 0) {
+            response.setAmount(new BigDecimal(0));
+        } else {
+            response.setAmount(BigDecimal.valueOf(amount).divide(BigDecimal.valueOf(100), 2, BigDecimal.ROUND_HALF_UP));
+        }
         return  APIResponse.success(response);
     }
 

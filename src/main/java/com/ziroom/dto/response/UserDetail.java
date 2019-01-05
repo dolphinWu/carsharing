@@ -4,8 +4,10 @@ import com.ziroom.model.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Setter
 @Getter
 public class UserDetail extends UserEntity{
-    private Integer amount;//累计收益
+    private BigDecimal amount;//累计收益
 }
