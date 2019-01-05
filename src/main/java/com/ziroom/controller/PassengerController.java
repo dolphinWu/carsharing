@@ -1,7 +1,8 @@
 package com.ziroom.controller;
 
 
-import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.github.pagehelper.PageInfo;
 import com.ziroom.dto.request.PassengerRequest;
 import com.ziroom.dto.response.PassengerIndexResponse;
 import com.ziroom.model.AddressEntity;
@@ -10,9 +11,13 @@ import com.ziroom.model.UserEntity;
 import com.ziroom.service.Address.AddressService;
 import com.ziroom.service.driverOrder.DriverPlanService;
 import com.ziroom.service.passenger.PassengerOrderService;
+import com.ziroom.service.user.UserService;
 import com.ziroom.utils.APIResponse;
 import com.ziroom.utils.Tools;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
@@ -22,14 +27,12 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.geom.Point2D;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Api("乘客端")
 @RestController("PassengerController")
-@RequestMapping(value = "/passenger")
+@RequestMapping(value = "/api/passenger")
 public class PassengerController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PassengerController.class);
@@ -41,15 +44,28 @@ public class PassengerController extends BaseController {
     private AddressService addressService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private DriverPlanService driverPlanService;
 
     @PostMapping(value = "/index", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public APIResponse index(PassengerRequest passengerRequest,
-                                                           @RequestParam(value = "radius", required = false, defaultValue = "2000") double radius) {
+    @ApiOperation(value = "乘客首页信息", notes = "乘客登录之后获取相关所需信息")
+    @ApiImplicitParams({@ApiImplicitParam(name = "uid", value = "用户id", dataType = "Integer", required = true),
+            @ApiImplicitParam(name = "departTime", value = "发车时间", dataType = "Date"),
+            @ApiImplicitParam(name = "longitude", value = "经度", dataType = "String"),
+            @ApiImplicitParam(name = "latitude", value = "纬度", dataType = "String"),
+            @ApiImplicitParam(name = "radius", value = "终点距离半径", defaultValue = "2000", dataType = "Double")})
+    public APIResponse index(PassengerRequest passengerRequest, @RequestParam("uid") int uid,
+                             @RequestParam(value = "radius", required = false, defaultValue = "2000") double radius) {
+        UserEntity userEntity = userService.getUserInfoById(uid);
+        if (userEntity == null) {
+            return APIResponse.fail("当前用户不存在");
+        }
+
         String longitude = passengerRequest.getLongitude();
         String latitude = passengerRequest.getLatitude();
         if (StringUtils.isBlank(longitude) && StringUtils.isBlank(latitude)) {
-            UserEntity userEntity = new UserEntity();
             Integer homeAddressId = userEntity.getHomeAddressId();
             if (homeAddressId == null) {
                 return APIResponse.fail("未维护常用地址");
@@ -68,12 +84,12 @@ public class PassengerController extends BaseController {
         PassengerIndexResponse passengerIndexResponse = new PassengerIndexResponse();
 
         //查询最近时间的行程单
-        List<DriverPlanEntity> driverPlanEntityList = passengerOrderService.getAllDriverPlanInManyHours(passengerRequest);
+        List<DriverPlanEntity> driverPlanEntityList = driverPlanService.getAllDriverPlanInManyHours(passengerRequest);
         driverPlanEntityList = driverPlanEntityList.stream().filter(driverPlanEntity -> {
             //过滤距离小于指定值的行程单
             String endXPoint = driverPlanEntity.getEndXpoint();
             String endYPoint = driverPlanEntity.getEndYpoint();
-            return Tools.getDistance(homeAddress, new Point2D.Double(NumberUtils.toDouble(endXPoint), NumberUtils.toDouble(endYPoint))) <= radius ;
+            return Tools.getDistance(homeAddress, new Point2D.Double(NumberUtils.toDouble(endXPoint), NumberUtils.toDouble(endYPoint))) <= radius;
         }).collect(Collectors.toList());
 
         passengerIndexResponse.setDriverPlanEntityList(driverPlanEntityList);
@@ -83,6 +99,8 @@ public class PassengerController extends BaseController {
     }
 
     @PostMapping(value = "/viewDriverPlan/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "查看行程单详情")
+    @ApiImplicitParam(name = "id", value = "行程单id", dataType = "Path", required = true)
     public APIResponse viewDriverPlan(@PathVariable("id") int id) {
         DriverPlanEntity driverPlanEntity = driverPlanService.findDriverPlanById(id);
         if (driverPlanEntity == null) {
@@ -92,6 +110,8 @@ public class PassengerController extends BaseController {
     }
 
     @PostMapping(value = "/joinJourney/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "加入行程单")
+    @ApiImplicitParam(name = "id", value = "行程单id", dataType = "Path", required = true)
     public APIResponse joinJourney(@PathVariable("id") Integer id) {
         DriverPlanEntity driverPlanEntity = driverPlanService.findDriverPlanById(id);
         if (driverPlanEntity == null) {
@@ -104,5 +124,13 @@ public class PassengerController extends BaseController {
     @PostMapping(value = "/cancelJourney/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public APIResponse cancelJourney(@PathVariable("id") Integer id) {
         return passengerOrderService.cancelJourney(id);
+    }
+
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public APIResponse findPassengerOrderForPage(@RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+                                                 @RequestParam(value = "pageNumber", required = false, defaultValue = "1") Integer pageNumber,
+                                                 @RequestParam(value = "uid") Integer uid) {
+        PageInfo pageInfo = passengerOrderService.findPassengerOrderForPage(uid, pageSize, pageNumber);
+        return APIResponse.success(pageInfo);
     }
 }

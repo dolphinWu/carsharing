@@ -8,10 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by codey on 2019/1/3.
@@ -59,9 +56,9 @@ public class DriverController {
      * @param
      * @return
      */
-    @PostMapping(value = "/beginPlan",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public APIResponse beginPlan(@RequestBody DriverPlanRequest driverPlanRequest){
-        return driverPlanService.beginPlan(driverPlanRequest);
+    @PostMapping(value = "/beginPlan/{driverNo}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public APIResponse beginPlan(@PathVariable("driverNo") String driverNo){
+        return driverPlanService.beginPlan(driverNo);
     }
 
     /**
@@ -71,9 +68,9 @@ public class DriverController {
      * @param
      * @return
      */
-    @PostMapping(value = "/cancelPlan",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public APIResponse cancelPlan(@RequestBody DriverPlanRequest driverPlanRequest){
-        return driverPlanService.cancelPlan(driverPlanRequest);
+    @PostMapping(value = "/cancelPlan/{driverNo}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public APIResponse cancelPlan(@PathVariable("driverNo") String driverNo){
+        return driverPlanService.cancelPlan(driverNo);
     }
 
     /**
@@ -85,7 +82,7 @@ public class DriverController {
      */
     @PostMapping(value = "/finishPlan",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public APIResponse finishPlan(@RequestBody DriverPlanRequest driverPlanRequest){
-        return driverPlanService.cancelPlan(driverPlanRequest);
+        return driverPlanService.finishPlan(driverPlanRequest);
     }
 
 }

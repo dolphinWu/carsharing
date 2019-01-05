@@ -4,6 +4,7 @@ import com.ziroom.model.DriverPlanEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DriverPlanEntityMapper {
     int deleteByPrimaryKey(Integer id);
@@ -27,4 +28,23 @@ public interface DriverPlanEntityMapper {
      */
     List<DriverPlanEntity> selectByUid(@Param("driverUid") String driverUid,@Param("status") Integer status);
 
+    /**
+     * @author codey
+     * @description 查询司机有效的行程单
+     * @date 2019/1/4 10:51
+     * @param
+     * @return
+     */
+    List<DriverPlanEntity> selectByUidAndStatus(String driverUid);
+
+    /**
+     * @author codey
+     * @description 根据行程单号查询
+     * @date 2019/1/4 11:06
+     * @param 
+     * @return 
+     */
+    DriverPlanEntity selectByNo(String driverNo);
+
+    List<DriverPlanEntity> getAllDriverPlanInManyHours(Map<String, Object> paramMap);
 }

@@ -20,4 +20,15 @@ public interface PassengerOrderEntityMapper {
     int updateByPrimaryKey(PassengerOrderEntity record);
 
     List<DriverPlanEntity> getAllDriverPlanInManyHours(Map<String,Object> map);
+
+    /**
+     * @author codey
+     * @description 根据司机订单号查询乘客订单
+     * @date 2019/1/4 11:14
+     * @param
+     * @return
+     */
+    List<PassengerOrderEntity> selectByDriverOrderNo(String orderNo);
+
+    List<PassengerOrderEntity> findList(Map<String, Object> paramsMap);
 }

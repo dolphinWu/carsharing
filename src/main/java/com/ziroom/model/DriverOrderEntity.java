@@ -21,16 +21,6 @@ public class DriverOrderEntity extends BaseEntity {
 
     private Integer passengerCount;
 
-    private Date createTime;
-
-    private Date updateTime;
-
-    private String creator;
-
-    private String updator;
-
-    private Integer isDel;
-
     public Integer getId() {
         return id;
     }
@@ -103,43 +93,4 @@ public class DriverOrderEntity extends BaseEntity {
         this.passengerCount = passengerCount;
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator == null ? null : creator.trim();
-    }
-
-    public String getUpdator() {
-        return updator;
-    }
-
-    public void setUpdator(String updator) {
-        this.updator = updator == null ? null : updator.trim();
-    }
-
-    public Integer getIsDel() {
-        return isDel;
-    }
-
-    public void setIsDel(Integer isDel) {
-        this.isDel = isDel;
-    }
 }

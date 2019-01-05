@@ -1,8 +1,11 @@
 package com.ziroom.service.driverOrder;
 
 import com.ziroom.dto.request.DriverPlanRequest;
+import com.ziroom.dto.request.PassengerRequest;
 import com.ziroom.model.DriverPlanEntity;
 import com.ziroom.utils.APIResponse;
+
+import java.util.List;
 
 /**
  * Created by codey on 2019/1/2.
@@ -34,7 +37,7 @@ public interface DriverPlanService {
     * @param 
     * @return 
     */
-   APIResponse beginPlan(DriverPlanRequest driverPlanReq);
+   APIResponse beginPlan(String driverNo);
 
    /**
     * @author codey
@@ -43,7 +46,7 @@ public interface DriverPlanService {
     * @param
     * @return
     */
-   APIResponse cancelPlan(DriverPlanRequest driverPlanReq);
+   APIResponse cancelPlan(String driverNo);
 
    /**
     * @author codey
@@ -54,5 +57,12 @@ public interface DriverPlanService {
     */
    APIResponse finishPlan(DriverPlanRequest driverPlanReq);
 
-    DriverPlanEntity findDriverPlanById(Integer id);
+   DriverPlanEntity findDriverPlanById(Integer id);
+
+   /**
+    * 获取一定时间内所有的行程单
+    * @param passengerRequest
+    * @return
+    */
+   List<DriverPlanEntity> getAllDriverPlanInManyHours(PassengerRequest passengerRequest);
 }
