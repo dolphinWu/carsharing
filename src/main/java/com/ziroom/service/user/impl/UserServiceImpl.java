@@ -1,16 +1,12 @@
 package com.ziroom.service.user.impl;
 
 import com.ziroom.dao.UserEntityMapper;
-import com.ziroom.dao.UserRelationEntityMapper;
-import com.ziroom.exception.BusinessException;
 import com.ziroom.model.UserEntity;
-import com.ziroom.model.UserRelationEntity;
 import com.ziroom.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
 
     public int updateUserByUid(UserEntity user){
-        return userEntityMapper.updateByPrimaryKey(user);
+        return userEntityMapper.updateByPrimaryKeySelective(user);
     }
 
    public UserEntity getUserInfoByEmployeeNo(String employeeNo){

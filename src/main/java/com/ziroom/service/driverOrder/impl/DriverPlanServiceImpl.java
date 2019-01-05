@@ -272,6 +272,6 @@ public class DriverPlanServiceImpl implements DriverPlanService {
        if(driverPlanEntity==null){
            return 0;
        }
-        return driverOrderEntityMapper.selectTotalAmountByDriverNo(driverPlanEntity.getDriverUid());
+        return driverOrderEntityMapper.selectTotalAmountByDriverNo(driverPlanEntity.getDriverNo());
     }
 }
