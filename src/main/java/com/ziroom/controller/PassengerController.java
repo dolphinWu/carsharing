@@ -64,18 +64,12 @@ public class PassengerController extends BaseController {
         String longitude = passengerRequest.getLongitude();
         String latitude = passengerRequest.getLatitude();
         if (StringUtils.isBlank(longitude) && StringUtils.isBlank(latitude)) {
-            Integer homeAddressId = userEntity.getHomeAddressId();
-            if (homeAddressId == null) {
-                return APIResponse.success(null);
-            }
+            longitude = userEntity.getHomeLongitude();
+            latitude = userEntity.getHomeLatitude();
+        }
 
-            AddressEntity addressEntity = addressService.findAddressById(homeAddressId);
-            if (addressEntity == null) {
-                return APIResponse.success(null);
-            }
-
-            longitude = addressEntity.getLongitude();
-            latitude = addressEntity.getLatitude();
+        if (StringUtils.isBlank(longitude) && StringUtils.isBlank(latitude)) {
+            return APIResponse.success(null);
         }
 
         Point2D homeAddress = new Point2D.Double(NumberUtils.toDouble(longitude), NumberUtils.toDouble(latitude));
