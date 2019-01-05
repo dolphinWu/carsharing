@@ -9,7 +9,6 @@ import com.ziroom.dao.AddressEntityMapper;
 import com.ziroom.dao.DriverOrderEntityMapper;
 import com.ziroom.dao.PassengerOrderEntityMapper;
 import com.ziroom.dao.UserEntityMapper;
-import com.ziroom.dto.request.PassengerRequest;
 import com.ziroom.model.DriverOrderEntity;
 import com.ziroom.model.DriverPlanEntity;
 import com.ziroom.model.PassengerOrderEntity;
