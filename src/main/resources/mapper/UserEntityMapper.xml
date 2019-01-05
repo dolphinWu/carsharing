@@ -267,5 +267,11 @@
     SET credit_score = credit_score + 1 WHERE uid = #{uid,jdbcType=VARCHAR}
   </update>
 
+  <!-- 扣除用户信用分 -->
+  <update id="deductUserCreditScore" parameterType="java.lang.String">
+    UPDATE tb_user
+    SET credit_score = credit_score - 1 WHERE uid = #{uid,jdbcType=VARCHAR}
+  </update>
+
 
 </mapper>

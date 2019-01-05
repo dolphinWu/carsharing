@@ -55,4 +55,18 @@ public class UserServiceImpl implements UserService {
         });
     }
 
+    /**
+     * @author codey
+     * @description 扣除用户信用分
+     * @date 2019/1/5 15:24
+     * @param
+     * @return
+     */
+    @Override
+    public void deductUserCreditScore(String... uidList) {
+        for (String uid : uidList) {
+            userEntityMapper.deductUserCreditScore(uid);
+        }
+    }
+
 }

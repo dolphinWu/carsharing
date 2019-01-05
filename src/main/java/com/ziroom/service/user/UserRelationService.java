@@ -15,4 +15,13 @@ public interface UserRelationService {
      * @return
      */
     void addUserFriendshipScore(List<String> uidLis);
+
+    /**
+     * @author codey
+     * @description 扣除用户信用分
+     * @date 2019/1/5 15:27
+     * @param
+     * @return
+     */
+    void deductDriverFriendshipScore(String driverUid,List<String> passengerUidList);
 }

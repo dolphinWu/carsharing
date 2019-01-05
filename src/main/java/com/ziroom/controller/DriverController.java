@@ -38,7 +38,7 @@ public class DriverController {
 
     /**
      * @author codey
-     * @description 查看刚刚发布的行程单
+     * @description 查看发布的行程单--司机首页
      * @date 2019/1/5 14:46
      * @param
      * @return
