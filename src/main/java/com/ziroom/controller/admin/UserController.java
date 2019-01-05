@@ -32,7 +32,7 @@ import java.util.Map;
 
 @Api("用户管理类")
 @Controller
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/api/user")
 public class UserController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
@@ -82,7 +82,7 @@ public class UserController {
                 LOGGER.info("CasLogin 返回的结果为==>" + s);
                 JSONObject jsonResult = JSONObject.parseObject(s);
                 //登录成功   获取用户信息
-                return queryUserDetail(jsonResult.getString("employeeId"), token);
+                return queryUserDetailByEHR(jsonResult.getString("employeeId"), token);
             } else {
                 throw new RuntimeException();
             }
@@ -114,9 +114,9 @@ public class UserController {
      * @param  employeeId 系统号
      * @return
      */
-    @PostMapping(value="/queryUserDetail", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/queryUserDetailByEHR", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public APIResponse queryUserDetail(String employeeId, String token){
+    public APIResponse queryUserDetailByEHR(String employeeId, String token){
         Map<String, String> paramMap = new HashMap<String, String>();
         paramMap.put("userCode",employeeId);
         paramMap.put("page","1");

@@ -17,7 +17,7 @@ import java.util.List;
 
 @Api("地址管理类")
 @Controller
-@RequestMapping(value = "/address")
+@RequestMapping(value = "/api/address")
 public class UserAddressController {
     private static Logger logger = LoggerFactory.getLogger(UserAddressController.class);
 
