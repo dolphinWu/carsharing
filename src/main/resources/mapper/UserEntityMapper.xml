@@ -9,8 +9,8 @@
     <result column="car_number" jdbcType="VARCHAR" property="carNumber" />
     <result column="credit_score" jdbcType="INTEGER" property="creditScore" />
     <result column="home_address_name" jdbcType="VARCHAR" property="homeAddressName" />
-    <result column="home_longitude" jdbcType="VARCHAR" property="hameLongitude" />
-    <result column="home_latitude" jdbcType="VARCHAR" property="hameLatitude" />
+    <result column="home_longitude" jdbcType="VARCHAR" property="homeLongitude" />
+    <result column="home_latitude" jdbcType="VARCHAR" property="homeLatitude" />
     <result column="company_address_name" jdbcType="VARCHAR" property="companyAddressName" />
     <result column="company_longitude" jdbcType="VARCHAR" property="companyLongitude" />
     <result column="company_latitude" jdbcType="VARCHAR" property="companyLatitude" />
@@ -44,7 +44,7 @@
       employee_no, remark, create_user,create_date,last_modify_user,last_modify_date,is_del)
     values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, 
       #{phoneNumber,jdbcType=VARCHAR}, #{carNumber,jdbcType=VARCHAR}, #{creditScore,jdbcType=INTEGER}, 
-      #{homeAddressName,jdbcType=VARCHAR}, #{hameLongitude,jdbcType=VARCHAR}, #{homeLatitude,jdbcType=VARCHAR},
+      #{homeAddressName,jdbcType=VARCHAR}, #{homeLongitude,jdbcType=VARCHAR}, #{homeLatitude,jdbcType=VARCHAR},
       #{companyAddressName,jdbcType=VARCHAR}, #{companyLongitude,jdbcType=VARCHAR}, #{companyLatitude,jdbcType=VARCHAR},
       #{employeeNo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{lastModifyUser,jdbcType=VARCHAR},
       #{lastModifyDate,jdbcType=TIMESTAMP},#{isDel,jdbcType=INTEGER})

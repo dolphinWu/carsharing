@@ -13,6 +13,7 @@ import com.ziroom.service.driverOrder.DriverPlanService;
 import com.ziroom.service.passenger.PassengerOrderService;
 import com.ziroom.service.user.UserService;
 import com.ziroom.utils.APIResponse;
+import com.ziroom.utils.PointCalculateUtil;
 import com.ziroom.utils.Tools;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -77,15 +78,26 @@ public class PassengerController extends BaseController {
 
         //查询最近时间的行程单
         List<DriverPlanEntity> driverPlanEntityList = driverPlanService.getAllDriverPlanInManyHours(passengerRequest);
-        driverPlanEntityList = driverPlanEntityList.stream().filter(driverPlanEntity -> {
+        driverPlanEntityList = driverPlanEntityList.parallelStream().filter(driverPlanEntity -> {
             //过滤距离小于指定值的行程单
             String endXPoint = driverPlanEntity.getEndXpoint();
             String endYPoint = driverPlanEntity.getEndYpoint();
+            String startXPoint = driverPlanEntity.getStartXpoint();
+            String startYPoint = driverPlanEntity.getStartYpoint();
+            Point2D startPoint = new Point2D.Double(NumberUtils.toDouble(startXPoint, 0), NumberUtils.toDouble(startYPoint, 0));
+            Point2D endPoint = new Point2D.Double(NumberUtils.toDouble(endXPoint, 0), NumberUtils.toDouble(endYPoint, 0));
+
+            //是否在所选地点范围
+            boolean pointRange;
             if (BaseConst.UseType.ON_DUTY.equals(passengerRequest.getUseType())) {
-                endXPoint = driverPlanEntity.getStartXpoint();
-                endYPoint = driverPlanEntity.getStartYpoint();
+                pointRange = Tools.getDistance(homeAddress, startPoint) <= passengerRequest.getRadius();
+            } else {
+                pointRange = Tools.getDistance(homeAddress, endPoint) <= passengerRequest.getRadius();
             }
-            return Tools.getDistance(homeAddress, new Point2D.Double(NumberUtils.toDouble(endXPoint, 0), NumberUtils.toDouble(endYPoint, 0))) <= passengerRequest.getRadius();
+
+            //计算是否在路径上的范围
+            boolean pathwayInRange = PointCalculateUtil.calculateIsInRange(startPoint, endPoint, homeAddress, null);
+            return pointRange || pathwayInRange;
         }).collect(Collectors.toList());
 
         passengerIndexResponse.setDriverPlanEntityList(driverPlanEntityList);
