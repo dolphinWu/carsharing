@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 import java.awt.geom.Point2D;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by codey on 2019/1/2.
@@ -164,6 +165,9 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     public APIResponse cancelPlan(String driverNo) {
         //查询行程单
         DriverPlanEntity driverPlan = driverPlanEntityMapper.selectByNo(driverNo);
+
+        List<String> passengerUidList = new ArrayList<>();
+
         //只有拼车中可以取消
         if(DriverPlanStatus.WAITING.getCode() != driverPlan.getStatus()){
             return APIResponse.fail("只有拼车中才可以取消哦~");
@@ -189,7 +193,15 @@ public class DriverPlanServiceImpl implements DriverPlanService {
             //更新乘客订单状态为取消
             passengerOrderEntity.setStatus(PassengerOrderStatus.CANCEL.getStatusCode());
             passengerOrderEntityMapper.updateByPrimaryKey(passengerOrderEntity);
+            passengerUidList.add(passengerOrderEntity.getPassengerUid());
         });
+
+        //扣除司机
+        userService.deductUserCreditScore(driverPlan.getDriverUid());
+        //扣除乘客和司机的亲密度---如果有乘客
+        if(passengerUidList.size() > 0){
+            userRelationService.deductDriverFriendshipScore(driverPlan.getDriverUid(),passengerUidList);
+        }
 
         return APIResponse.success("取消成功！");
     }
@@ -208,6 +220,7 @@ public class DriverPlanServiceImpl implements DriverPlanService {
             return APIResponse.fail("距离终点还挺远呢，不可以结束哦`");
         }
 
+        //所有用户uid
         List<String> uidList = new ArrayList<>();
 
         //更新行程单
@@ -236,8 +249,10 @@ public class DriverPlanServiceImpl implements DriverPlanService {
 
         //增加司机和乘客的信用分
         userService.addUserCreditScore(uidList);
-        //增加亲密度
-        userRelationService.addUserFriendshipScore(uidList);
+        //增加亲密度---如果有乘客
+        if(uidList.size() > 1){
+            userRelationService.addUserFriendshipScore(uidList);
+        }
 
         return APIResponse.success();
     }

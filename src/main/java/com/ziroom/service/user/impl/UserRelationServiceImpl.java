@@ -27,20 +27,19 @@ public class UserRelationServiceImpl implements UserRelationService {
      * @return
      */
     @Override
-    public void addUserFriendshipScore(List<String> uidLis) {
+    public void addUserFriendshipScore(List<String> uidList) {
         //先排序
-        uidLis.sort((u1, u2) -> Long.parseLong(u1) > Long.parseLong(u2) ? 1 : -1);
+        uidList.sort((u1, u2) -> Long.parseLong(u1) > Long.parseLong(u2) ? 1 : -1);
         //循环组合关系
-        for (int i = 0; i < uidLis.size(); i++) {
-            for (int j = i + 1 ; j < uidLis.size(); j++) {
-                //封装用户关系model
-                UserRelationEntity userRelationEntity = userRelationEntityMapper.selectRelation(uidLis.get(i),uidLis.get(j));
-                //判断用户关系十分存在
+        for (int i = 0; i < uidList.size(); i++) {
+            for (int j = i + 1 ; j < uidList.size(); j++) {
+                UserRelationEntity userRelationEntity = userRelationEntityMapper.selectRelation(uidList.get(i),uidList.get(j));
+                //判断用户关系是否存在
                 if (userRelationEntity == null){
                     //不存在则创建关系
                     UserRelationEntity relationEntity = UserRelationEntity.builder()
-                            .uid1(uidLis.get(i))
-                            .uid2(uidLis.get(j))
+                            .uid1(uidList.get(i))
+                            .uid2(uidList.get(j))
                             .friendshipScore(1)
                             .build();
                     relationEntity.setCreateDate(new Date());
@@ -57,6 +56,40 @@ public class UserRelationServiceImpl implements UserRelationService {
                     userRelationEntityMapper.updateByPrimaryKeySelective(userRelationEntity);
                 }
 
+            }
+        }
+    }
+
+    /**
+     * @author codey
+     * @description 扣除司机与乘客的亲密度
+     * @date 2019/1/5 15:33
+     * @param
+     * @return
+     */
+    @Override
+    public void deductDriverFriendshipScore(String driverUid,List<String> passengerUidList) {
+        //先放一起排序
+        List<String> uidList = new ArrayList<>();
+        uidList.add(driverUid);
+        uidList.addAll(passengerUidList);
+        uidList.sort((u1, u2) -> Long.parseLong(u1) > Long.parseLong(u2) ? 1 : -1);
+        //循环组合关系
+        for (int i = 0; i < uidList.size(); i++) {
+            for (int j = i + 1; j < uidList.size(); j++) {
+                //只有是跟司机有关系的组合才需要扣除
+                if(uidList.get(i).equals(driverUid) || uidList.get(j).equals(driverUid) ){
+                    //判断关系是否存在
+                    UserRelationEntity userRelationEntity = userRelationEntityMapper.selectRelation(uidList.get(i),uidList.get(j));
+                    if(userRelationEntity != null){
+                        //存在关系才扣除
+                        userRelationEntity.setFriendshipScore(userRelationEntity.getFriendshipScore() - 1);
+                        userRelationEntity.setLastModifyUser("system");
+                        userRelationEntity.setLastModifyDate(new Date());
+                        //修改
+                        userRelationEntityMapper.updateByPrimaryKeySelective(userRelationEntity);
+                    }
+                }
             }
         }
     }

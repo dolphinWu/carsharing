@@ -23,4 +23,12 @@ public interface UserService {
      */
     void addUserCreditScore(List<String> uidList);
 
+    /**
+     * @author codey
+     * @description 扣除用户信用分
+     * @date 2019/1/5 15:22
+     * @param
+     * @return
+     */
+    void deductUserCreditScore(String... uidList);
 }
