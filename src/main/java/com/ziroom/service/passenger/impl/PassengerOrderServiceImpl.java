@@ -90,6 +90,6 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
         paramsMap.put("uid", uid);
         PageHelper.startPage(pageNumber, pageSize, true);
         List<PassengerOrderEntity> passengerOrderEntityList = passengerOrderEntityMapper.findList(paramsMap);
-        return new PageInfo(passengerOrderEntityList);
+        return new PageInfo<>(passengerOrderEntityList);
     }
 }
