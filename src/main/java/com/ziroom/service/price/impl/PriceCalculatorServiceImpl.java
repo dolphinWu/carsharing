@@ -24,7 +24,7 @@ public class PriceCalculatorServiceImpl implements PriceCalculatorService {
         for (PriceCalculateType s : EnumSet.allOf(PriceCalculateType.class)) {
             NameAndCodeModel nameAndCodeModel = new NameAndCodeModel();
             nameAndCodeModel.setCode(s.getIndex()+"");
-            if (s.getIndex() == 2) {
+            if (s.getIndex() == PriceCalculateType.ONE_PRICE.getIndex()) {
                 nameAndCodeModel.setName("0.00");
             } else {
                 nameAndCodeModel.setName(pPointDistance.totalPrice());
