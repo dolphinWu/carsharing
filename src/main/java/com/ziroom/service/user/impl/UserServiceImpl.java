@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -34,5 +36,19 @@ public class UserServiceImpl implements UserService {
 
    public UserEntity getUserInfoByEmployeeNo(String employeeNo){
        return userEntityMapper.getUserInfoByEmployeeNo(employeeNo);
+    }
+
+    /**
+     * @author codey
+     * @description 增加用户信用分
+     * @date 2019/1/5 11:32
+     * @param
+     * @return
+     */
+    @Override
+    public void addUserCreditScore(List<String> uidList) {
+        uidList.forEach(uid ->{
+            userEntityMapper.addUserCreditScore(uid);
+        });
     }
 }

@@ -13,14 +13,18 @@ import com.ziroom.model.DriverOrderEntity;
 import com.ziroom.model.DriverPlanEntity;
 import com.ziroom.model.PassengerOrderEntity;
 import com.ziroom.service.driverOrder.DriverPlanService;
+import com.ziroom.service.user.UserService;
 import com.ziroom.utils.APIResponse;
 import com.ziroom.utils.DateKit;
+import com.ziroom.utils.Tools;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.geom.Point2D;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -38,6 +42,8 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     private DriverOrderEntityMapper driverOrderEntityMapper;
     @Autowired
     private PassengerOrderEntityMapper passengerOrderEntityMapper;
+    @Autowired
+    private UserService userService;
 
     @Override
     public List<DriverPlanEntity> getAllDriverPlanInManyHours(PassengerRequest passengerRequest) {
@@ -168,11 +174,20 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     //确认结束，完成行程
     @Override
     public APIResponse finishPlan(DriverPlanRequest driverPlanReq) {
-        //TODO 校验是否在终点一定范围内
+        //判断当前距离与终点距离
+        Point2D currentPoint = new Point2D.Double(NumberUtils.toDouble(driverPlanReq.getCurrentXpoint()),NumberUtils.toDouble(driverPlanReq.getCurrentYpoint()));
+        Point2D endPoint = new Point2D.Double(NumberUtils.toDouble(driverPlanReq.getEndXpoint()),NumberUtils.toDouble(driverPlanReq.getEndYpoint()));
+        if(Tools.getDistance(currentPoint,endPoint) <= 2000){
+            return APIResponse.fail("距离终点还挺远呢，不可以结束哦`");
+        }
+
+        List<String> uidList = new ArrayList<>();
+
         //查询行程单
         DriverPlanEntity driverPlan = driverPlanEntityMapper.selectByNo(driverPlanReq.getDriverNo());
         driverPlan.setStatus(DriverPlanStatus.FINISH.getCode());
         driverPlanEntityMapper.updateByPrimaryKey(driverPlan);
+        uidList.add(driverPlan.getDriverUid());
 
         //查询司机订单
         DriverOrderEntity driverOrder = driverOrderEntityMapper.selectByDriverNo(driverPlan.getDriverNo());
@@ -190,7 +205,14 @@ public class DriverPlanServiceImpl implements DriverPlanService {
             passengerOrderEntity.setStatus(PassengerOrderStatus.COMPLETE.getStatusCode());
             passengerOrderEntity.setActualEndTime(new Date());
             passengerOrderEntityMapper.updateByPrimaryKey(passengerOrderEntity);
+            uidList.add(passengerOrderEntity.getPassengerUid());
         });
+
+        //增加司机和乘客的信用分
+        userService.addUserCreditScore(uidList);
+        //增加亲密度
+
+
         return APIResponse.success();
     }
 

@@ -1,19 +1,20 @@
 package com.ziroom.dto.request;
 
 import com.ziroom.model.DriverPlanEntity;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by codey on 2019/1/3.
  */
+@Setter
+@Getter
 public class DriverPlanRequest extends DriverPlanEntity {
 
     private String actualAmount;//实际金额
 
-    public String getActualAmount() {
-        return actualAmount;
-    }
+    private String currentXpoint;
 
-    public void setActualAmount(String actualAmount) {
-        this.actualAmount = actualAmount;
-    }
+    private String currentYpoint;
+
 }

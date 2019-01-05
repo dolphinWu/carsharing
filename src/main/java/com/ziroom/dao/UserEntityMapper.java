@@ -16,4 +16,13 @@ public interface UserEntityMapper {
     int updateByPrimaryKey(UserEntity record);
 
     UserEntity getUserInfoByEmployeeNo(String employeeNo);
+
+    /**
+     * @author codey
+     * @description 增加用户信用分
+     * @date 2019/1/5 11:33
+     * @param
+     * @return
+     */
+    void addUserCreditScore(String uid);
 }
