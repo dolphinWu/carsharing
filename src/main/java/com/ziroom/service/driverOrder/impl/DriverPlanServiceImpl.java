@@ -101,7 +101,7 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         driverPlan.setLastModifyDate(new Date());
         driverPlan.setIsDel(0);
         driverPlanEntityMapper.insert(driverPlan);
-        return APIResponse.success(driverPlan);
+        return APIResponse.success();
     }
 
     //开始行程，返回起点终点的经纬度（导航）

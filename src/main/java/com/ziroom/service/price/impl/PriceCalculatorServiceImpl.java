@@ -29,6 +29,7 @@ public class PriceCalculatorServiceImpl implements PriceCalculatorService {
             } else {
                 nameAndCodeModel.setName(pPointDistance.totalPrice());
             }
+            nameAndCodeModel.setDesc(s.getName());
             list.add(nameAndCodeModel);
         }
         return list;

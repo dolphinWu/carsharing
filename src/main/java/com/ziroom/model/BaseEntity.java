@@ -8,7 +8,6 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString
 public class BaseEntity {
 
