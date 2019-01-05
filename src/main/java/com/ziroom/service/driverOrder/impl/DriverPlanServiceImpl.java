@@ -147,7 +147,7 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         driverOrder.setStatus(DriverOrderStatus.TRAVELING.getCode());
         //更新订单实际出发时间
         driverOrder.setActualStartTime(new Date());
-        driverOrderEntityMapper.updateByPrimaryKey(driverOrder);
+        driverOrderEntityMapper.updateByPrimaryKeySelective(driverOrder);
 
         //TODO 需测试有实际订单但是没有乘客订单的情况
         //查询乘客订单
@@ -157,7 +157,7 @@ public class DriverPlanServiceImpl implements DriverPlanService {
                     //更新状态为行驶中，实际出发时间
                     passengerOrderEntity.setStatus(PassengerOrderStatus.TRAVELING.getStatusCode());
                     passengerOrderEntity.setActualStartTime(new Date());
-                    passengerOrderEntityMapper.updateByPrimaryKey(passengerOrderEntity);
+                    passengerOrderEntityMapper.updateByPrimaryKeySelective(passengerOrderEntity);
                 }
         );
 
@@ -173,7 +173,7 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         List<String> passengerUidList = new ArrayList<>();
 
         //只有拼车中可以取消
-        if(DriverPlanStatus.WAITING.getCode() != driverPlan.getStatus()){
+        if(!DriverPlanStatus.WAITING.getCode().equals(driverPlan.getStatus())){
             return APIResponse.fail("只有拼车中才可以取消哦~");
         }
         //没有订单，直接取消行程单
@@ -185,18 +185,19 @@ public class DriverPlanServiceImpl implements DriverPlanService {
             return APIResponse.success("取消成功！");
         }
         //只有待发车和已满员状态可以取消
-        if(DriverOrderStatus.WAIT_DEPART.getCode() != driverOrder.getStatus() && DriverOrderStatus.READY.getCode() != driverOrder.getStatus()){
+        if(!DriverOrderStatus.WAIT_DEPART.getCode().equals(driverOrder.getStatus()) && !DriverOrderStatus.READY.getCode().equals(driverOrder.getStatus())){
             return APIResponse.fail("现在不可以取消哦~");
         }
+
         //更新司机订单状态为取消
         driverOrder.setStatus(DriverOrderStatus.CANCEL.getCode());
-        driverOrderEntityMapper.updateByPrimaryKey(driverOrder);
+        driverOrderEntityMapper.updateByPrimaryKeySelective(driverOrder);
         //查询乘客端订单
         List<PassengerOrderEntity> passengerOrderList = passengerOrderEntityMapper.selectByDriverOrderNo(driverOrder.getOrderNo());
         passengerOrderList.forEach(passengerOrderEntity -> {
             //更新乘客订单状态为取消
             passengerOrderEntity.setStatus(PassengerOrderStatus.CANCEL.getStatusCode());
-            passengerOrderEntityMapper.updateByPrimaryKey(passengerOrderEntity);
+            passengerOrderEntityMapper.updateByPrimaryKeySelective(passengerOrderEntity);
             passengerUidList.add(passengerOrderEntity.getPassengerUid());
         });
 
@@ -240,14 +241,14 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         }
         driverOrder.setStatus(DriverOrderStatus.FINISH.getCode());
         driverOrder.setActualEndTime(new Date());
-        driverOrderEntityMapper.updateByPrimaryKey(driverOrder);
+        driverOrderEntityMapper.updateByPrimaryKeySelective(driverOrder);
         //查询乘客端订单
         List<PassengerOrderEntity> passengerOrderList = passengerOrderEntityMapper.selectByDriverOrderNo(driverOrder.getOrderNo());
         passengerOrderList.forEach(passengerOrderEntity -> {
             //更新乘客订单状态为取消
             passengerOrderEntity.setStatus(PassengerOrderStatus.COMPLETE.getStatusCode());
             passengerOrderEntity.setActualEndTime(new Date());
-            passengerOrderEntityMapper.updateByPrimaryKey(passengerOrderEntity);
+            passengerOrderEntityMapper.updateByPrimaryKeySelective(passengerOrderEntity);
             uidList.add(passengerOrderEntity.getPassengerUid());
         });
 
