@@ -2,6 +2,7 @@ package com.ziroom.service.driverOrder;
 
 import com.ziroom.dto.request.DriverPlanRequest;
 import com.ziroom.dto.request.PassengerRequest;
+import com.ziroom.dto.response.DriverPlanResponse;
 import com.ziroom.model.DriverPlanEntity;
 import com.ziroom.utils.APIResponse;
 
@@ -76,4 +77,6 @@ public interface DriverPlanService {
     APIResponse getShowPlan(String driverUid);
 
    Integer sumMoney(String uid);
+
+   DriverPlanResponse findDriverPlanResponseById(Integer id);
 }

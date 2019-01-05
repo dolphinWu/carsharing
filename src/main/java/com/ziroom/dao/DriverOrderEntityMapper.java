@@ -1,5 +1,6 @@
 package com.ziroom.dao;
 
+import com.ziroom.dto.response.DriverPlanResponse;
 import com.ziroom.model.DriverOrderEntity;
 
 public interface DriverOrderEntityMapper {
@@ -24,5 +25,5 @@ public interface DriverOrderEntityMapper {
      */
     DriverOrderEntity selectByDriverNo(String driverNo);
 
-   int  selectTotalAmountByDriverNo(String uid);
+   int  selectTotalAmountByDriverNo(String driverNo);
 }

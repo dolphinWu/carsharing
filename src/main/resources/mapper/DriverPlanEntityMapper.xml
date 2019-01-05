@@ -324,4 +324,13 @@
     where driver_no = #{driverNo,jdbcType=VARCHAR}
   </select>
 
+    <select id="selectResponseByPrimaryKey" resultType="com.ziroom.dto.response.DriverPlanResponse" parameterType="java.lang.Integer">
+        select
+          <include refid="Response_Column_List" />
+        from
+        tb_driver_plan tdp
+        left join
+        tb_user tu on tu.uid = tdp.driver_uid and tu.is_del = 0
+        where tdp.id = #{id}
+    </select>
 </mapper>
