@@ -8,8 +8,12 @@
     <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
     <result column="car_number" jdbcType="VARCHAR" property="carNumber" />
     <result column="credit_score" jdbcType="INTEGER" property="creditScore" />
-    <result column="home_address_id" jdbcType="INTEGER" property="homeAddressId" />
-    <result column="company_address_id" jdbcType="INTEGER" property="companyAddressId" />
+    <result column="home_address_name" jdbcType="VARCHAR" property="homeAddressName" />
+    <result column="home_longitude" jdbcType="VARCHAR" property="hameLongitude" />
+    <result column="home_latitude" jdbcType="VARCHAR" property="hameLatitude" />
+    <result column="company_address_name" jdbcType="VARCHAR" property="companyAddressName" />
+    <result column="company_longitude" jdbcType="VARCHAR" property="companyLongitude" />
+    <result column="company_latitude" jdbcType="VARCHAR" property="companyLatitude" />
     <result column="employee_no" jdbcType="VARCHAR" property="employeeNo" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
@@ -19,7 +23,8 @@
     <result column="is_del" jdbcType="INTEGER" property="isDel" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, uid, uname, phone_number, car_number, credit_score, home_address_id, company_address_id,
+    id, uid, uname, phone_number, car_number, credit_score,
+    home_address_name,home_longitude, home_latitude, company_address_name,company_longitude, company_latitude,
     employee_no, remark, create_user,create_date,last_modify_user,last_modify_date,is_del
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -35,12 +40,13 @@
   <insert id="insert" parameterType="com.ziroom.model.UserEntity">
     insert into tb_user (id, uid, uname, 
       phone_number, car_number, credit_score, 
-      home_address_id, company_address_id, employee_no,
-      remark, create_user,create_date,last_modify_user,last_modify_date,is_del)
+     home_address_name,home_longitude, home_latitude, company_address_name,company_longitude, company_latitude,
+      employee_no, remark, create_user,create_date,last_modify_user,last_modify_date,is_del)
     values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, 
       #{phoneNumber,jdbcType=VARCHAR}, #{carNumber,jdbcType=VARCHAR}, #{creditScore,jdbcType=INTEGER}, 
-      #{homeAddressId,jdbcType=INTEGER}, #{companyAddressId,jdbcType=INTEGER}, #{employeeNo,jdbcType=VARCHAR},
-      #{remark,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{lastModifyUser,jdbcType=VARCHAR},
+      #{homeAddressName,jdbcType=VARCHAR}, #{hameLongitude,jdbcType=VARCHAR}, #{homeLatitude,jdbcType=VARCHAR},
+      #{companyAddressName,jdbcType=VARCHAR}, #{companyLongitude,jdbcType=VARCHAR}, #{companyLatitude,jdbcType=VARCHAR},
+      #{employeeNo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{lastModifyUser,jdbcType=VARCHAR},
       #{lastModifyDate,jdbcType=TIMESTAMP},#{isDel,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.ziroom.model.UserEntity">
@@ -64,11 +70,24 @@
       <if test="creditScore != null">
         credit_score,
       </if>
-      <if test="homeAddressId != null">
-        home_address_id,
+      <if test="homeAddressName != null">
+        home_address_name,
       </if>
-      <if test="companyAddressId != null">
-        company_address_id,
+
+      <if test="homeLongitude != null">
+        home_longitude,
+      </if>
+      <if test="homeLatitude != null">
+        home_latitude,
+      </if>
+      <if test="companyAddressName != null">
+        company_address_name,
+      </if>
+      <if test="companyLongitude != null">
+        company_longitude,
+      </if>
+      <if test="companyLatitude != null">
+        company_latitude,
       </if>
       <if test="employeeNo != null">
         employee_no,
@@ -111,11 +130,23 @@
       <if test="creditScore != null">
         #{creditScore,jdbcType=INTEGER},
       </if>
-      <if test="homeAddressId != null">
-        #{homeAddressId,jdbcType=INTEGER},
+      <if test="homeAddressName != null">
+        #{homeAddressName,jdbcType=VARCHAR},
       </if>
-      <if test="companyAddressId != null">
-        #{companyAddressId,jdbcType=INTEGER},
+      <if test="companyAddressName != null">
+        #{companyAddressName,jdbcType=VARCHAR},
+      </if>
+      <if test="homeLongitude != null">
+        #{homeLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="homeLatitude != null">
+        #{homeLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="companyLongitude != null">
+        #{companyLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="companyLatitude != null">
+        #{companyLatitude,jdbcType=VARCHAR},
       </if>
       <if test="employeeNo != null">
         #{employeeNo,jdbcType=VARCHAR},
@@ -158,11 +189,23 @@
       <if test="creditScore != null">
         credit_score = #{creditScore,jdbcType=INTEGER},
       </if>
-      <if test="homeAddressId != null">
-        home_address_id = #{homeAddressId,jdbcType=INTEGER},
+      <if test="homeAddressName != null">
+        home_address_name= #{homeAddressName,jdbcType=VARCHAR},
       </if>
-      <if test="companyAddressId != null">
-        company_address_id = #{companyAddressId,jdbcType=INTEGER},
+      <if test="companyAddressName != null">
+        company_address_name= #{companyAddressName,jdbcType=VARCHAR},
+      </if>
+      <if test="homeLongitude != null">
+        home_longitude = #{homeLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="homeLatitude != null">
+        home_latitude = #{homeLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="companyLongitude != null">
+        company_longitude = #{companyLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="companyLatitude != null">
+        company_latitude =  #{companyLatitude,jdbcType=VARCHAR},
       </if>
       <if test="employeeNo != null">
         employee_no = #{employeeNo,jdbcType=VARCHAR},
@@ -195,8 +238,12 @@
       phone_number = #{phoneNumber,jdbcType=VARCHAR},
       car_number = #{carNumber,jdbcType=VARCHAR},
       credit_score = #{creditScore,jdbcType=INTEGER},
-      home_address_id = #{homeAddressId,jdbcType=INTEGER},
-      company_address_id = #{companyAddressId,jdbcType=INTEGER},
+      home_address_name= #{homeAddressName,jdbcType=VARCHAR},
+      company_address_name= #{companyAddressName,jdbcType=VARCHAR},
+      home_longitude = #{homeLongitude,jdbcType=VARCHAR},
+      home_latitude = #{homeLatitude,jdbcType=VARCHAR},
+      company_longitude = #{companyLongitude,jdbcType=VARCHAR},
+      company_latitude =  #{companyLatitude,jdbcType=VARCHAR},
       employee_no = #{employeeNo,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       create_user = #{createUser,jdbcType=VARCHAR},
@@ -218,6 +265,12 @@
   <update id="addUserCreditScore" parameterType="java.lang.String">
     UPDATE tb_user
     SET credit_score = credit_score + 1 WHERE uid = #{uid,jdbcType=VARCHAR}
+  </update>
+
+  <!-- 扣除用户信用分 -->
+  <update id="deductUserCreditScore" parameterType="java.lang.String">
+    UPDATE tb_user
+    SET credit_score = credit_score - 1 WHERE uid = #{uid,jdbcType=VARCHAR}
   </update>
 
   <select id="selectByUId" resultMap="BaseResultMap" parameterType="java.lang.Integer">

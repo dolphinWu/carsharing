@@ -284,19 +284,27 @@
   </select>
 
   <!-- 根据司机uid查询 -->
-  <select id="selectByUid" resultMap="BaseResultMap">
+  <select id="selectByUidAndStatus" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from tb_driver_plan
     where driver_uid = #{driverUid,jdbcType=VARCHAR} AND status = #{status,jdbcType=INTEGER}
   </select>
 
-  <!-- 查询司机有效的行程单 -->
-  <select id="selectByUidAndStatus" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <!-- 根据司机uid查询 -->
+  <select id="selectByUid" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from tb_driver_plan
-    where driver_uid = #{driverUid,jdbcType=VARCHAR} AND status = 0 OR status = 1
+    where driver_uid = #{driverUid,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 查询司机有效的行程单 -->
+  <select id="selectExistPlan" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_driver_plan
+    where driver_uid = #{driverUid,jdbcType=VARCHAR} AND ( status = 0 OR status = 1 )
   </select>
 
   <!-- 根据行程单号查询 -->

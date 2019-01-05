@@ -136,4 +136,11 @@
       is_del = #{isDel,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!-- selectRelation -->
+  <select id="selectRelation" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM tb_user_relation WHERE uid1 = #{uid1,jdbcType=VARCHAR} AND uid2 = #{uid2,jdbcType=VARCHAR} AND is_del = 0
+  </select>
 </mapper>

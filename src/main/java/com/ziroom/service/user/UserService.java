@@ -10,10 +10,25 @@ public interface UserService {
 
     UserEntity getUserInfoByUId(Integer uId);
 
-    int updateCarNoByEmployeeNo(UserEntity userEntity);
+    int updateUserByUid(UserEntity userEntity);
 
     UserEntity getUserInfoByEmployeeNo(String employeeNo);
 
+    /**
+     * @author codey
+     * @description 增加信用分
+     * @date 2019/1/5 11:49
+     * @param
+     * @return
+     */
     void addUserCreditScore(List<String> uidList);
 
+    /**
+     * @author codey
+     * @description 扣除用户信用分
+     * @date 2019/1/5 15:22
+     * @param
+     * @return
+     */
+    void deductUserCreditScore(String... uidList);
 }

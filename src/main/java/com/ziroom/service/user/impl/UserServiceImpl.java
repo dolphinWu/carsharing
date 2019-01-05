@@ -1,13 +1,16 @@
 package com.ziroom.service.user.impl;
 
 import com.ziroom.dao.UserEntityMapper;
+import com.ziroom.dao.UserRelationEntityMapper;
 import com.ziroom.exception.BusinessException;
 import com.ziroom.model.UserEntity;
+import com.ziroom.model.UserRelationEntity;
 import com.ziroom.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,7 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public int updateCarNoByEmployeeNo(UserEntity user){
+    public int updateUserByUid(UserEntity user){
         return userEntityMapper.updateByPrimaryKey(user);
     }
 
@@ -51,4 +54,19 @@ public class UserServiceImpl implements UserService {
             userEntityMapper.addUserCreditScore(uid);
         });
     }
+
+    /**
+     * @author codey
+     * @description 扣除用户信用分
+     * @date 2019/1/5 15:24
+     * @param
+     * @return
+     */
+    @Override
+    public void deductUserCreditScore(String... uidList) {
+        for (String uid : uidList) {
+            userEntityMapper.deductUserCreditScore(uid);
+        }
+    }
+
 }

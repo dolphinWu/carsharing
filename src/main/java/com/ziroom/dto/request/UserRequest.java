@@ -1,11 +1,14 @@
-package com.ziroom.model;
+package com.ziroom.dto.request;
 
+import com.ziroom.model.AddressEntity;
+import com.ziroom.model.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UserEntity extends BaseEntity {
+public class UserRequest extends BaseEntity {
+
     private Integer id;
 
     private String uid;

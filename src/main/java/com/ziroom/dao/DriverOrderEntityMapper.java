@@ -23,4 +23,6 @@ public interface DriverOrderEntityMapper {
      * @return
      */
     DriverOrderEntity selectByDriverNo(String driverNo);
+
+   int  selectTotalAmountByDriverNo(String uid);
 }

@@ -3,6 +3,7 @@ package com.ziroom.dto.request;
 import com.ziroom.utils.MathUtil;
 import com.ziroom.utils.PointCalculateUtil;
 import com.ziroom.utils.Tools;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import java.awt.geom.Point2D;
 
@@ -57,15 +58,7 @@ public class PPointDistance {
     }
 
     public String distance() {
-        String xXDistance = PointCalculateUtil.num1SubtractNum2(this.endXpoint,this.startXpoint)+"";
-        String yYDistance = PointCalculateUtil.num1SubtractNum2(this.endYpoint,this.startYpoint)+"";
-
-        //x差值的平方
-        String x2 = PointCalculateUtil.num1MultiplyNum2(xXDistance, xXDistance)+"";
-        String y2 = PointCalculateUtil.num1MultiplyNum2(yYDistance, yYDistance) + "";
-        //平方和
-        String z2 = PointCalculateUtil.num1PlusNum2(x2, y2);
-        return PointCalculateUtil.square(z2);
+        return Tools.getDistance(new Point2D.Double(NumberUtils.toDouble(this.startXpoint, 0), NumberUtils.toDouble(this.startYpoint, 0)), new Point2D.Double(NumberUtils.toDouble(this.endXpoint, 0), NumberUtils.toDouble(this.endYpoint, 0)))+"";
     }
 
     @Override
