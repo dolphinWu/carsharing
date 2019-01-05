@@ -57,10 +57,27 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         return driverPlanEntityMapper.getAllDriverPlanInManyHours(paramMap);
     }
 
+    //查看刚刚发布的行程单
+    @Override
+    public APIResponse getShowPlan(String driverUid) {
+        DriverPlanEntity driverPlanEntity = driverPlanEntityMapper.selectByUidAndStatus(driverUid,0);
+        DriverPlanResponse response = new DriverPlanResponse();
+        //查询该行程单的订单
+        DriverOrderEntity driverOrderEntity = driverOrderEntityMapper.selectByDriverNo(driverPlanEntity.getDriverNo());
+        if(driverOrderEntity != null){
+            //设置当前拼车乘客数
+            response.setPassengerCount(driverOrderEntity.getPassengerCount());
+        }else {
+            //发布后查看时如果没有订单，显示实际乘车人数为0
+            response.setPassengerCount(0);
+        }
+        return APIResponse.success(response);
+    }
+
     //1.查询历史记录;2.行程单发布后需要查询分布的行程单（状态为拼车中）
     @Override
-    public APIResponse getHistoryPlan(String driverUid,Integer status,Integer pageSize,Integer pageNumber) {
-        List<DriverPlanEntity> list = driverPlanEntityMapper.selectByUid(driverUid,status);
+    public APIResponse getHistoryPlan(String driverUid,Integer pageSize,Integer pageNumber) {
+        List<DriverPlanEntity> list = driverPlanEntityMapper.selectByUid(driverUid);
         List<DriverPlanResponse> responselist = new ArrayList<>();
         for (DriverPlanEntity driverPlanEntity : list) {
             DriverPlanResponse response = new DriverPlanResponse();
@@ -84,7 +101,7 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     @Override
     public APIResponse createDriverPlan(DriverPlanRequest driverPlanReq) {
         //判断行程单是否存在，转态为拼车中和已出发
-        List<DriverPlanEntity> list = driverPlanEntityMapper.selectByUidAndStatus(driverPlanReq.getDriverUid());
+        List<DriverPlanEntity> list = driverPlanEntityMapper.selectExistPlan(driverPlanReq.getDriverUid());
         if(list.size() != 0){
             return APIResponse.fail("已存在行程单，不可重复发布");
         }
@@ -180,17 +197,20 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     //确认结束，完成行程
     @Override
     public APIResponse finishPlan(DriverPlanRequest driverPlanReq) {
+        //查询行程单
+        DriverPlanEntity driverPlan = driverPlanEntityMapper.selectByNo(driverPlanReq.getDriverNo());
+
         //判断当前距离与终点距离
         Point2D currentPoint = new Point2D.Double(NumberUtils.toDouble(driverPlanReq.getCurrentXpoint()),NumberUtils.toDouble(driverPlanReq.getCurrentYpoint()));
-        Point2D endPoint = new Point2D.Double(NumberUtils.toDouble(driverPlanReq.getEndXpoint()),NumberUtils.toDouble(driverPlanReq.getEndYpoint()));
-        if(Tools.getDistance(currentPoint,endPoint) <= 2000){
+        Point2D endPoint = new Point2D.Double(NumberUtils.toDouble(driverPlan.getEndXpoint()),NumberUtils.toDouble(driverPlan.getEndYpoint()));
+        System.out.println(Tools.getDistance(currentPoint,endPoint));
+        if(Tools.getDistance(currentPoint,endPoint) >= 2000){
             return APIResponse.fail("距离终点还挺远呢，不可以结束哦`");
         }
 
         List<String> uidList = new ArrayList<>();
 
-        //查询行程单
-        DriverPlanEntity driverPlan = driverPlanEntityMapper.selectByNo(driverPlanReq.getDriverNo());
+        //更新行程单
         driverPlan.setStatus(DriverPlanStatus.FINISH.getCode());
         driverPlanEntityMapper.updateByPrimaryKey(driverPlan);
         uidList.add(driverPlan.getDriverUid());

@@ -26,7 +26,7 @@ public interface DriverPlanEntityMapper {
      * @param
      * @return
      */
-    List<DriverPlanEntity> selectByUid(@Param("driverUid") String driverUid,@Param("status") Integer status);
+    List<DriverPlanEntity> selectByUid(@Param("driverUid") String driverUid);
 
     /**
      * @author codey
@@ -35,7 +35,9 @@ public interface DriverPlanEntityMapper {
      * @param
      * @return
      */
-    List<DriverPlanEntity> selectByUidAndStatus(String driverUid);
+    List<DriverPlanEntity> selectExistPlan(String driverUid);
+
+    DriverPlanEntity selectByUidAndStatus(@Param("driverUid") String driverUid,@Param("status") Integer status);
 
     /**
      * @author codey

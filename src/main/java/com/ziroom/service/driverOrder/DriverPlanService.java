@@ -19,7 +19,7 @@ public interface DriverPlanService {
      * @param driverUid
      * @return
      */
-   APIResponse getHistoryPlan(String driverUid,Integer status,Integer pageSize,Integer pageNumber);
+   APIResponse getHistoryPlan(String driverUid,Integer pageSize,Integer pageNumber);
 
    /**
     * @author codey
@@ -65,4 +65,13 @@ public interface DriverPlanService {
     * @return
     */
    List<DriverPlanEntity> getAllDriverPlanInManyHours(PassengerRequest passengerRequest);
+
+   /**
+    * @author codey
+    * @description 查看刚刚发布的行程单
+    * @date 2019/1/5 14:47
+    * @param
+    * @return
+    */
+    APIResponse getShowPlan(String driverUid);
 }

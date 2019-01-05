@@ -33,8 +33,20 @@ public class DriverController {
     @PostMapping(value = "/historyPlan",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public APIResponse historyPlan(DriverPlanRequest driverPlanRequest){
         String driverUid = driverPlanRequest.getDriverUid();
-        Integer status = driverPlanRequest.getStatus();
-        return driverPlanService.getHistoryPlan(driverUid,status,driverPlanRequest.getPageSize(),driverPlanRequest.getPageNumber());
+        return driverPlanService.getHistoryPlan(driverUid,driverPlanRequest.getPageSize(),driverPlanRequest.getPageNumber());
+    }
+
+    /**
+     * @author codey
+     * @description 查看刚刚发布的行程单
+     * @date 2019/1/5 14:46
+     * @param
+     * @return
+     */
+    @PostMapping(value = "/showPlan",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public APIResponse showPlan(DriverPlanRequest driverPlanRequest){
+        String driverUid = driverPlanRequest.getDriverUid();
+        return driverPlanService.getShowPlan(driverUid);
     }
 
     /**
