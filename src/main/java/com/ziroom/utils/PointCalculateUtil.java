@@ -1,5 +1,7 @@
 package com.ziroom.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.awt.geom.Point2D;
 import java.math.BigDecimal;
 
@@ -8,6 +10,7 @@ import java.math.BigDecimal;
  * @Author: liuzh
  * @Description: 为了计算地图之间的距离的工具类(需要保留6位小数)
  */
+@Slf4j
 public class PointCalculateUtil {
 
     /**
@@ -109,7 +112,9 @@ public class PointCalculateUtil {
             range = 1000D;
         }
 
-        return area / startToEndDistance <= range;
+        double distance = area / startToEndDistance;
+        log.info("途径点到起始点和终点之间的距离：{}", distance);
+        return  distance<= range;
     }
 
     /**
