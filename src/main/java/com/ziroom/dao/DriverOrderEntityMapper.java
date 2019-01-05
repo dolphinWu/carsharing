@@ -1,5 +1,6 @@
 package com.ziroom.dao;
 
+import com.ziroom.dto.response.DriverPlanResponse;
 import com.ziroom.model.DriverOrderEntity;
 
 public interface DriverOrderEntityMapper {

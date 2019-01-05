@@ -1,5 +1,6 @@
 package com.ziroom.dao;
 
+import com.ziroom.dto.response.DriverPlanResponse;
 import com.ziroom.model.DriverPlanEntity;
 import org.apache.ibatis.annotations.Param;
 
@@ -49,4 +50,6 @@ public interface DriverPlanEntityMapper {
     DriverPlanEntity selectByNo(String driverNo);
 
     List<DriverPlanEntity> getAllDriverPlanInManyHours(Map<String, Object> paramMap);
+
+    DriverPlanResponse selectResponseByPrimaryKey(Integer id);
 }

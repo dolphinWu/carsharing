@@ -275,4 +275,9 @@ public class DriverPlanServiceImpl implements DriverPlanService {
        }
         return driverOrderEntityMapper.selectTotalAmountByDriverNo(driverPlanEntity.getDriverNo());
     }
+
+    @Override
+    public DriverPlanResponse findDriverPlanResponseById(Integer id) {
+        return driverPlanEntityMapper.selectResponseByPrimaryKey(id);
+    }
 }

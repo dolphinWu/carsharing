@@ -4,6 +4,7 @@ package com.ziroom.controller;
 import com.github.pagehelper.PageInfo;
 import com.ziroom.constant.BaseConst;
 import com.ziroom.dto.request.PassengerRequest;
+import com.ziroom.dto.response.DriverPlanResponse;
 import com.ziroom.dto.response.PassengerIndexResponse;
 import com.ziroom.model.AddressEntity;
 import com.ziroom.model.DriverPlanEntity;
@@ -18,6 +19,8 @@ import com.ziroom.utils.Tools;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
@@ -27,12 +30,14 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.geom.Point2D;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Api("乘客端")
 @RestController("PassengerController")
 @RequestMapping(value = "/api/passenger")
+@Slf4j
 public class PassengerController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PassengerController.class);
@@ -109,11 +114,11 @@ public class PassengerController extends BaseController {
     @PostMapping(value = "/viewDriverPlan/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "查看行程单详情")
     public APIResponse viewDriverPlan(@PathVariable("id") int id) {
-        DriverPlanEntity driverPlanEntity = driverPlanService.findDriverPlanById(id);
-        if (driverPlanEntity == null) {
+        DriverPlanResponse driverPlanResponse = driverPlanService.findDriverPlanResponseById(id);
+        if (driverPlanResponse == null) {
             return APIResponse.fail("行程单不存在，请刷新重试！");
         }
-        return APIResponse.success(driverPlanEntity);
+        return APIResponse.success(driverPlanResponse);
     }
 
     @PostMapping(value = "/joinJourney/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
