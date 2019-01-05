@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public int updateCarNoByEmployeeNo(UserEntity user){
+    public int updateUserByUid(UserEntity user){
         return userEntityMapper.updateByPrimaryKey(user);
     }
 

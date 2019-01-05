@@ -8,7 +8,6 @@ import com.ziroom.dto.response.UserDetail;
 import com.ziroom.dto.response.UserResponse;
 import com.ziroom.http.HttpRequestClient;
 import com.ziroom.model.UserEntity;
-import com.ziroom.service.Address.AddressService;
 import com.ziroom.service.driverOrder.DriverPlanService;
 import com.ziroom.service.user.UserService;
 import com.ziroom.utils.APIResponse;
@@ -45,9 +44,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private AddressService addressService;
 
     @Autowired
     private DriverPlanService driverPlanService;
@@ -174,7 +170,7 @@ public class UserController {
            return  APIResponse.fail("该用户不存在");
        }
        userRequest.setId(userEntity.getId());
-       userService.updateCarNoByEmployeeNo(userRequest);
+       userService.updateUserByUid(userRequest);
        return  APIResponse.success();
     }
 

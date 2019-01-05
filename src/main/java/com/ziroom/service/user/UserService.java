@@ -10,7 +10,7 @@ public interface UserService {
 
     UserEntity getUserInfoById(Integer uId);
 
-    int updateCarNoByEmployeeNo(UserEntity userEntity);
+    int updateUserByUid(UserEntity userEntity);
 
     UserEntity getUserInfoByEmployeeNo(String employeeNo);
 
