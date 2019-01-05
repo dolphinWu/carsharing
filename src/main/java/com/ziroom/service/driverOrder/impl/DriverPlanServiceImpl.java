@@ -58,10 +58,14 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         return driverPlanEntityMapper.getAllDriverPlanInManyHours(paramMap);
     }
 
-    //查看刚刚发布的行程单
+    //查看发布的行程单--司机首页
     @Override
     public APIResponse getShowPlan(String driverUid) {
         DriverPlanEntity driverPlanEntity = driverPlanEntityMapper.selectByUidAndStatus(driverUid,0);
+        //没有也返回
+        if(driverPlanEntity == null){
+            return APIResponse.success();
+        }
         DriverPlanResponse response = new DriverPlanResponse();
         //查询该行程单的订单
         DriverOrderEntity driverOrderEntity = driverOrderEntityMapper.selectByDriverNo(driverPlanEntity.getDriverNo());
