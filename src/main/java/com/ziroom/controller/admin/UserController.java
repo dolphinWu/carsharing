@@ -200,10 +200,7 @@ public class UserController {
         //查询累计手收益
         int amount = driverPlanService.sumMoney(uid);
         response.setAmount(amount);
-
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userDetail",response);
-        return  APIResponse.success(jsonObject);
+        return  APIResponse.success(response);
     }
 
 }
