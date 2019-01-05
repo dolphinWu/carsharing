@@ -25,8 +25,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity getUserInfoById(Integer Id) {
-        return userEntityMapper.selectByPrimaryKey(Id);
+    public UserEntity getUserInfoByUId(Integer uId) {
+        return userEntityMapper.selectByUId(uId);
     }
 
 

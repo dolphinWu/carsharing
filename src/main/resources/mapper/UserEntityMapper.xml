@@ -220,5 +220,11 @@
     SET credit_score = credit_score + 1 WHERE uid = #{uid,jdbcType=VARCHAR}
   </update>
 
+  <select id="selectByUId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT
+    <include refid="Base_Column_List" />
+    from tb_user
+    where uid = #{uId}
+  </select>
 
 </mapper>

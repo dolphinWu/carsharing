@@ -56,7 +56,7 @@ public class PassengerController extends BaseController {
             return APIResponse.fail("uid必传");
         }
 
-        UserEntity userEntity = userService.getUserInfoById(uid);
+        UserEntity userEntity = userService.getUserInfoByUId(uid);
         if (userEntity == null) {
             return APIResponse.fail("当前用户不存在");
         }
@@ -66,12 +66,12 @@ public class PassengerController extends BaseController {
         if (StringUtils.isBlank(longitude) && StringUtils.isBlank(latitude)) {
             Integer homeAddressId = userEntity.getHomeAddressId();
             if (homeAddressId == null) {
-                return APIResponse.fail("未维护常用地址");
+                return APIResponse.success(null);
             }
 
             AddressEntity addressEntity = addressService.findAddressById(homeAddressId);
             if (addressEntity == null) {
-                return APIResponse.fail("家庭地址已失效");
+                return APIResponse.success(null);
             }
 
             longitude = addressEntity.getLongitude();

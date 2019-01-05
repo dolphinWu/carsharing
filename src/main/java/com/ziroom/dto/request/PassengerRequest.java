@@ -1,6 +1,5 @@
 package com.ziroom.dto.request;
 
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class PassengerRequest {
