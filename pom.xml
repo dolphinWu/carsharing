@@ -24,6 +24,7 @@
     </properties>
 
     <dependencies>
+        <!-- springboot相关-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -45,6 +46,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <!-- EhCache 相关 -->
@@ -82,6 +87,7 @@
             <version>3.4</version>
         </dependency>
 
+        <!--jackson-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -98,6 +104,7 @@
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-parameter-names</artifactId>
         </dependency>
+
         <!--http -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -120,12 +127,6 @@
             <artifactId>jodd-http</artifactId>
             <version>3.7.1</version>
         </dependency>
-        <!--fastjson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.44</version>
-        </dependency>
 
         <!-- Common Utils -->
         <dependency>
@@ -146,6 +147,7 @@
             <version>1.1.9</version>
         </dependency>
 
+        <!-- fastjson-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -159,6 +161,7 @@
             <version>3.2.0</version>
         </dependency>
 
+        <!-- swagger-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -177,6 +180,7 @@
             <version>1.9.22</version>
         </dependency>
 
+        <!-- Gson-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
