@@ -269,18 +269,27 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="getAllDriverPlanInManyHours" resultMap="BaseResultMap" parameterType="map">
+  <sql id="Response_Column_List">
+    tdp.id, tdp.plan_start_time planStartTime, tdp.car_capacity carCapacity, tdp.remark, tdp.plan_amount planAmount, tdp.status, tdp.driver_uid driverUid, tdp.driver_no driverNo,
+    tdp.start_xpoint startXpoint, tdp.start_ypoint startYpoint, tdp.end_xpoint endXpoint, tdp.end_ypoint endYpoint, tdp.accounting_rules accountingRules, tdp.start_name startName, tdp.end_name endName,
+    tdp.create_user createUser,tdp.create_date createDate,tdp.last_modify_user lastModifyUser,tdp.last_modify_date lastModifyDate,tdp.is_del isDel, tu.uname,tu.phone_number driverPhoneNumber
+  </sql>
+
+  <select id="getAllDriverPlanInManyHours" resultType="com.ziroom.dto.response.DriverPlanResponse" parameterType="map">
     select
-    <include refid="Base_Column_List" />
-    from tb_driver_plan
+      <include refid="Response_Column_List" />
+    from
+        tb_driver_plan tdp
+    left join
+        tb_user tu on tu.uid = tdp.driver_uid and tu.is_del = 0
     where
     <if test="departTime != null and departTime != ''">
-      plan_start_time <![CDATA[<=]]> ${departTime}
+      tdp.plan_start_time <![CDATA[<=]]> ${departTime}
     </if>
     <if test="departTime == null">
-      plan_start_time <![CDATA[<=]]> date_add(now(), interval 2 hour)
+      tdp.plan_start_time <![CDATA[<=]]> date_add(now(), interval 2 hour)
     </if>
-    and plan_start_time <![CDATA[>=]]>  now()
+    and tdp.plan_start_time <![CDATA[>=]]>  now() and tdp.is_del = 0 and tdp.status = 0
   </select>
 
   <!-- 根据司机uid查询 -->
