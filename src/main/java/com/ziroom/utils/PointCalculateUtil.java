@@ -106,7 +106,7 @@ public class PointCalculateUtil {
         }
 
         if (range == null) {
-            range = 2000D;
+            range = 1000D;
         }
 
         return area / startToEndDistance <= range;
