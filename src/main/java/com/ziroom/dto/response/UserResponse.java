@@ -16,8 +16,7 @@ public class UserResponse {
     //客户手机号
     private String phone;
 
-    //职级名称
-    private String levelName;
+    private String descr;
 
     //邮箱
     private String email;

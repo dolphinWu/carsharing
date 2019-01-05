@@ -33,7 +33,7 @@ public class UserAddressController {
     public APIResponse addAddress(@RequestBody AddressRequest request)throws Exception {
         AddressEntity address = new AddressEntity();
         BeanUtils.copyProperties(address, request);
-        address.setUid(request.getEmployeeNo());
+        address.setUid(request.getUid());
 
         int i = addressService.insertAddress(address);
         if(i!=1){

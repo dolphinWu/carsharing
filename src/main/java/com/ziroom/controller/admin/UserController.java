@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -144,6 +145,11 @@ public class UserController {
             user.setUid(response.getEmplid());
             user.setPhoneNumber(response.getPhone());
             user.setCreditScore(100);//信用分
+            user.setRemark("欢迎登录自如行APP");
+            user.setIsDel(0);
+            user.setCreateDate(new Date());
+            user.setCreateUser(response.getName());
+            user.setJobTitle(response.getDescr());
             userService.insertUserInfo(user);
         }
         try {
@@ -194,10 +200,7 @@ public class UserController {
         //查询累计手收益
         int amount = driverPlanService.sumMoney(uid);
         response.setAmount(amount);
-
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userDetail",response);
-        return  APIResponse.success(jsonObject);
+        return  APIResponse.success(response);
     }
 
 }
