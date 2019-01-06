@@ -106,6 +106,9 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     //创建行程单
     @Override
     public APIResponse createDriverPlan(DriverPlanRequest driverPlanReq) {
+        if (driverPlanReq.getCarCapacity() <= 0 || driverPlanReq.getCarCapacity() > 4) {
+            return APIResponse.fail("发布乘车座位数有误，请重新下单");
+        }
         //判断行程单是否存在，转态为拼车中和已出发
         List<DriverPlanEntity> list = driverPlanEntityMapper.selectExistPlan(driverPlanReq.getDriverUid());
         if(list.size() != 0){
