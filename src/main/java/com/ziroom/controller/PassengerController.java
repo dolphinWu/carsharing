@@ -123,8 +123,8 @@ public class PassengerController extends BaseController {
 
     @PostMapping(value = "/viewDriverPlan", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "查看行程单详情")
-    public APIResponse viewDriverPlan(@RequestParam("id") int id, @RequestParam("longitude") String longitude,
-                                      @RequestParam("latitude") String latitude, @RequestParam("uid") String uid) {
+    public APIResponse viewDriverPlan(@RequestParam("id") int id, @RequestParam(value = "longitude", required = false) String longitude,
+                                      @RequestParam(value = "latitude", required = false) String latitude, @RequestParam("uid") String uid) {
         DriverPlanResponse driverPlanResponse = driverPlanService.findDriverPlanResponseById(id);
         if (driverPlanResponse == null) {
             return APIResponse.fail("行程单不存在，请刷新重试！");
@@ -143,7 +143,7 @@ public class PassengerController extends BaseController {
             List<PassengerOrderEntity> passengerOrderEntityList = driverOrderEntity.getPassengerOrderEntityList();
             if (CollectionUtils.isNotEmpty(passengerOrderEntityList)) {
                 //设置行程单已有人数
-                passengerCount = passengerOrderEntityList.size() - 1;
+                passengerCount = passengerOrderEntityList.size();
             }
         }
 

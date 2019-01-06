@@ -20,6 +20,7 @@ import com.ziroom.service.user.UserService;
 import com.ziroom.utils.APIResponse;
 import com.ziroom.utils.DateKit;
 import com.ziroom.utils.Tools;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,10 +70,15 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         DriverPlanResponse response = new DriverPlanResponse();
         BeanUtils.copyProperties(driverPlanEntity,response);
         //查询该行程单的订单
-        DriverOrderEntity driverOrderEntity = driverOrderEntityMapper.selectByDriverNo(driverPlanEntity.getDriverNo());
+        String driverNo = driverPlanEntity.getDriverNo();
+        Map<String,Object> map = new HashMap<>();
+        map.put("driverNo", driverNo);
+        DriverOrderEntity driverOrderEntity = driverOrderEntityMapper.findDriverOrderAllInfo(map);
         if(driverOrderEntity != null){
             //设置当前拼车乘客数
             response.setPassengerCount(driverOrderEntity.getPassengerCount());
+            List<PassengerOrderEntity> passengerOrderEntityList = driverOrderEntity.getPassengerOrderEntityList();
+            response.setPassengerOrderEntityList(passengerOrderEntityList);
         }else {
             //发布后查看时如果没有订单，显示实际乘车人数为0
             response.setPassengerCount(0);
@@ -89,10 +95,15 @@ public class DriverPlanServiceImpl implements DriverPlanService {
             DriverPlanResponse response = new DriverPlanResponse();
             BeanUtils.copyProperties(driverPlanEntity,response);
             //查询该行程单的订单
-            DriverOrderEntity driverOrderEntity = driverOrderEntityMapper.selectByDriverNo(driverPlanEntity.getDriverNo());
+            String driverNo = driverPlanEntity.getDriverNo();
+            Map<String,Object> map = new HashMap<>();
+            map.put("driverNo", driverNo);
+            DriverOrderEntity driverOrderEntity = driverOrderEntityMapper.findDriverOrderAllInfo(map);
             if(driverOrderEntity != null){
                 //设置当前拼车乘客数
                 response.setPassengerCount(driverOrderEntity.getPassengerCount());
+                List<PassengerOrderEntity> passengerOrderEntityList = driverOrderEntity.getPassengerOrderEntityList();
+                response.setPassengerOrderEntityList(passengerOrderEntityList);
             }else {
                 //发布后查看时如果没有订单，显示实际乘车人数为0
                 response.setPassengerCount(0);
