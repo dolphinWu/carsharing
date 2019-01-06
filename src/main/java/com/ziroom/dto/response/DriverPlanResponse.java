@@ -13,6 +13,10 @@ public class DriverPlanResponse extends DriverPlanEntity {
 
     private String driverName;
 
+    private String currentMoney;
+
+    private Integer currentPeopleCount;
+
     public Integer getPassengerCount() {
         return passengerCount;
     }
@@ -35,5 +39,21 @@ public class DriverPlanResponse extends DriverPlanEntity {
 
     public void setDriverName(String driverName) {
         this.driverName = driverName;
+    }
+
+    public String getCurrentMoney() {
+        return currentMoney;
+    }
+
+    public void setCurrentMoney(String currentMoney) {
+        this.currentMoney = currentMoney;
+    }
+
+    public Integer getCurrentPeopleCount() {
+        return currentPeopleCount;
+    }
+
+    public void setCurrentPeopleCount(Integer currentPeopleCount) {
+        this.currentPeopleCount = currentPeopleCount;
     }
 }

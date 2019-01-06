@@ -16,6 +16,29 @@
     <result column="last_modify_user" jdbcType="VARCHAR" property="lastModifyUser" />
     <result column="last_modify_date" jdbcType="TIMESTAMP" property="lastModifyDate" />
     <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <collection property="passengerOrderEntityList" ofType="com.ziroom.model.PassengerOrderEntity">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="passenger_no" jdbcType="VARCHAR" property="passengerNo" />
+      <result column="driver_order_no" jdbcType="VARCHAR" property="driverOrderNo" />
+      <result column="passenger_count" jdbcType="INTEGER" property="passengerCount" />
+      <result column="start_name" jdbcType="VARCHAR" property="startName" />
+      <result column="end_name" jdbcType="VARCHAR" property="endName" />
+      <result column="actual_amount" jdbcType="INTEGER" property="actualAmount" />
+      <result column="status" jdbcType="INTEGER" property="status" />
+      <result column="actual_start_time" jdbcType="TIMESTAMP" property="actualStartTime" />
+      <result column="actual_end_time" jdbcType="TIMESTAMP" property="actualEndTime" />
+      <result column="passenger_uid" jdbcType="VARCHAR" property="passengerUid" />
+      <result column="start_xpoint" jdbcType="VARCHAR" property="startXpoint" />
+      <result column="start_ypoint" jdbcType="VARCHAR" property="startYpoint" />
+      <result column="end_xpoint" jdbcType="VARCHAR" property="endXpoint" />
+      <result column="end_ypoint" jdbcType="VARCHAR" property="endYpoint" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+      <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+      <result column="last_modify_user" jdbcType="VARCHAR" property="lastModifyUser" />
+      <result column="last_modify_date" jdbcType="TIMESTAMP" property="lastModifyDate" />
+      <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    </collection>
   </resultMap>
   <sql id="Base_Column_List">
     id, order_no, remark, status, actual_start_time, actual_end_time, driver_no, actual_amount, 
@@ -208,5 +231,23 @@
     select SUM (actual_amount)
     from tb_driver_order
     where driver_no = #{driverNo,jdbcType=VARCHAR} AND is_del = 0
+  </select>
+
+  <!--级联查询司机订单和乘客订单-->
+  <select id="findByDriverPlanNo" resultMap="BaseResultMap" parameterType="map">
+    select
+      tdo.id, tdo.order_no, tdo.remark, tdo.status, tdo.actual_start_time, tdo.actual_end_time, tdo.driver_no, tdo.actual_amount,
+      tdo.passenger_count,tpo.id, tpo.passenger_no, tpo.driver_order_no, tpo.passenger_count, tpo.start_name, tpo.end_name, tpo.actual_amount,
+      tpo.status, tpo.actual_start_time, tpo.actual_end_time, tpo.passenger_uid, tpo.start_xpoint, tpo.start_ypoint,
+      tpo.end_xpoint, tpo.end_ypoint, tpo.remark
+    from tb_driver_order tdo
+    left join
+      tb_passenger_order tpo
+      on tpo.driver_order_no = tdo.order_no
+      and tpo.is_del = 0
+    <if test="status != null">
+      and tpo.status = #{status}
+    </if>
+    where tdo.driver_no = #{driverNo} and tdo.is_del = 0
   </select>
 </mapper>

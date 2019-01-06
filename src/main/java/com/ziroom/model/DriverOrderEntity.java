@@ -1,6 +1,7 @@
 package com.ziroom.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class DriverOrderEntity extends BaseEntity {
     private Integer id;
@@ -20,6 +21,8 @@ public class DriverOrderEntity extends BaseEntity {
     private Integer actualAmount;
 
     private Integer passengerCount;
+
+    private List<PassengerOrderEntity> passengerOrderEntityList;
 
     public Integer getId() {
         return id;
@@ -93,4 +96,11 @@ public class DriverOrderEntity extends BaseEntity {
         this.passengerCount = passengerCount;
     }
 
+    public List<PassengerOrderEntity> getPassengerOrderEntityList() {
+        return passengerOrderEntityList;
+    }
+
+    public void setPassengerOrderEntityList(List<PassengerOrderEntity> passengerOrderEntityList) {
+        this.passengerOrderEntityList = passengerOrderEntityList;
+    }
 }

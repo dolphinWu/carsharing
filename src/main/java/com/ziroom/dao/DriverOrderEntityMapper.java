@@ -3,6 +3,8 @@ package com.ziroom.dao;
 import com.ziroom.dto.response.DriverPlanResponse;
 import com.ziroom.model.DriverOrderEntity;
 
+import java.util.Map;
+
 public interface DriverOrderEntityMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -17,13 +19,15 @@ public interface DriverOrderEntityMapper {
     int updateByPrimaryKey(DriverOrderEntity record);
 
     /**
+     * @param
+     * @return
      * @author codey
      * @description 根据行程单号查询订单
      * @date 2019/1/3 11:10
-     * @param
-     * @return
      */
     DriverOrderEntity selectByDriverNo(String driverNo);
 
-   int  selectTotalAmountByDriverNo(String driverNo);
+    int selectTotalAmountByDriverNo(String driverNo);
+
+    DriverOrderEntity findDriverOrderAllInfo(Map<String, Object> map);
 }
