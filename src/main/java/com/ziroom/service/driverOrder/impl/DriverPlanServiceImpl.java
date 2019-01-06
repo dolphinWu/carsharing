@@ -120,7 +120,7 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         //状态
         driverPlan.setStatus(DriverPlanStatus.WAITING.getCode());
         //转换金额
-        driverPlan.setPlanAmount(new BigDecimal(driverPlanReq.getPlanAmount()).multiply(new BigDecimal("100")).intValue());
+        //driverPlan.setPlanAmount(new BigDecimal(driverPlanReq.getPlanAmount()).multiply(new BigDecimal("100")).intValue());
         //单号
         driverPlan.setDriverNo("DP"+System.currentTimeMillis());
         driverPlan.setCreateDate(new Date());
