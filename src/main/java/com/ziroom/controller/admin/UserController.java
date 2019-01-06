@@ -206,6 +206,9 @@ public class UserController {
         }
         //查询累计手收益
         Double amount = driverPlanService.sumMoney(uid);
+        if (amount == null) {
+            amount=0.00;
+        }
         response.setAmount(new BigDecimal(amount));
         return  APIResponse.success(response);
     }
