@@ -12,6 +12,7 @@ import com.ziroom.model.UserEntity;
 import com.ziroom.service.driverOrder.DriverPlanService;
 import com.ziroom.service.user.UserService;
 import com.ziroom.utils.APIResponse;
+import com.ziroom.utils.MathUtil;
 import io.swagger.annotations.Api;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
@@ -210,7 +211,7 @@ public class UserController {
         if (amount == null) {
             amount=0.00;
         }
-        response.setAmount(new BigDecimal(amount));
+        response.setAmount(new BigDecimal(MathUtil.formatFloatNumber(amount)).setScale(2,BigDecimal.ROUND_HALF_UP));
         return  APIResponse.success(response);
     }
 

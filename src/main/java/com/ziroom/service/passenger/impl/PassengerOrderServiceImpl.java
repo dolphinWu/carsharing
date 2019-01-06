@@ -221,9 +221,9 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
                 if (driver != null) {
                     passengerOrderResponse.setUname(driver.getUname());
                     passengerOrderResponse.setPhoneNumber(driver.getPhoneNumber());
-                    passengerOrderResponses.add(passengerOrderResponse);
                 }
             }
+            passengerOrderResponses.add(passengerOrderResponse);
         });
         return new PageInfo<>(passengerOrderResponses);
     }
