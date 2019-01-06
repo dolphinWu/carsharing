@@ -10,6 +10,7 @@ import com.ziroom.model.*;
 import com.ziroom.service.driverOrder.DriverOrderService;
 import com.ziroom.service.driverOrder.DriverPlanService;
 import com.ziroom.service.passenger.PassengerOrderService;
+import com.ziroom.service.user.UserRelationService;
 import com.ziroom.service.user.UserService;
 import com.ziroom.utils.APIResponse;
 import com.ziroom.utils.PointCalculateUtil;
@@ -47,10 +48,13 @@ public class PassengerController extends BaseController {
     @Autowired
     private DriverPlanService driverPlanService;
 
+    @Autowired
+    private UserRelationService userRelationService;
+
     @PostMapping(value = "/index", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "乘客首页信息", notes = "乘客登录之后获取相关所需信息")
     public APIResponse index(PassengerRequest passengerRequest) {
-        Integer uid = passengerRequest.getUid();
+        String uid = passengerRequest.getUid();
         if (uid == null) {
             return APIResponse.fail("uid必传");
         }
@@ -107,7 +111,7 @@ public class PassengerController extends BaseController {
     @PostMapping(value = "/viewDriverPlan", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "查看行程单详情")
     public APIResponse viewDriverPlan(@RequestParam("id") int id, @RequestParam("longitude") String longitude,
-                                      @RequestParam("latitude") String latitude) {
+                                      @RequestParam("latitude") String latitude,@RequestParam("passengerUid") String passengerUid) {
         DriverPlanResponse driverPlanResponse = driverPlanService.findDriverPlanResponseById(id);
         if (driverPlanResponse == null) {
             return APIResponse.fail("行程单不存在，请刷新重试！");
@@ -128,6 +132,12 @@ public class PassengerController extends BaseController {
                 driverPlanResponse.setPassengerCount(passengerOrderEntityList.size() - 1);
             }
         }
+        //司机uid
+        String driverUid = driverPlanResponse.getDriverUid();
+        //司机信用分
+        driverPlanResponse.setCreditScore(userService.getUserInfoByUId(driverUid).getCreditScore());
+        //亲密度
+        driverPlanResponse.setFriendshipScore(userRelationService.selectFriendshipScore(driverUid,passengerUid));
 
         return APIResponse.success(driverPlanResponse);
     }

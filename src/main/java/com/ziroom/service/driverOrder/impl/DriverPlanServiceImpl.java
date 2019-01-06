@@ -241,9 +241,9 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         Point2D currentPoint = new Point2D.Double(NumberUtils.toDouble(driverPlanReq.getCurrentXpoint()),NumberUtils.toDouble(driverPlanReq.getCurrentYpoint()));
         Point2D endPoint = new Point2D.Double(NumberUtils.toDouble(driverPlan.getEndXpoint()),NumberUtils.toDouble(driverPlan.getEndYpoint()));
         System.out.println(Tools.getDistance(currentPoint,endPoint));
-        if(Tools.getDistance(currentPoint,endPoint) >= 2000){
+        /*if(Tools.getDistance(currentPoint,endPoint) >= 2000){
             return APIResponse.fail("距离终点还挺远呢，不可以结束哦`");
-        }
+        }*/
 
         //所有用户uid
         List<String> uidList = new ArrayList<>();

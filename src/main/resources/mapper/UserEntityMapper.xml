@@ -284,7 +284,7 @@
     SET credit_score = credit_score - 1 WHERE uid = #{uid,jdbcType=VARCHAR}
   </update>
 
-  <select id="selectByUId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  <select id="selectByUId" resultMap="BaseResultMap" parameterType="java.lang.String">
     SELECT
     <include refid="Base_Column_List" />
     from tb_user
