@@ -40,13 +40,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PassengerController extends BaseController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PassengerController.class);
-
     @Autowired
     private PassengerOrderService passengerOrderService;
-
-    @Autowired
-    private AddressService addressService;
 
     @Autowired
     private UserService userService;
