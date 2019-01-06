@@ -6,7 +6,7 @@
     <result column="plan_start_time" jdbcType="TIMESTAMP" property="planStartTime" />
     <result column="car_capacity" jdbcType="INTEGER" property="carCapacity" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="plan_amount" jdbcType="INTEGER" property="planAmount" />
+    <result column="plan_amount" jdbcType="DOUBLE" property="planAmount" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="driver_uid" jdbcType="VARCHAR" property="driverUid" />
     <result column="driver_no" jdbcType="VARCHAR" property="driverNo" />
@@ -47,7 +47,7 @@
        create_user,create_date,last_modify_user,last_modify_date,is_del
       )
     values (#{id,jdbcType=INTEGER}, #{planStartTime,jdbcType=TIMESTAMP}, #{carCapacity,jdbcType=INTEGER}, 
-      #{remark,jdbcType=VARCHAR}, #{planAmount,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{planAmount,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER},
       #{driverUid,jdbcType=VARCHAR}, #{driverNo,jdbcType=VARCHAR}, #{startXpoint,jdbcType=VARCHAR},
       #{startYpoint,jdbcType=VARCHAR}, #{endXpoint,jdbcType=VARCHAR}, #{endYpoint,jdbcType=VARCHAR}, 
       #{accountingRules,jdbcType=INTEGER}, #{startName,jdbcType=VARCHAR}, #{endName,jdbcType=VARCHAR},
@@ -133,7 +133,7 @@
         #{remark,jdbcType=VARCHAR},
       </if>
       <if test="planAmount != null">
-        #{planAmount,jdbcType=INTEGER},
+        #{planAmount,jdbcType=DOUBLE},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -195,7 +195,7 @@
         remark = #{remark,jdbcType=VARCHAR},
       </if>
       <if test="planAmount != null">
-        plan_amount = #{planAmount,jdbcType=INTEGER},
+        plan_amount = #{planAmount,jdbcType=DOUBLE},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -250,7 +250,7 @@
     set plan_start_time = #{planStartTime,jdbcType=TIMESTAMP},
       car_capacity = #{carCapacity,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR},
-      plan_amount = #{planAmount,jdbcType=INTEGER},
+      plan_amount = #{planAmount,jdbcType=DOUBLE},
       status = #{status,jdbcType=INTEGER},
       driver_uid = #{driverUid,jdbcType=VARCHAR},
       driver_no = #{driverNo,jdbcType=VARCHAR},
