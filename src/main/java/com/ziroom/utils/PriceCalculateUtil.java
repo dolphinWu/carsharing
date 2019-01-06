@@ -1,5 +1,6 @@
 package com.ziroom.utils;
 
+import com.ziroom.constant.PriceCalculateType;
 import com.ziroom.constant.PriceDiscountType;
 import com.ziroom.model.DriverOrderEntity;
 import com.ziroom.model.DriverPlanEntity;
@@ -29,19 +30,19 @@ public class PriceCalculateUtil {
     public static String discount4 = "1.60";
 
     //两个人的折扣
-
     /**
-     * @param
-     * @return
      * @author liuzh
-     * @description:计算乘客端的费用 一个人全价
+     * @description:计算乘客端的费用
+     * 一个人全价
      * 两个人6折
      * 三个人5折
      * 4个人4折
      * @date 2019/1/4 15:07
+     * @param
+     * @return
      */
-    public static String calculatePrice(String count, String totalPrice, String distanceRate) {
-        Integer countInt = Integer.valueOf(count);
+    public static String calculatePrice(String count,String totalPrice,String distanceRate) {
+        Integer countInt=Integer.valueOf(count);
         if (countInt < 1 || countInt > 4) {
             throw new RuntimeException("人数错误");
         }
@@ -50,22 +51,23 @@ public class PriceCalculateUtil {
                 continue;
             }
             String amount = MathUtil.num1DivideNum2(MathUtil.num1DivideNum2(totalPrice, priceDiscountType.getName()), priceDiscountType.getIndex() + "");
-            return MathUtil.num1DivideNum2(amount, distanceRate);
+            return  MathUtil.num1DivideNum2(amount,distanceRate);
         }
 
         throw new RuntimeException("计算价格参数异常");
     }
 
     /**
-     * @param point2DS:当前所有的乘客的坐标点,
-     * @param driverPointS:行程单开始的坐标,
-     * @param driverPointE:行程单结束的坐标
-     * @return
      * @author liuzh
      * @description:
      * @date 2019/1/5 17:58
+     * @param point2DS:当前所有的乘客的坐标点,
+     * @param driverPointS:行程单开始的坐标,
+     * @param driverPointE:行程单结束的坐标
+     * @return 
      */
-    public static Map<Point2D, String> calculatePrice(String totalPrice, List<Point2D> point2DS, Point2D driverPointS, Point2D driverPointE) {
+    public static Map<Point2D,String> calculatePrice(String totalPrice, List<Point2D> point2DS,
+                                                     Point2D driverPointS,Point2D driverPointE,int accountingRules) {
         if (point2DS == null || point2DS.isEmpty()) {
             throw new RuntimeException("乘客端的列表点不能为空");
         }
@@ -74,18 +76,22 @@ public class PriceCalculateUtil {
         }
         String totalDistance = "0.00";
         for (Point2D point2D : point2DS) {
-            totalDistance = MathUtil.num1PlusNum2(totalDistance, MathUtil.formatFloatNumber(Tools.getDistance(point2D, driverPointS)));
+            totalDistance = MathUtil.num1PlusNum2(totalDistance,MathUtil.formatFloatNumber(Tools.getDistance(point2D,driverPointS)));
         }
 
         //所有人里程数相加是一倍里程数的倍数
-        String allPriceRate = MathUtil.num1DivideNum2(totalDistance, MathUtil.formatFloatNumber(Tools.getDistance(driverPointS, driverPointE)));
+        String allPriceRate =  MathUtil.num1DivideNum2(totalDistance,MathUtil.formatFloatNumber(Tools.getDistance(driverPointS,driverPointE)));
         //所有付钱的总数
-        String allPrice = calculateAllPrice(totalPrice, allPriceRate);
+        String allPrice = calculateAllPrice(totalPrice,allPriceRate);
         //再计算每个人乘客的付钱(按照乘客的比例系数)
-        Map<Point2D, String> rateMap = new LinkedHashMap<>();
+        Map<Point2D,String> rateMap = new LinkedHashMap<>();
         for (Point2D point2D : point2DS) {
-            String currPointRate = MathUtil.num1DivideNum2(MathUtil.formatFloatNumber(Tools.getDistance(point2D, driverPointS)), totalDistance);
-            rateMap.put(point2D, MathUtil.num1MultiplyNum2(currPointRate, allPrice));
+            if (accountingRules == PriceCalculateType.AVERAGE_PRICE.getIndex()) {
+                rateMap.put(point2D, totalPrice);
+            } else {
+                String currPointRate = MathUtil.num1DivideNum2(MathUtil.formatFloatNumber(Tools.getDistance(point2D, driverPointS)), totalDistance);
+                rateMap.put(point2D,MathUtil.num1MultiplyNum2(currPointRate,allPrice));
+            }
         }
         return rateMap;
     }
@@ -99,7 +105,7 @@ public class PriceCalculateUtil {
             return MathUtil.num1DivideNum2(totalPrice, allPriceRate);
         }
         String stepFeePart = MathUtil.num1MultiplyNum2(stepFeeAll, stepRate);
-        return MathUtil.num1PlusNum2(totalPrice, stepFeePart);
+        return MathUtil.num1PlusNum2(totalPrice,stepFeePart);
     }
 
 
