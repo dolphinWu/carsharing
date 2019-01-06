@@ -5,10 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.ziroom.constant.BaseConst;
 import com.ziroom.constant.DriverOrderStatus;
 import com.ziroom.constant.PassengerOrderStatus;
-import com.ziroom.dao.AddressEntityMapper;
-import com.ziroom.dao.DriverOrderEntityMapper;
-import com.ziroom.dao.PassengerOrderEntityMapper;
-import com.ziroom.dao.UserEntityMapper;
+import com.ziroom.dao.*;
+import com.ziroom.dto.response.PassengerOrderResponse;
 import com.ziroom.model.DriverOrderEntity;
 import com.ziroom.model.DriverPlanEntity;
 import com.ziroom.model.PassengerOrderEntity;
@@ -18,6 +16,7 @@ import com.ziroom.utils.APIResponse;
 import com.ziroom.utils.PriceCalculateUtil;
 import com.ziroom.utils.UserUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +32,12 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
 
     @Autowired
     private DriverOrderEntityMapper driverOrderEntityMapper;
+
+    @Autowired
+    private DriverPlanEntityMapper driverPlanEntityMapper;
+
+    @Autowired
+    private UserEntityMapper userEntityMapper;
 
     /**
      * 加入行程
@@ -158,7 +163,20 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("uid", uid);
         PageHelper.startPage(pageNumber, pageSize, true);
+        List<PassengerOrderResponse> passengerOrderResponses = new ArrayList<>();
         List<PassengerOrderEntity> passengerOrderEntityList = passengerOrderEntityMapper.findList(paramsMap);
-        return new PageInfo<>(passengerOrderEntityList);
+        passengerOrderEntityList.forEach(passengerOrderEntity -> {
+            PassengerOrderResponse passengerOrderResponse = new PassengerOrderResponse();
+            BeanUtils.copyProperties(passengerOrderEntity,passengerOrderResponse);
+            //查询司机订单
+            DriverOrderEntity driverOrderEntity = driverOrderEntityMapper.selectByDriverNo(passengerOrderEntity.getDriverOrderNo());
+            DriverPlanEntity driverPlanEntity = driverPlanEntityMapper.selectByNo(driverOrderEntity.getDriverNo());
+            //查询司机信息
+            UserEntity driver = userEntityMapper.selectByUId(driverPlanEntity.getDriverUid());
+            passengerOrderResponse.setUname(driver.getUname());
+            passengerOrderResponse.setPhoneNumber(driver.getPhoneNumber());
+            passengerOrderResponses.add(passengerOrderResponse);
+        });
+        return new PageInfo<>(passengerOrderResponses);
     }
 }
