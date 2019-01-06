@@ -121,9 +121,9 @@ public class PassengerController extends BaseController {
         return APIResponse.success(driverPlanResponse);
     }
 
-    @PostMapping(value = "/joinJourney/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/joinJourney", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "加入行程单")
-    public APIResponse joinJourney(@PathVariable("id") Integer id) {
+    public APIResponse joinJourney(@RequestParam("id") Integer id) {
         DriverPlanEntity driverPlanEntity = driverPlanService.findDriverPlanById(id);
         if (driverPlanEntity == null) {
             return APIResponse.fail("行程单已取消！");
@@ -132,9 +132,9 @@ public class PassengerController extends BaseController {
         return passengerOrderService.joinJourney(driverPlanEntity);
     }
 
-    @PostMapping(value = "/cancelJourney/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/cancelJourney", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "取消行程单")
-    public APIResponse cancelJourney(@PathVariable("id") Integer id) {
+    public APIResponse cancelJourney(@RequestParam("id") Integer id) {
         return passengerOrderService.cancelJourney(id);
     }
 
