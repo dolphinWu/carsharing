@@ -207,13 +207,17 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
             PassengerOrderResponse passengerOrderResponse = new PassengerOrderResponse();
             BeanUtils.copyProperties(passengerOrderEntity,passengerOrderResponse);
             //查询司机订单
-            DriverOrderEntity driverOrderEntity = driverOrderEntityMapper.selectByDriverNo(passengerOrderEntity.getDriverOrderNo());
-            DriverPlanEntity driverPlanEntity = driverPlanEntityMapper.selectByNo(driverOrderEntity.getDriverNo());
-            //查询司机信息
-            UserEntity driver = userEntityMapper.selectByUId(driverPlanEntity.getDriverUid());
-            passengerOrderResponse.setUname(driver.getUname());
-            passengerOrderResponse.setPhoneNumber(driver.getPhoneNumber());
-            passengerOrderResponses.add(passengerOrderResponse);
+            DriverOrderEntity driverOrderEntity = driverOrderEntityMapper.selectByDriverOrderNo(passengerOrderEntity.getDriverOrderNo());
+            if (driverOrderEntity != null) {
+                DriverPlanEntity driverPlanEntity = driverPlanEntityMapper.selectByNo(driverOrderEntity.getDriverNo());
+                //查询司机信息
+                UserEntity driver = userEntityMapper.selectByUId(driverPlanEntity.getDriverUid());
+                if (driver != null) {
+                    passengerOrderResponse.setUname(driver.getUname());
+                    passengerOrderResponse.setPhoneNumber(driver.getPhoneNumber());
+                    passengerOrderResponses.add(passengerOrderResponse);
+                }
+            }
         });
         return new PageInfo<>(passengerOrderResponses);
     }

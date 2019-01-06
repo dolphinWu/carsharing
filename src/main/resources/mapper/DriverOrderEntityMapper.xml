@@ -225,6 +225,13 @@
     from tb_driver_order
     where driver_no = #{driverNo,jdbcType=VARCHAR} AND is_del = 0
   </select>
+  <!-- 根据订单号查询-->
+  <select id="selectByDriverOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_driver_order
+    where order_no = #{driverOrderNo,jdbcType=VARCHAR} AND is_del = 0
+  </select>
 
   <!-- 通过uid查询累计收益 -->
   <select id="selectTotalAmountByDriverNo" parameterType="java.lang.String" resultType="java.lang.Integer">

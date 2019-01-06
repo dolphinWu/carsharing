@@ -2,6 +2,7 @@ package com.ziroom.dao;
 
 import com.ziroom.dto.response.DriverPlanResponse;
 import com.ziroom.model.DriverOrderEntity;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Map;
 
@@ -26,6 +27,13 @@ public interface DriverOrderEntityMapper {
      * @date 2019/1/3 11:10
      */
     DriverOrderEntity selectByDriverNo(String driverNo);
+
+    /**
+     * 根据订单好查询
+     * @param driverNo
+     * @return
+     */
+    DriverOrderEntity selectByDriverOrderNo(@Param("driverOrderNo") String driverNo);
 
     int selectTotalAmountByDriverNo(String driverNo);
 
