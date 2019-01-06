@@ -63,6 +63,14 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
             return APIResponse.fail("用户未登录");
         }
 
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("uid", currentUser.getUid());
+        paramMap.put("status", 1);
+        List<PassengerOrderEntity> passengerOrderList = passengerOrderEntityMapper.findList(paramMap);
+        if (CollectionUtils.isNotEmpty(passengerOrderList)) {
+            return APIResponse.fail("您已加入行程");
+        }
+
         String uname = currentUser.getUname();
         Date now = new Date();
         String driverNo = driverPlanEntity.getDriverNo();
@@ -211,7 +219,7 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
         List<PassengerOrderEntity> passengerOrderEntityList = passengerOrderEntityMapper.findList(paramsMap);
         passengerOrderEntityList.forEach(passengerOrderEntity -> {
             PassengerOrderResponse passengerOrderResponse = new PassengerOrderResponse();
-            BeanUtils.copyProperties(passengerOrderEntity,passengerOrderResponse);
+            BeanUtils.copyProperties(passengerOrderEntity, passengerOrderResponse);
             //查询司机订单
             DriverOrderEntity driverOrderEntity = driverOrderEntityMapper.selectByDriverOrderNo(passengerOrderEntity.getDriverOrderNo());
             if (driverOrderEntity != null) {
