@@ -128,6 +128,7 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
         passengerOrderEntity.setCreateUser(uname);
         passengerOrderEntity.setLastModifyDate(now);
         passengerOrderEntity.setLastModifyUser(uname);
+        passengerOrderEntity.setIsDel(BaseConst.TrueOrFalse.FALSE);
 
         List<PassengerOrderEntity> passengerOrderEntityList = driverOrderEntity.getPassengerOrderEntityList();
         if (passengerOrderEntityList == null) {
