@@ -4,6 +4,7 @@ import com.ziroom.constant.PriceCalculateType;
 import com.ziroom.dto.request.PPointDistance;
 import com.ziroom.dto.response.NameAndCodeModel;
 import com.ziroom.service.price.PriceCalculatorService;
+import com.ziroom.utils.MathUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class PriceCalculatorServiceImpl implements PriceCalculatorService {
             NameAndCodeModel nameAndCodeModel = new NameAndCodeModel();
             nameAndCodeModel.setCode(s.getIndex()+"");
             if (s.getIndex() == PriceCalculateType.ONE_PRICE.getIndex()) {
-                nameAndCodeModel.setName("0.00");
+                nameAndCodeModel.setName(MathUtil.num1DivideNum2(pPointDistance.totalPrice(), "4"));
             } else {
                 nameAndCodeModel.setName(pPointDistance.totalPrice());
             }
