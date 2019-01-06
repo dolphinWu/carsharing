@@ -291,6 +291,10 @@
     <include refid="Base_Column_List" />
     from tb_passenger_order
     where passenger_uid = #{uid} and is_del = 0
+    <if test="status != null">
+      and (status = 0 or status = 1)
+    </if>
     order by create_date DESC
   </select>
+
 </mapper>
