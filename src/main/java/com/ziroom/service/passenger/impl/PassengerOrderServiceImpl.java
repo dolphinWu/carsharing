@@ -15,15 +15,15 @@ import com.ziroom.model.PassengerOrderEntity;
 import com.ziroom.model.UserEntity;
 import com.ziroom.service.passenger.PassengerOrderService;
 import com.ziroom.utils.APIResponse;
+import com.ziroom.utils.PriceCalculateUtil;
 import com.ziroom.utils.UserUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.awt.geom.Point2D;
+import java.util.*;
 
 @Service
 public class PassengerOrderServiceImpl implements PassengerOrderService {
@@ -32,23 +32,19 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
     private PassengerOrderEntityMapper passengerOrderEntityMapper;
 
     @Autowired
-    private UserEntityMapper userEntityMapper;
-
-    @Autowired
-    private AddressEntityMapper addressEntityMapper;
-
-    @Autowired
     private DriverOrderEntityMapper driverOrderEntityMapper;
 
     /**
      * 加入行程
      *
      * @param driverPlanEntity
+     * @param currentPoint
+     * @param name
      * @return
      */
     @Override
     @Transactional
-    public synchronized APIResponse joinJourney(DriverPlanEntity driverPlanEntity) {
+    public synchronized APIResponse joinJourney(DriverPlanEntity driverPlanEntity, Point2D currentPoint, String name) {
         UserEntity currentUser = UserUtils.getCurrentUser();
         if (currentUser == null) {
             return APIResponse.fail("用户未登录");
@@ -98,13 +94,48 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
         PassengerOrderEntity passengerOrderEntity = new PassengerOrderEntity();
         passengerOrderEntity.setDriverOrderNo(driverOrderEntity.getOrderNo());
         passengerOrderEntity.setStatus(PassengerOrderStatus.WAIT_DEPART.getStatusCode());
-        passengerOrderEntity.setEndXpoint(driverPlanEntity.getEndXpoint());
-        passengerOrderEntity.setEndYpoint(driverPlanEntity.getEndYpoint());
-        passengerOrderEntity.setEndName(driverPlanEntity.getEndName());
+        passengerOrderEntity.setEndXpoint(currentPoint.getX() + "");
+        passengerOrderEntity.setEndYpoint(currentPoint.getY() + "");
+        passengerOrderEntity.setEndName(name);
         passengerOrderEntity.setStartName(driverPlanEntity.getStartName());
         passengerOrderEntity.setStartXpoint(driverPlanEntity.getStartXpoint());
         passengerOrderEntity.setStartYpoint(driverPlanEntity.getStartYpoint());
         passengerOrderEntity.setPassengerNo("PN-" + System.currentTimeMillis());
+
+        List<PassengerOrderEntity> passengerOrderEntityList = driverOrderEntity.getPassengerOrderEntityList();
+        if (passengerOrderEntityList != null) {
+            passengerOrderEntityList = new ArrayList<>();
+        }
+
+        passengerOrderEntityList.add(passengerOrderEntity);
+        List<Point2D> point2DS = new ArrayList<>();
+        //乘客的订单跟点的映射
+        Map<PassengerOrderEntity, Point2D> map = new HashMap<>();
+        passengerOrderEntityList.stream().forEach(orderEntity -> {
+            Point2D.Double passengerPoint = new Point2D.Double(NumberUtils.toDouble(orderEntity.getEndXpoint()), NumberUtils.toDouble(orderEntity.getEndYpoint()));
+            map.put(orderEntity, passengerPoint);
+            point2DS.add(passengerPoint);
+        });
+
+        //行程单起始结束点
+        Point2D startPoint = new Point2D.Double(NumberUtils.toDouble(driverPlanEntity.getStartXpoint()), NumberUtils.toDouble(driverPlanEntity.getStartYpoint()));
+        Point2D endPoint = new Point2D.Double(NumberUtils.toDouble(driverPlanEntity.getEndXpoint()), NumberUtils.toDouble(driverPlanEntity.getEndYpoint()));
+        Map<Point2D, String> priceMap = PriceCalculateUtil.calculatePrice(driverPlanEntity.getPlanAmount() + "", point2DS, startPoint, endPoint, driverPlanEntity.getAccountingRules());
+
+        //更新每个人的价钱
+        map.keySet().stream().forEach(orderEntity -> {
+            Point2D point2D = map.get(orderEntity);
+            String price = priceMap.get(point2D);
+            if (orderEntity.equals(passengerOrderEntity)) {
+                passengerOrderEntity.setActualAmount(NumberUtils.toInt(price));
+            } else {
+                PassengerOrderEntity updateEntity = new PassengerOrderEntity();
+                updateEntity.setId(orderEntity.getId());
+                updateEntity.setActualAmount(NumberUtils.toInt(price));
+                passengerOrderEntityMapper.updateByPrimaryKeySelective(updateEntity);
+            }
+        });
+
         passengerOrderEntityMapper.insertSelective(passengerOrderEntity);
         return APIResponse.success("成功加入行程");
     }

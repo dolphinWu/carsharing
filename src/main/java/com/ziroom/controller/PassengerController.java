@@ -134,13 +134,16 @@ public class PassengerController extends BaseController {
 
     @PostMapping(value = "/joinJourney", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "加入行程单")
-    public APIResponse joinJourney(@RequestParam("id") Integer id) {
+    public APIResponse joinJourney(@RequestParam("id") Integer id, @RequestParam("longitude") String longitude,
+                                   @RequestParam("latitude") String latitude,@RequestParam("name") String name) {
         DriverPlanEntity driverPlanEntity = driverPlanService.findDriverPlanById(id);
         if (driverPlanEntity == null) {
             return APIResponse.fail("行程单已取消！");
         }
 
-        return passengerOrderService.joinJourney(driverPlanEntity);
+        //乘客目的地点
+        Point2D endPoint = new Point2D.Double(NumberUtils.toDouble(longitude), NumberUtils.toDouble(latitude));
+        return passengerOrderService.joinJourney(driverPlanEntity, endPoint, name);
     }
 
     @PostMapping(value = "/cancelJourney", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
