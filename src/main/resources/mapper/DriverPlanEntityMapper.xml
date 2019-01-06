@@ -32,10 +32,10 @@
     select 
     <include refid="Base_Column_List" />
     from tb_driver_plan
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and is_del = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tb_driver_plan
+    update tb_driver_plan set is_del = 0
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.ziroom.model.DriverPlanEntity">
@@ -295,9 +295,9 @@
   <!-- 根据司机uid查询 -->
     <select id="selectByUidAndStatus" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
+      <include refid="Base_Column_List" />
     from tb_driver_plan
-    where driver_uid = #{driverUid,jdbcType=VARCHAR} AND status = #{status,jdbcType=INTEGER} ORDER BY create_date DESC
+    where driver_uid = #{driverUid,jdbcType=VARCHAR} and IS_DEL = 0 AND status = #{status,jdbcType=INTEGER} ORDER BY create_date DESC
   </select>
 
   <!-- 根据司机uid查询 -->
@@ -305,7 +305,7 @@
     select
     <include refid="Base_Column_List" />
     from tb_driver_plan
-    where driver_uid = #{driverUid,jdbcType=VARCHAR}
+    where driver_uid = #{driverUid,jdbcType=VARCHAR} and is_del = 0
   </select>
 
   <!-- 查询司机有效的行程单 -->
@@ -313,7 +313,7 @@
     select
     <include refid="Base_Column_List" />
     from tb_driver_plan
-    where driver_uid = #{driverUid,jdbcType=VARCHAR} AND ( status = 0 OR status = 1 )
+    where driver_uid = #{driverUid,jdbcType=VARCHAR} AND ( status = 0 OR status = 1 ) and is_del = 0
   </select>
 
   <!-- 根据行程单号查询 -->
@@ -321,7 +321,7 @@
     select
     <include refid="Base_Column_List" />
     from tb_driver_plan
-    where driver_no = #{driverNo,jdbcType=VARCHAR}
+    where driver_no = #{driverNo,jdbcType=VARCHAR} and is_del = 0
   </select>
 
     <select id="selectResponseByPrimaryKey" resultType="com.ziroom.dto.response.DriverPlanResponse" parameterType="java.lang.Integer">

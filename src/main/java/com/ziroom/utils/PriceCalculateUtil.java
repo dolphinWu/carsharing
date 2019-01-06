@@ -119,10 +119,10 @@ public class PriceCalculateUtil {
      */
     public static String calculateCurrentUserPrice(DriverOrderEntity driverOrderEntity, DriverPlanEntity driverPlanEntity, Point2D currentUserPoint) {
         List<Point2D> point2DS = new ArrayList<>();
+        point2DS.add(currentUserPoint);
         if (driverOrderEntity != null) {
             //获取当前订单级联的乘客订单
             List<PassengerOrderEntity> passengerOrderEntityList = driverOrderEntity.getPassengerOrderEntityList();
-            point2DS.add(currentUserPoint);
             if (CollectionUtils.isNotEmpty(passengerOrderEntityList)) {
                 //添加所有乘客的目的地点坐标
                 passengerOrderEntityList.stream().forEach(passengerOrderEntity -> {
@@ -165,7 +165,7 @@ public class PriceCalculateUtil {
         map.keySet().stream().forEach(orderEntity -> {
             Point2D point2D = map.get(orderEntity);
             String price = priceMap.get(point2D);
-            orderEntity.setActualAmount(NumberUtils.toInt(price));
+            orderEntity.setActualAmount(NumberUtils.toDouble(price));
         });
     }
 }

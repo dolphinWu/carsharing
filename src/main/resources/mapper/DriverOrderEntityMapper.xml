@@ -48,10 +48,10 @@
     select 
     <include refid="Base_Column_List" />
     from tb_driver_order
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and is_del = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tb_driver_order
+    update tb_driver_order set is_del = 0
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.ziroom.model.DriverOrderEntity">
@@ -234,7 +234,7 @@
   </select>
 
   <!--级联查询司机订单和乘客订单-->
-  <select id="findByDriverPlanNo" resultMap="BaseResultMap" parameterType="map">
+  <select id="findDriverOrderAllInfo" resultMap="BaseResultMap" parameterType="map">
     select
       tdo.id, tdo.order_no, tdo.remark, tdo.status, tdo.actual_start_time, tdo.actual_end_time, tdo.driver_no, tdo.actual_amount,
       tdo.passenger_count,tpo.id, tpo.passenger_no, tpo.driver_order_no, tpo.passenger_count, tpo.start_name, tpo.end_name, tpo.actual_amount,

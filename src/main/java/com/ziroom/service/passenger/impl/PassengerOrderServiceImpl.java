@@ -183,6 +183,7 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
                 }
             }
 
+            //取消减信用分
             userService.deductUserCreditScore(currentUser.getUid());
             return APIResponse.success("取消成功");
         }

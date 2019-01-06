@@ -32,10 +32,10 @@
     select 
     <include refid="Base_Column_List" />
     from tb_user
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and is_del = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tb_user
+    update tb_user set is_del = 0
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.ziroom.model.UserEntity">
@@ -269,7 +269,7 @@
     SELECT
     <include refid="Base_Column_List" />
     from tb_user
-    where employee_no = #{employeeNo,jdbcType=VARCHAR}
+    where employee_no = #{employeeNo,jdbcType=VARCHAR} and is_del = 0
   </select>
 
   <!-- 增加用户信用分 -->
@@ -288,7 +288,7 @@
     SELECT
     <include refid="Base_Column_List" />
     from tb_user
-    where uid = #{uId}
+    where uid = #{uId} and is_del = 0
   </select>
 
 </mapper>

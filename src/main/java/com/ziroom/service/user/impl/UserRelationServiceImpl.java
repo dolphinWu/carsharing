@@ -38,6 +38,9 @@ public class UserRelationServiceImpl implements UserRelationService {
             u2 = temp;
         }
         UserRelationEntity userRelationEntity = userRelationEntityMapper.selectRelation(Long.toString(u1),Long.toString(u2));
+        if (userRelationEntity == null) {
+            return 0;
+        }
         return userRelationEntity.getFriendshipScore();
     }
 

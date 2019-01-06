@@ -111,7 +111,7 @@ public class PassengerController extends BaseController {
     @PostMapping(value = "/viewDriverPlan", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "查看行程单详情")
     public APIResponse viewDriverPlan(@RequestParam("id") int id, @RequestParam("longitude") String longitude,
-                                      @RequestParam("latitude") String latitude,@RequestParam("passengerUid") String passengerUid) {
+                                      @RequestParam("latitude") String latitude, @RequestParam("uid") String uid) {
         DriverPlanResponse driverPlanResponse = driverPlanService.findDriverPlanResponseById(id);
         if (driverPlanResponse == null) {
             return APIResponse.fail("行程单不存在，请刷新重试！");
@@ -124,7 +124,7 @@ public class PassengerController extends BaseController {
 
         //当前乘客需要付钱数
         String price = PriceCalculateUtil.calculateCurrentUserPrice(driverOrderEntity, driverPlanResponse, currentPoint);
-        driverPlanResponse.setCurrentMoney(NumberUtils.toDouble(price) / 100);
+        driverPlanResponse.setCurrentMoney(NumberUtils.toDouble(price));
         if (driverOrderEntity != null) {
             List<PassengerOrderEntity> passengerOrderEntityList = driverOrderEntity.getPassengerOrderEntityList();
             if (CollectionUtils.isNotEmpty(passengerOrderEntityList)) {
@@ -137,7 +137,7 @@ public class PassengerController extends BaseController {
         //司机信用分
         driverPlanResponse.setCreditScore(userService.getUserInfoByUId(driverUid).getCreditScore());
         //亲密度
-        driverPlanResponse.setFriendshipScore(userRelationService.selectFriendshipScore(driverUid,passengerUid));
+        driverPlanResponse.setFriendshipScore(userRelationService.selectFriendshipScore(driverUid, uid));
 
         return APIResponse.success(driverPlanResponse);
     }
@@ -145,7 +145,8 @@ public class PassengerController extends BaseController {
     @PostMapping(value = "/joinJourney", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "加入行程单")
     public APIResponse joinJourney(@RequestParam("id") Integer id, @RequestParam("longitude") String longitude,
-                                   @RequestParam("latitude") String latitude,@RequestParam("name") String name) {
+                                   @RequestParam("latitude") String latitude, @RequestParam("name") String name,
+                                   @RequestParam("uid") String uid) {
         DriverPlanEntity driverPlanEntity = driverPlanService.findDriverPlanById(id);
         if (driverPlanEntity == null) {
             return APIResponse.fail("行程单已取消！");
@@ -158,7 +159,7 @@ public class PassengerController extends BaseController {
 
     @PostMapping(value = "/cancelJourney", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "取消行程单")
-    public APIResponse cancelJourney(@RequestParam("id") Integer id) {
+    public APIResponse cancelJourney(@RequestParam("id") Integer id, @RequestParam("uid") String uid) {
         return passengerOrderService.cancelJourney(id);
     }
 
