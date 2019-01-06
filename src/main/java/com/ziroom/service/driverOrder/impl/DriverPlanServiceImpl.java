@@ -130,6 +130,7 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     //开始行程，返回起点终点的经纬度（导航）
     @Override
     public APIResponse beginPlan(String driverNo) {
+        logger.info("finishPlan--->driverNo:{}",driverNo);
         //查询行程单
         DriverPlanEntity driverPlan = driverPlanEntityMapper.selectByNo(driverNo);
         //判断是否到时间
@@ -168,6 +169,7 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     //取消行程单
     @Override
     public APIResponse cancelPlan(String driverNo) {
+        logger.info("finishPlan--->driverNo:{}",driverNo);
         //查询行程单
         DriverPlanEntity driverPlan = driverPlanEntityMapper.selectByNo(driverNo);
 
@@ -215,6 +217,8 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     //确认结束，完成行程
     @Override
     public APIResponse finishPlan(DriverPlanRequest driverPlanReq) {
+
+        logger.info("finishPlan--->driverNo:{}",driverPlanReq.getDriverNo());
         //查询行程单
         DriverPlanEntity driverPlan = driverPlanEntityMapper.selectByNo(driverPlanReq.getDriverNo());
 

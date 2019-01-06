@@ -68,8 +68,8 @@ public class DriverController {
      * @param
      * @return
      */
-    @PostMapping(value = "/beginPlan/{driverNo}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public APIResponse beginPlan(@PathVariable("driverNo") String driverNo){
+    @PostMapping(value = "/beginPlan",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public APIResponse beginPlan(String driverNo){
         return driverPlanService.beginPlan(driverNo);
     }
 
@@ -80,8 +80,8 @@ public class DriverController {
      * @param
      * @return
      */
-    @PostMapping(value = "/cancelPlan/{driverNo}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public APIResponse cancelPlan(@PathVariable("driverNo") String driverNo){
+    @PostMapping(value = "/cancelPlan",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public APIResponse cancelPlan(String driverNo){
         return driverPlanService.cancelPlan(driverNo);
     }
 
