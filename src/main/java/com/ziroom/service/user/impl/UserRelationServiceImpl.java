@@ -21,6 +21,28 @@ public class UserRelationServiceImpl implements UserRelationService {
 
     /**
      * @author codey
+     * @description 查询两个人的亲密度
+     * @date 2019/1/6 14:24
+     * @param
+     * @return
+     */
+    @Override
+    public Integer selectFriendshipScore(String uid1, String uid2) {
+        //先排序
+        long temp ;
+        long u1 = Long.parseLong(uid1);
+        long u2 = Long.parseLong(uid2);
+        if(u1 > u2){
+            temp = u1;
+            u1 = u2;
+            u2 = temp;
+        }
+        UserRelationEntity userRelationEntity = userRelationEntityMapper.selectRelation(Long.toString(u1),Long.toString(u2));
+        return userRelationEntity.getFriendshipScore();
+    }
+
+    /**
+     * @author codey
      * @description 增加用户亲密度
      * @date 2019/1/5 13:05
      * @param
