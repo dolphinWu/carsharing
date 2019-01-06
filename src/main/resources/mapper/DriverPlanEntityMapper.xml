@@ -297,7 +297,7 @@
     select
     <include refid="Base_Column_List" />
     from tb_driver_plan
-    where driver_uid = #{driverUid,jdbcType=VARCHAR} AND status = #{status,jdbcType=INTEGER}
+    where driver_uid = #{driverUid,jdbcType=VARCHAR} AND status = #{status,jdbcType=INTEGER} ORDER BY create_date DESC
   </select>
 
   <!-- 根据司机uid查询 -->
