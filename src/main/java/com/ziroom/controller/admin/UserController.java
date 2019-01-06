@@ -6,6 +6,7 @@ import com.ziroom.config.CasConfig;
 import com.ziroom.config.EhrConfig;
 import com.ziroom.dto.response.UserDetail;
 import com.ziroom.dto.response.UserResponse;
+import com.ziroom.exception.BusinessException;
 import com.ziroom.http.HttpRequestClient;
 import com.ziroom.model.UserEntity;
 import com.ziroom.service.driverOrder.DriverPlanService;
@@ -86,7 +87,7 @@ public class UserController {
                 //登录成功   获取用户信息
                 return queryUserDetailByEHR(jsonResult.getString("employeeId"), token);
             } else {
-                throw new RuntimeException();
+                throw new BusinessException("调用CAS登录异常");
             }
         } catch (Exception e) {
             LOGGER.info("登录错误结果==>" + e.getMessage());

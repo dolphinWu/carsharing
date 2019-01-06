@@ -6,11 +6,11 @@ import com.ziroom.dto.response.NameAndCodeModel;
 import com.ziroom.service.price.PriceCalculatorService;
 import com.ziroom.utils.APIResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Date:2019/1/2 21:18

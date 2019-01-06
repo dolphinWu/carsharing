@@ -4,9 +4,11 @@ import com.ziroom.model.AddressEntity;
 import com.ziroom.model.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class UserRequest extends BaseEntity {
 
     private Integer id;

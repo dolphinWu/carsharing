@@ -2,6 +2,7 @@ package com.ziroom.utils;
 
 import com.ziroom.constant.PriceCalculateType;
 import com.ziroom.constant.PriceDiscountType;
+import com.ziroom.exception.BusinessException;
 import com.ziroom.model.DriverOrderEntity;
 import com.ziroom.model.DriverPlanEntity;
 import com.ziroom.model.PassengerOrderEntity;
@@ -44,7 +45,7 @@ public class PriceCalculateUtil {
     public static String calculatePrice(String count, String totalPrice, String distanceRate) {
         Integer countInt = Integer.valueOf(count);
         if (countInt < 1 || countInt > 4) {
-            throw new RuntimeException("人数错误");
+            throw new BusinessException("人数错误");
         }
         for (PriceDiscountType priceDiscountType : EnumSet.allOf(PriceDiscountType.class)) {
             if (priceDiscountType.getIndex() != countInt) {
@@ -54,7 +55,7 @@ public class PriceCalculateUtil {
             return MathUtil.num1DivideNum2(amount, distanceRate);
         }
 
-        throw new RuntimeException("计算价格参数异常");
+        throw new BusinessException("计算价格参数异常");
     }
 
     /**
@@ -69,10 +70,10 @@ public class PriceCalculateUtil {
     public static Map<Point2D, String> calculatePrice(String totalPrice, List<Point2D> point2DS,
                                                       Point2D driverPointS, Point2D driverPointE, int accountingRules) {
         if (point2DS == null || point2DS.isEmpty()) {
-            throw new RuntimeException("乘客端的列表点不能为空");
+            throw new BusinessException("乘客端的列表点不能为空");
         }
         if (point2DS.size() > 4) {
-            throw new RuntimeException("乘客端的列表筛选存在问题");
+            throw new BusinessException("乘客端的列表筛选存在问题");
         }
         String totalDistance = "0.00";
         for (Point2D point2D : point2DS) {
@@ -143,7 +144,8 @@ public class PriceCalculateUtil {
 
     /**
      * 计算并未每个人设值
-     * @param driverPlanEntity 行程单
+     *
+     * @param driverPlanEntity         行程单
      * @param passengerOrderEntityList 乘客订单集合
      */
     public static void calculateAndSetMoney(DriverPlanEntity driverPlanEntity, List<PassengerOrderEntity> passengerOrderEntityList) {
