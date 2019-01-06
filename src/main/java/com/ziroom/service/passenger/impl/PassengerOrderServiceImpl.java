@@ -114,9 +114,15 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
         passengerOrderEntity.setStartXpoint(driverPlanEntity.getStartXpoint());
         passengerOrderEntity.setStartYpoint(driverPlanEntity.getStartYpoint());
         passengerOrderEntity.setPassengerNo("PN-" + System.currentTimeMillis());
+        passengerOrderEntity.setPassengerCount(1);
+        passengerOrderEntity.setPassengerUid(currentUser.getUid());
+        passengerOrderEntity.setCreateDate(now);
+        passengerOrderEntity.setCreateUser(uname);
+        passengerOrderEntity.setLastModifyDate(now);
+        passengerOrderEntity.setLastModifyUser(uname);
 
         List<PassengerOrderEntity> passengerOrderEntityList = driverOrderEntity.getPassengerOrderEntityList();
-        if (passengerOrderEntityList != null) {
+        if (passengerOrderEntityList == null) {
             passengerOrderEntityList = new ArrayList<>();
         }
 

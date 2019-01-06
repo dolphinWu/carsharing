@@ -138,13 +138,17 @@ public class PassengerController extends BaseController {
         //当前乘客需要付钱数
         String price = PriceCalculateUtil.calculateCurrentUserPrice(driverOrderEntity, driverPlanResponse, currentPoint);
         driverPlanResponse.setCurrentMoney(NumberUtils.toDouble(price));
+        int passengerCount = 0;
         if (driverOrderEntity != null) {
             List<PassengerOrderEntity> passengerOrderEntityList = driverOrderEntity.getPassengerOrderEntityList();
             if (CollectionUtils.isNotEmpty(passengerOrderEntityList)) {
                 //设置行程单已有人数
-                driverPlanResponse.setPassengerCount(passengerOrderEntityList.size() - 1);
+                passengerCount = passengerOrderEntityList.size() - 1;
             }
         }
+
+        //设置人数
+        driverPlanResponse.setCurrentPeopleCount(passengerCount);
         //司机uid
         String driverUid = driverPlanResponse.getDriverUid();
         //司机信用分
