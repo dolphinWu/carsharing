@@ -248,6 +248,12 @@
     <if test="status != null">
       and tpo.status = #{status}
     </if>
-    where tdo.driver_no = #{driverNo} and tdo.is_del = 0
+    where tdo.is_del = 0
+    <if test="driverNo != null" >
+      and tdo.driver_no = #{driverNo}
+    </if>
+    <if test="driverOrderNo != null" >
+      and tdo.order_no = #{driverOrderNo}
+    </if>
   </select>
 </mapper>

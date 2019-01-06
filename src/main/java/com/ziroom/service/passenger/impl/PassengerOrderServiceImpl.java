@@ -5,18 +5,19 @@ import com.github.pagehelper.PageInfo;
 import com.ziroom.constant.BaseConst;
 import com.ziroom.constant.DriverOrderStatus;
 import com.ziroom.constant.PassengerOrderStatus;
-import com.ziroom.dao.AddressEntityMapper;
 import com.ziroom.dao.DriverOrderEntityMapper;
+import com.ziroom.dao.DriverPlanEntityMapper;
 import com.ziroom.dao.PassengerOrderEntityMapper;
-import com.ziroom.dao.UserEntityMapper;
 import com.ziroom.model.DriverOrderEntity;
 import com.ziroom.model.DriverPlanEntity;
 import com.ziroom.model.PassengerOrderEntity;
 import com.ziroom.model.UserEntity;
 import com.ziroom.service.passenger.PassengerOrderService;
+import com.ziroom.service.user.UserService;
 import com.ziroom.utils.APIResponse;
 import com.ziroom.utils.PriceCalculateUtil;
 import com.ziroom.utils.UserUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,12 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
 
     @Autowired
     private DriverOrderEntityMapper driverOrderEntityMapper;
+
+    @Autowired
+    private DriverPlanEntityMapper driverPlanEntityMapper;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 加入行程
@@ -143,11 +150,40 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
     @Override
     @Transactional
     public APIResponse cancelJourney(Integer id) {
-        PassengerOrderEntity passengerOrderEntity = new PassengerOrderEntity();
-        passengerOrderEntity.setId(id);
-        passengerOrderEntity.setStatus(PassengerOrderStatus.CANCEL.getStatusCode());
-        int count = passengerOrderEntityMapper.updateByPrimaryKeySelective(passengerOrderEntity);
+        UserEntity currentUser = UserUtils.getCurrentUser();
+        PassengerOrderEntity passengerOrderEntity = passengerOrderEntityMapper.selectByPrimaryKey(id);
+        if (passengerOrderEntity == null) {
+            return APIResponse.fail("乘客订单不存在");
+        }
+
+        PassengerOrderEntity updateOrderEntity = new PassengerOrderEntity();
+        updateOrderEntity.setId(id);
+        updateOrderEntity.setStatus(PassengerOrderStatus.CANCEL.getStatusCode());
+        int count = passengerOrderEntityMapper.updateByPrimaryKeySelective(updateOrderEntity);
         if (count > 0) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("driverOrderNo", passengerOrderEntity.getDriverOrderNo());
+            DriverOrderEntity driverOrderEntity = driverOrderEntityMapper.findDriverOrderAllInfo(map);
+            if (driverOrderEntity != null) {
+                List<PassengerOrderEntity> passengerOrderEntityList = driverOrderEntity.getPassengerOrderEntityList();
+                if (CollectionUtils.isNotEmpty(passengerOrderEntityList)) {
+                    DriverPlanEntity driverPlanEntity = driverPlanEntityMapper.selectByNo(driverOrderEntity.getDriverNo());
+                    if (driverOrderEntity == null) {
+                        return APIResponse.fail("行程单不存在");
+                    }
+
+                    //修改每个人金额
+                    PriceCalculateUtil.calculateAndSetMoney(driverPlanEntity, passengerOrderEntityList);
+                    passengerOrderEntityList.stream().forEach(orderEntity -> {
+                        PassengerOrderEntity updateEntity = new PassengerOrderEntity();
+                        updateEntity.setId(orderEntity.getId());
+                        updateEntity.setActualAmount(orderEntity.getActualAmount());
+                        passengerOrderEntityMapper.updateByPrimaryKeySelective(updateEntity);
+                    });
+                }
+            }
+
+            userService.deductUserCreditScore(currentUser.getUid());
             return APIResponse.success("取消成功");
         }
         return APIResponse.fail("取消失败");

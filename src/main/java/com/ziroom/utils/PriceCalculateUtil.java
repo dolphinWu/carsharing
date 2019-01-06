@@ -140,4 +140,32 @@ public class PriceCalculateUtil {
         String price = point2DStringMap.get(currentUserPoint);
         return price;
     }
+
+    /**
+     * 计算并未每个人设值
+     * @param driverPlanEntity 行程单
+     * @param passengerOrderEntityList 乘客订单集合
+     */
+    public static void calculateAndSetMoney(DriverPlanEntity driverPlanEntity, List<PassengerOrderEntity> passengerOrderEntityList) {
+        List<Point2D> point2DS = new ArrayList<>();
+        //乘客的订单跟点的映射
+        Map<PassengerOrderEntity, Point2D> map = new HashMap<>();
+        passengerOrderEntityList.stream().forEach(orderEntity -> {
+            Point2D.Double passengerPoint = new Point2D.Double(NumberUtils.toDouble(orderEntity.getEndXpoint()), NumberUtils.toDouble(orderEntity.getEndYpoint()));
+            map.put(orderEntity, passengerPoint);
+            point2DS.add(passengerPoint);
+        });
+
+        //行程单起始结束点
+        Point2D startPoint = new Point2D.Double(NumberUtils.toDouble(driverPlanEntity.getStartXpoint()), NumberUtils.toDouble(driverPlanEntity.getStartYpoint()));
+        Point2D endPoint = new Point2D.Double(NumberUtils.toDouble(driverPlanEntity.getEndXpoint()), NumberUtils.toDouble(driverPlanEntity.getEndYpoint()));
+        Map<Point2D, String> priceMap = calculatePrice(driverPlanEntity.getPlanAmount() + "", point2DS, startPoint, endPoint, driverPlanEntity.getAccountingRules());
+
+        //更新每个人的价钱
+        map.keySet().stream().forEach(orderEntity -> {
+            Point2D point2D = map.get(orderEntity);
+            String price = priceMap.get(point2D);
+            orderEntity.setActualAmount(NumberUtils.toInt(price));
+        });
+    }
 }
