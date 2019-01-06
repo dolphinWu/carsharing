@@ -293,7 +293,7 @@
   </select>
 
   <!-- 根据司机uid查询 -->
-  <select id="selectByUidAndStatus" resultMap="BaseResultMap">
+    <select id="selectByUidAndStatus" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from tb_driver_plan
@@ -333,4 +333,19 @@
         tb_user tu on tu.uid = tdp.driver_uid and tu.is_del = 0
         where tdp.id = #{id}
     </select>
+
+
+  <select id="sumAmount" resultType="java.lang.Double" parameterType="java.lang.String">
+        SELECT
+        SUM(b.actual_amount)
+    FROM
+        tb_driver_plan a
+    LEFT JOIN tb_driver_order b ON a.driver_no = b.driver_no
+    WHERE
+        a.driver_uid = #{uid,jdbcType=VARCHAR}
+    and a.`status`=2
+    and a.is_del=0
+    and b.is_del=0
+  </select>
+
 </mapper>

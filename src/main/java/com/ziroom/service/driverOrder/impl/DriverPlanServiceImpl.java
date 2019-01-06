@@ -61,11 +61,12 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     //查看发布的行程单--司机首页
     @Override
     public APIResponse getShowPlan(String driverUid) {
-        DriverPlanEntity driverPlanEntity = driverPlanEntityMapper.selectByUidAndStatus(driverUid,0);
+        List<DriverPlanEntity> driverPlanEntities = driverPlanEntityMapper.selectByUidAndStatus(driverUid,0);
         //没有也返回
-        if(driverPlanEntity == null){
+        if(driverPlanEntities.isEmpty()){
             return APIResponse.success();
         }
+        DriverPlanEntity driverPlanEntity=driverPlanEntities.get(0);
         DriverPlanResponse response = new DriverPlanResponse();
         BeanUtils.copyProperties(driverPlanEntity,response);
         //查询该行程单的订单
@@ -286,12 +287,8 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         return driverPlanEntityMapper.selectByPrimaryKey(id);
     }
 
-    public Integer sumMoney(String uid){
-        DriverPlanEntity driverPlanEntity= driverPlanEntityMapper.selectByUidAndStatus(uid,3);
-        if(driverPlanEntity==null){ return 0;}
-        DriverOrderEntity orderEntity = driverOrderEntityMapper.selectByDriverNo(driverPlanEntity.getDriverNo());
-        if(orderEntity==null){ return 0;}
-        return driverOrderEntityMapper.selectTotalAmountByDriverNo(driverPlanEntity.getDriverNo());
+    public Double sumMoney(String uid){
+        return driverPlanEntityMapper.sumAmount(uid);
     }
 
     @Override

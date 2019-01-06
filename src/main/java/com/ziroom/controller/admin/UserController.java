@@ -205,13 +205,8 @@ public class UserController {
             LOGGER.info("调用copyProperties结果:{}", e.getMessage());
         }
         //查询累计手收益
-        int amount = driverPlanService.sumMoney(uid);
-        //金额格式化
-        if (amount == 0) {
-            response.setAmount(new BigDecimal(0));
-        } else {
-            response.setAmount(BigDecimal.valueOf(amount).divide(BigDecimal.valueOf(100), 2, BigDecimal.ROUND_HALF_UP));
-        }
+        Double amount = driverPlanService.sumMoney(uid);
+        response.setAmount(new BigDecimal(amount));
         return  APIResponse.success(response);
     }
 
