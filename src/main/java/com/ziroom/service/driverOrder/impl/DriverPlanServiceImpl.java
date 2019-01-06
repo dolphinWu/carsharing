@@ -61,11 +61,12 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     //查看发布的行程单--司机首页
     @Override
     public APIResponse getShowPlan(String driverUid) {
-        DriverPlanEntity driverPlanEntity = driverPlanEntityMapper.selectByUidAndStatus(driverUid,0);
+        List<DriverPlanEntity> driverPlanEntities = driverPlanEntityMapper.selectExistPlan(driverUid);
         //没有也返回
-        if(driverPlanEntity == null){
+        if(driverPlanEntities.isEmpty()){
             return APIResponse.success();
         }
+        DriverPlanEntity driverPlanEntity=driverPlanEntities.get(0);
         DriverPlanResponse response = new DriverPlanResponse();
         BeanUtils.copyProperties(driverPlanEntity,response);
         //查询该行程单的订单
@@ -120,7 +121,7 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         //状态
         driverPlan.setStatus(DriverPlanStatus.WAITING.getCode());
         //转换金额
-        driverPlan.setPlanAmount(new BigDecimal(driverPlanReq.getPlanAmount()).multiply(new BigDecimal("100")).intValue());
+        //driverPlan.setPlanAmount(new BigDecimal(driverPlanReq.getPlanAmount()).multiply(new BigDecimal("100")).intValue());
         //单号
         driverPlan.setDriverNo("DP"+System.currentTimeMillis());
         driverPlan.setCreateDate(new Date());
@@ -240,9 +241,9 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         Point2D currentPoint = new Point2D.Double(NumberUtils.toDouble(driverPlanReq.getCurrentXpoint()),NumberUtils.toDouble(driverPlanReq.getCurrentYpoint()));
         Point2D endPoint = new Point2D.Double(NumberUtils.toDouble(driverPlan.getEndXpoint()),NumberUtils.toDouble(driverPlan.getEndYpoint()));
         System.out.println(Tools.getDistance(currentPoint,endPoint));
-        if(Tools.getDistance(currentPoint,endPoint) >= 2000){
+        /*if(Tools.getDistance(currentPoint,endPoint) >= 2000){
             return APIResponse.fail("距离终点还挺远呢，不可以结束哦`");
-        }
+        }*/
 
         //所有用户uid
         List<String> uidList = new ArrayList<>();
@@ -258,9 +259,11 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         if(driverOrder == null){
             return APIResponse.success();
         }
+        //实际总金额
+        BigDecimal sumActualAmount = new BigDecimal("0");
         driverOrder.setStatus(DriverOrderStatus.FINISH.getCode());
         driverOrder.setActualEndTime(new Date());
-        driverOrderEntityMapper.updateByPrimaryKeySelective(driverOrder);
+
         //查询乘客端订单
         List<PassengerOrderEntity> passengerOrderList = passengerOrderEntityMapper.selectByDriverOrderNo(driverOrder.getOrderNo());
         passengerOrderList.forEach(passengerOrderEntity -> {
@@ -270,6 +273,13 @@ public class DriverPlanServiceImpl implements DriverPlanService {
             passengerOrderEntityMapper.updateByPrimaryKeySelective(passengerOrderEntity);
             uidList.add(passengerOrderEntity.getPassengerUid());
         });
+
+        for (PassengerOrderEntity passengerOrderEntity : passengerOrderList) {
+            //计算司机订单的实际金额
+            sumActualAmount = sumActualAmount.add(new BigDecimal(passengerOrderEntity.getActualAmount()));
+        }
+        driverOrder.setActualAmount(sumActualAmount.doubleValue());
+        driverOrderEntityMapper.updateByPrimaryKeySelective(driverOrder);
 
         //增加司机和乘客的信用分
         userService.addUserCreditScore(uidList);
@@ -286,12 +296,8 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         return driverPlanEntityMapper.selectByPrimaryKey(id);
     }
 
-    public Integer sumMoney(String uid){
-        DriverPlanEntity driverPlanEntity= driverPlanEntityMapper.selectByUidAndStatus(uid,3);
-        if(driverPlanEntity==null){ return 0;}
-        DriverOrderEntity orderEntity = driverOrderEntityMapper.selectByDriverNo(driverPlanEntity.getDriverNo());
-        if(orderEntity==null){ return 0;}
-        return driverOrderEntityMapper.selectTotalAmountByDriverNo(driverPlanEntity.getDriverNo());
+    public Double sumMoney(String uid){
+        return driverPlanEntityMapper.sumAmount(uid);
     }
 
     @Override

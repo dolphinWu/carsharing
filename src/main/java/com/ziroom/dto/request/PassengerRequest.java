@@ -1,7 +1,12 @@
 package com.ziroom.dto.request;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
+@Setter
+@Getter
 public class PassengerRequest {
 
     //出发时间
@@ -11,58 +16,10 @@ public class PassengerRequest {
 
     private String latitude;
 
-    private Integer uid;
+    private String uid;
 
     //0下班，1上班
     private Integer useType;
 
     private Double radius = 2000D;
-
-    public Date getDepartTime() {
-        return departTime;
-    }
-
-    public void setDepartTime(Date departTime) {
-        this.departTime = departTime;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
-    }
-
-    public Double getRadius() {
-        return radius;
-    }
-
-    public void setRadius(Double radius) {
-        this.radius = radius;
-    }
-
-    public Integer getUseType() {
-        return useType;
-    }
-
-    public void setUseType(Integer useType) {
-        this.useType = useType;
-    }
 }

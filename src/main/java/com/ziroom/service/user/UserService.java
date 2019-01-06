@@ -8,7 +8,7 @@ public interface UserService {
 
     int insertUserInfo(UserEntity user);
 
-    UserEntity getUserInfoByUId(Integer uId);
+    UserEntity getUserInfoByUId(String uId);
 
     int updateUserByUid(UserEntity userEntity);
 

@@ -26,7 +26,7 @@ public interface UserEntityMapper {
      */
     void addUserCreditScore(String uid);
 
-    UserEntity selectByUId(Integer uId);
+    UserEntity selectByUId(String uId);
 
     /**
      * @author codey

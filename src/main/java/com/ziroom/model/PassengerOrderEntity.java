@@ -15,7 +15,7 @@ public class PassengerOrderEntity extends BaseEntity {
 
     private String endName;
 
-    private Integer actualAmount;
+    private Double actualAmount;
 
     private Integer status;
 
@@ -83,11 +83,11 @@ public class PassengerOrderEntity extends BaseEntity {
         this.endName = endName == null ? null : endName.trim();
     }
 
-    public Integer getActualAmount() {
+    public Double getActualAmount() {
         return actualAmount;
     }
 
-    public void setActualAmount(Integer actualAmount) {
+    public void setActualAmount(Double actualAmount) {
         this.actualAmount = actualAmount;
     }
 

@@ -76,7 +76,7 @@ public interface DriverPlanService {
     */
     APIResponse getShowPlan(String driverUid);
 
-   Integer sumMoney(String uid);
+   Double sumMoney(String uid);
 
    DriverPlanResponse findDriverPlanResponseById(Integer id);
 

@@ -38,7 +38,7 @@ public interface DriverPlanEntityMapper {
      */
     List<DriverPlanEntity> selectExistPlan(String driverUid);
 
-    DriverPlanEntity selectByUidAndStatus(@Param("driverUid") String driverUid,@Param("status") Integer status);
+    List<DriverPlanEntity> selectByUidAndStatus(@Param("driverUid") String driverUid,@Param("status") Integer status);
 
     /**
      * @author codey
@@ -52,4 +52,6 @@ public interface DriverPlanEntityMapper {
     List<DriverPlanEntity> getAllDriverPlanInManyHours(Map<String, Object> paramMap);
 
     DriverPlanResponse selectResponseByPrimaryKey(Integer id);
+
+    Double sumAmount(@Param("uid") String uid);
 }
