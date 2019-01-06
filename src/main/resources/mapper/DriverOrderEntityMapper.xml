@@ -9,7 +9,7 @@
     <result column="actual_start_time" jdbcType="TIMESTAMP" property="actualStartTime" />
     <result column="actual_end_time" jdbcType="TIMESTAMP" property="actualEndTime" />
     <result column="driver_no" jdbcType="VARCHAR" property="driverNo" />
-    <result column="actual_amount" jdbcType="INTEGER" property="actualAmount" />
+    <result column="actual_amount" jdbcType="DOUBLE" property="actualAmount" />
     <result column="passenger_count" jdbcType="INTEGER" property="passengerCount" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
@@ -23,7 +23,7 @@
       <result column="passenger_count" jdbcType="INTEGER" property="passengerCount" />
       <result column="start_name" jdbcType="VARCHAR" property="startName" />
       <result column="end_name" jdbcType="VARCHAR" property="endName" />
-      <result column="actual_amount" jdbcType="INTEGER" property="actualAmount" />
+      <result column="actual_amount" jdbcType="DOUBLE" property="actualAmount" />
       <result column="status" jdbcType="INTEGER" property="status" />
       <result column="actual_start_time" jdbcType="TIMESTAMP" property="actualStartTime" />
       <result column="actual_end_time" jdbcType="TIMESTAMP" property="actualEndTime" />
@@ -60,7 +60,7 @@
       driver_no, actual_amount, passenger_count, create_user,create_date,last_modify_user,last_modify_date,is_del)
     values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{actualStartTime,jdbcType=TIMESTAMP}, #{actualEndTime,jdbcType=TIMESTAMP}, 
-      #{driverNo,jdbcType=VARCHAR}, #{actualAmount,jdbcType=INTEGER}, #{passengerCount,jdbcType=INTEGER},
+      #{driverNo,jdbcType=VARCHAR}, #{actualAmount,jdbcType=DOUBLE}, #{passengerCount,jdbcType=INTEGER},
       #{createUser,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{lastModifyUser,jdbcType=VARCHAR},
       #{lastModifyDate,jdbcType=TIMESTAMP},#{isDel,jdbcType=INTEGER})
   </insert>
@@ -133,7 +133,7 @@
         #{driverNo,jdbcType=VARCHAR},
       </if>
       <if test="actualAmount != null">
-        #{actualAmount,jdbcType=INTEGER},
+        #{actualAmount,jdbcType=DOUBLE},
       </if>
       <if test="passengerCount != null">
         #{passengerCount,jdbcType=INTEGER},
@@ -177,7 +177,7 @@
         driver_no = #{driverNo,jdbcType=VARCHAR},
       </if>
       <if test="actualAmount != null">
-        actual_amount = #{actualAmount,jdbcType=INTEGER},
+        actual_amount = #{actualAmount,jdbcType=DOUBLE},
       </if>
       <if test="passengerCount != null">
         passenger_count = #{passengerCount,jdbcType=INTEGER},
@@ -208,7 +208,7 @@
       actual_start_time = #{actualStartTime,jdbcType=TIMESTAMP},
       actual_end_time = #{actualEndTime,jdbcType=TIMESTAMP},
       driver_no = #{driverNo,jdbcType=VARCHAR},
-      actual_amount = #{actualAmount,jdbcType=INTEGER},
+      actual_amount = #{actualAmount,jdbcType=DOUBLE},
       passenger_count = #{passengerCount,jdbcType=INTEGER},
       create_user = #{createUser,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},

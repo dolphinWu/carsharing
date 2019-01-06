@@ -259,9 +259,11 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         if(driverOrder == null){
             return APIResponse.success();
         }
+        //实际总金额
+        BigDecimal sumActualAmount = new BigDecimal("0");
         driverOrder.setStatus(DriverOrderStatus.FINISH.getCode());
         driverOrder.setActualEndTime(new Date());
-        driverOrderEntityMapper.updateByPrimaryKeySelective(driverOrder);
+
         //查询乘客端订单
         List<PassengerOrderEntity> passengerOrderList = passengerOrderEntityMapper.selectByDriverOrderNo(driverOrder.getOrderNo());
         passengerOrderList.forEach(passengerOrderEntity -> {
@@ -271,6 +273,13 @@ public class DriverPlanServiceImpl implements DriverPlanService {
             passengerOrderEntityMapper.updateByPrimaryKeySelective(passengerOrderEntity);
             uidList.add(passengerOrderEntity.getPassengerUid());
         });
+
+        for (PassengerOrderEntity passengerOrderEntity : passengerOrderList) {
+            //计算司机订单的实际金额
+            sumActualAmount = sumActualAmount.add(new BigDecimal(passengerOrderEntity.getActualAmount()));
+        }
+        driverOrder.setActualAmount(sumActualAmount.doubleValue());
+        driverOrderEntityMapper.updateByPrimaryKeySelective(driverOrder);
 
         //增加司机和乘客的信用分
         userService.addUserCreditScore(uidList);
