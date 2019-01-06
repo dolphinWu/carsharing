@@ -127,11 +127,11 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
             Point2D point2D = map.get(orderEntity);
             String price = priceMap.get(point2D);
             if (orderEntity.equals(passengerOrderEntity)) {
-                passengerOrderEntity.setActualAmount(NumberUtils.toInt(price));
+                passengerOrderEntity.setActualAmount(Double.valueOf(price));
             } else {
                 PassengerOrderEntity updateEntity = new PassengerOrderEntity();
                 updateEntity.setId(orderEntity.getId());
-                updateEntity.setActualAmount(NumberUtils.toInt(price));
+                updateEntity.setActualAmount(Double.valueOf(price));
                 passengerOrderEntityMapper.updateByPrimaryKeySelective(updateEntity);
             }
         });

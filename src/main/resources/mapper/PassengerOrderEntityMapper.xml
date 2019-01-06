@@ -8,7 +8,7 @@
     <result column="passenger_count" jdbcType="INTEGER" property="passengerCount" />
     <result column="start_name" jdbcType="VARCHAR" property="startName" />
     <result column="end_name" jdbcType="VARCHAR" property="endName" />
-    <result column="actual_amount" jdbcType="INTEGER" property="actualAmount" />
+    <result column="actual_amount" jdbcType="DOUBLE" property="actualAmount" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="actual_start_time" jdbcType="TIMESTAMP" property="actualStartTime" />
     <result column="actual_end_time" jdbcType="TIMESTAMP" property="actualEndTime" />
@@ -48,7 +48,7 @@
       remark, create_user,create_date,last_modify_user,last_modify_date,is_del)
     values (#{id,jdbcType=INTEGER}, #{passengerNo,jdbcType=VARCHAR}, #{driverOrderNo,jdbcType=VARCHAR}, 
       #{passengerCount,jdbcType=INTEGER}, #{startName,jdbcType=VARCHAR}, #{endName,jdbcType=VARCHAR}, 
-      #{actualAmount,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{actualStartTime,jdbcType=TIMESTAMP}, 
+      #{actualAmount,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER}, #{actualStartTime,jdbcType=TIMESTAMP},
       #{actualEndTime,jdbcType=TIMESTAMP}, #{passengerUid,jdbcType=VARCHAR}, #{startXpoint,jdbcType=VARCHAR}, 
       #{startYpoint,jdbcType=VARCHAR}, #{endXpoint,jdbcType=VARCHAR}, #{endYpoint,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR},#{createUser,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{lastModifyUser,jdbcType=VARCHAR},
@@ -141,7 +141,7 @@
         #{endName,jdbcType=VARCHAR},
       </if>
       <if test="actualAmount != null">
-        #{actualAmount,jdbcType=INTEGER},
+        #{actualAmount,jdbcType=DOUBLE},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -206,7 +206,7 @@
         end_name = #{endName,jdbcType=VARCHAR},
       </if>
       <if test="actualAmount != null">
-        actual_amount = #{actualAmount,jdbcType=INTEGER},
+        actual_amount = #{actualAmount,jdbcType=DOUBLE},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -260,7 +260,7 @@
       passenger_count = #{passengerCount,jdbcType=INTEGER},
       start_name = #{startName,jdbcType=VARCHAR},
       end_name = #{endName,jdbcType=VARCHAR},
-      actual_amount = #{actualAmount,jdbcType=INTEGER},
+      actual_amount = #{actualAmount,jdbcType=DOUBLE},
       status = #{status,jdbcType=INTEGER},
       actual_start_time = #{actualStartTime,jdbcType=TIMESTAMP},
       actual_end_time = #{actualEndTime,jdbcType=TIMESTAMP},
