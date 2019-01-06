@@ -70,7 +70,7 @@ public class CommonTest {
         point2DS.add(pointPE2);
         point2DS.add(pointPE3);
 
-        Map<Point2D, String> point2DStringMap = PriceCalculateUtil.calculatePrice("100", point2DS, pointDS, pointDE);
+        Map<Point2D, String> point2DStringMap = PriceCalculateUtil.calculatePrice("100", point2DS, pointDS, pointDE,1);
         System.out.println(point2DStringMap);
     }
 }

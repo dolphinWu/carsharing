@@ -1,5 +1,6 @@
 package com.ziroom.utils;
 
+import com.ziroom.constant.PriceCalculateType;
 import com.ziroom.constant.PriceDiscountType;
 
 import java.awt.geom.Point2D;
@@ -61,7 +62,8 @@ public class PriceCalculateUtil {
      * @param driverPointE:行程单结束的坐标
      * @return 
      */
-    public static Map<Point2D,String> calculatePrice(String totalPrice, List<Point2D> point2DS,Point2D driverPointS,Point2D driverPointE) {
+    public static Map<Point2D,String> calculatePrice(String totalPrice, List<Point2D> point2DS,
+                                                     Point2D driverPointS,Point2D driverPointE,int accountingRules) {
         if (point2DS == null || point2DS.isEmpty()) {
             throw new RuntimeException("乘客端的列表点不能为空");
         }
@@ -80,8 +82,12 @@ public class PriceCalculateUtil {
         //再计算每个人乘客的付钱(按照乘客的比例系数)
         Map<Point2D,String> rateMap = new LinkedHashMap<>();
         for (Point2D point2D : point2DS) {
-            String currPointRate = MathUtil.num1DivideNum2(MathUtil.formatFloatNumber(Tools.getDistance(point2D, driverPointS)), totalDistance);
-            rateMap.put(point2D,MathUtil.num1MultiplyNum2(currPointRate,allPrice));
+            if (accountingRules == PriceCalculateType.AVERAGE_PRICE.getIndex()) {
+                rateMap.put(point2D, totalPrice);
+            } else {
+                String currPointRate = MathUtil.num1DivideNum2(MathUtil.formatFloatNumber(Tools.getDistance(point2D, driverPointS)), totalDistance);
+                rateMap.put(point2D,MathUtil.num1MultiplyNum2(currPointRate,allPrice));
+            }
         }
         return rateMap;
     }
