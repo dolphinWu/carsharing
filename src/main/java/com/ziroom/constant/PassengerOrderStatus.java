@@ -6,7 +6,7 @@ public enum PassengerOrderStatus {
     COMPLETE(2, "已完成"),
     CANCEL(3, "已取消");
 
-    private  PassengerOrderStatus(Integer statusCode,String statusName) {
+    PassengerOrderStatus(Integer statusCode, String statusName) {
         this.statusCode = statusCode;
         this.statusName = statusName;
     }

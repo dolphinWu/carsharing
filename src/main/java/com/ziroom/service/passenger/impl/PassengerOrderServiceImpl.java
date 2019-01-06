@@ -12,8 +12,10 @@ import com.ziroom.dao.UserEntityMapper;
 import com.ziroom.model.DriverOrderEntity;
 import com.ziroom.model.DriverPlanEntity;
 import com.ziroom.model.PassengerOrderEntity;
+import com.ziroom.model.UserEntity;
 import com.ziroom.service.passenger.PassengerOrderService;
 import com.ziroom.utils.APIResponse;
+import com.ziroom.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,25 +40,59 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
     @Autowired
     private DriverOrderEntityMapper driverOrderEntityMapper;
 
+    /**
+     * 加入行程
+     *
+     * @param driverPlanEntity
+     * @return
+     */
     @Override
     @Transactional
     public synchronized APIResponse joinJourney(DriverPlanEntity driverPlanEntity) {
+        UserEntity currentUser = UserUtils.getCurrentUser();
+        if (currentUser == null) {
+            return APIResponse.fail("用户未登录");
+        }
+
+        String uname = currentUser.getUname();
+        Date now = new Date();
         String driverNo = driverPlanEntity.getDriverNo();
+        //查询当前行程单是否已经产生订单
         DriverOrderEntity driverOrderEntity = driverOrderEntityMapper.selectByDriverNo(driverNo);
         if (driverOrderEntity == null) {
+            //没有的话就创建订单
             driverOrderEntity = new DriverOrderEntity();
-            driverOrderEntity.setCreateDate(new Date());
+            driverOrderEntity.setCreateDate(now);
+            driverOrderEntity.setCreateUser(uname);
+            driverOrderEntity.setLastModifyDate(now);
+            driverOrderEntity.setLastModifyUser(uname);
             //订单生成初始状态
             driverOrderEntity.setStatus(DriverOrderStatus.WAIT_DEPART.getCode());
             driverOrderEntity.setIsDel(BaseConst.TrueOrFalse.FALSE);
             driverOrderEntity.setDriverNo(driverNo);
             driverOrderEntity.setPassengerCount(1);
             driverOrderEntity.setOrderNo("DO-" + System.currentTimeMillis());
+            //如果满员修改状态
+            if (driverOrderEntity.getPassengerCount().equals(driverPlanEntity.getCarCapacity())) {
+                driverOrderEntity.setStatus(DriverOrderStatus.READY.getCode());
+            }
             driverOrderEntityMapper.insertSelective(driverOrderEntity);
-        }
+        } else {
+            Integer passengerCount = driverOrderEntity.getPassengerCount();
+            //判断是否满员
+            if (DriverOrderStatus.READY.getCode().equals(driverOrderEntity.getStatus())) {
+                return APIResponse.fail("乘客人数已满");
+            }
 
-        if (driverPlanEntity.getCarCapacity().equals(driverOrderEntity.getPassengerCount())) {
-            return APIResponse.fail("乘客人数已满");
+            driverOrderEntity.setLastModifyDate(now);
+            driverOrderEntity.setLastModifyUser(uname);
+            driverOrderEntity.setPassengerCount(passengerCount++);
+
+            if (driverPlanEntity.getCarCapacity().equals(passengerCount)) {
+                driverOrderEntity.setStatus(DriverOrderStatus.READY.getCode());
+            }
+
+            driverOrderEntityMapper.updateByPrimaryKeySelective(driverOrderEntity);
         }
 
         PassengerOrderEntity passengerOrderEntity = new PassengerOrderEntity();
@@ -66,6 +102,8 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
         passengerOrderEntity.setEndYpoint(driverPlanEntity.getEndYpoint());
         passengerOrderEntity.setEndName(driverPlanEntity.getEndName());
         passengerOrderEntity.setStartName(driverPlanEntity.getStartName());
+        passengerOrderEntity.setStartXpoint(driverPlanEntity.getStartXpoint());
+        passengerOrderEntity.setStartYpoint(driverPlanEntity.getStartYpoint());
         passengerOrderEntity.setPassengerNo("PN-" + System.currentTimeMillis());
         passengerOrderEntityMapper.insertSelective(passengerOrderEntity);
         return APIResponse.success("成功加入行程");

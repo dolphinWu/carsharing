@@ -13,7 +13,7 @@ public class DriverPlanResponse extends DriverPlanEntity {
 
     private String driverName;
 
-    private String currentMoney;
+    private Double currentMoney;
 
     private Integer currentPeopleCount;
 
@@ -41,11 +41,11 @@ public class DriverPlanResponse extends DriverPlanEntity {
         this.driverName = driverName;
     }
 
-    public String getCurrentMoney() {
+    public Double getCurrentMoney() {
         return currentMoney;
     }
 
-    public void setCurrentMoney(String currentMoney) {
+    public void setCurrentMoney(Double currentMoney) {
         this.currentMoney = currentMoney;
     }
 

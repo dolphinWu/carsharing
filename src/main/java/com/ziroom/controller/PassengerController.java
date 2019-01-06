@@ -7,7 +7,6 @@ import com.ziroom.dto.request.PassengerRequest;
 import com.ziroom.dto.response.DriverPlanResponse;
 import com.ziroom.dto.response.PassengerIndexResponse;
 import com.ziroom.model.*;
-import com.ziroom.service.Address.AddressService;
 import com.ziroom.service.driverOrder.DriverOrderService;
 import com.ziroom.service.driverOrder.DriverPlanService;
 import com.ziroom.service.passenger.PassengerOrderService;
@@ -17,24 +16,17 @@ import com.ziroom.utils.PointCalculateUtil;
 import com.ziroom.utils.PriceCalculateUtil;
 import com.ziroom.utils.Tools;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.geom.Point2D;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Api("乘客端")
@@ -121,32 +113,22 @@ public class PassengerController extends BaseController {
             return APIResponse.fail("行程单不存在，请刷新重试！");
         }
 
+        //乘客目的地点坐标
+        Point2D currentPoint = new Point2D.Double(NumberUtils.toDouble(longitude), NumberUtils.toDouble(latitude));
         //获取当前行程单对应的订单
         DriverOrderEntity driverOrderEntity = driverOrderService.findDriverOrderAllInfo(driverPlanResponse.getDriverNo());
-        if (driverOrderEntity != null) {
-            //获取当前订单级联的乘客订单
-            List<PassengerOrderEntity> passengerOrderEntityList = driverOrderEntity.getPassengerOrderEntityList();
-            List<Point2D> point2DS = new ArrayList<>();
-            //乘客目的地点坐标
-            Point2D currentPoint = new Point2D.Double(NumberUtils.toDouble(longitude), NumberUtils.toDouble(latitude));
-            point2DS.add(currentPoint);
-            if (CollectionUtils.isNotEmpty(passengerOrderEntityList)) {
-                //添加所有乘客的目的地点坐标
-                passengerOrderEntityList.stream().forEach(passengerOrderEntity -> {
-                    point2DS.add(new Point2D.Double(NumberUtils.toDouble(passengerOrderEntity.getEndXpoint()), NumberUtils.toDouble(passengerOrderEntity.getEndYpoint())));
-                });
-            }
 
-            //司机起始终止坐标
-            Point2D startPoint = new Point2D.Double(NumberUtils.toDouble(driverPlanResponse.getStartXpoint()), NumberUtils.toDouble(driverPlanResponse.getStartYpoint()));
-            Point2D endPoint = new Point2D.Double(NumberUtils.toDouble(driverPlanResponse.getEndXpoint()), NumberUtils.toDouble(driverPlanResponse.getEndYpoint()));
-            //计算每个人的价格
-            Map<Point2D, String> point2DStringMap = PriceCalculateUtil.calculatePrice(driverPlanResponse.getPlanAmount() + "", point2DS, startPoint, endPoint);
-            //当前乘客需要付钱数
-            String price = point2DStringMap.get(currentPoint);
-            driverPlanResponse.setCurrentMoney(price);
-            driverPlanResponse.setPassengerCount(point2DS.size() - 1);
+        //当前乘客需要付钱数
+        String price = PriceCalculateUtil.calculateCurrentUserPrice(driverOrderEntity, driverPlanResponse, currentPoint);
+        driverPlanResponse.setCurrentMoney(NumberUtils.toDouble(price) / 100);
+        if (driverOrderEntity != null) {
+            List<PassengerOrderEntity> passengerOrderEntityList = driverOrderEntity.getPassengerOrderEntityList();
+            if (CollectionUtils.isNotEmpty(passengerOrderEntityList)) {
+                //设置行程单已有人数
+                driverPlanResponse.setPassengerCount(passengerOrderEntityList.size() - 1);
+            }
         }
+
         return APIResponse.success(driverPlanResponse);
     }
 
