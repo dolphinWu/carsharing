@@ -1,6 +1,8 @@
 package com.ziroom.aspect;
 
 import com.ziroom.service.log.LogService;
+import com.ziroom.utils.IPKit;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -32,22 +34,36 @@ public class WebLogAspect {
     ThreadLocal<Long> startTime = new ThreadLocal<>();
 
     @Pointcut("execution(public * com.ziroom.controller..*.*(..))")
-    public void webLog(){}
+    public void webLog() {
+    }
 
 
     @Before("webLog()")
-    public void doBefore(JoinPoint joinPoint){
+    public void doBefore(JoinPoint joinPoint) {
         startTime.set(System.currentTimeMillis());
         //接收到请求，记录请求内容
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         HttpSession session = request.getSession();
+        String url = request.getRequestURL().toString();
+        String method = request.getMethod();
+        String ipAddr = IPKit.getIpAddrByRequest(request);
+        String classMethod = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
+        String args = Arrays.toString(joinPoint.getArgs());
+        String uid = request.getParameter("uid");
         // 记录下请求内容
-        LOGGER.info("URL : " + request.getRequestURL().toString());
-        LOGGER.info("HTTP_METHOD : " + request.getMethod());
-        LOGGER.info("IP : " + request.getRemoteAddr());
-        LOGGER.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        LOGGER.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
+        LOGGER.info("URL : " + url);
+        LOGGER.info("HTTP_METHOD : " + method);
+        LOGGER.info("IP : " + ipAddr);
+        LOGGER.info("CLASS_METHOD : " + classMethod);
+        LOGGER.info("ARGS : " + args);
+        LOGGER.info("uid : " + uid);
+        try {
+            //记录日志
+            logService.addLog(classMethod, args, ipAddr, NumberUtils.toInt(uid, -1));
+        } catch (Exception e) {
+            LOGGER.error("日志记录失败", e);
+        }
     }
 
     @AfterReturning(returning = "ret", pointcut = "webLog()")

@@ -3,7 +3,7 @@
 <mapper namespace="com.ziroom.dao.LogDao">
 
     <sql id="BASE_TABLE">
-        t_logs
+        tb_logs
     </sql>
 
     <!-- 基本列 -->

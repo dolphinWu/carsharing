@@ -85,13 +85,23 @@ public class PassengerController extends BaseController {
             String startYPoint = driverPlanEntity.getStartYpoint();
             Point2D startPoint = new Point2D.Double(NumberUtils.toDouble(startXPoint, 0), NumberUtils.toDouble(startYPoint, 0));
             Point2D endPoint = new Point2D.Double(NumberUtils.toDouble(endXPoint, 0), NumberUtils.toDouble(endYPoint, 0));
-
+            Double startToHomeDistance = Tools.getDistance(homeAddress, startPoint);
+            Double endToHomeDistance = Tools.getDistance(homeAddress, endPoint);
             //是否在所选地点范围
             boolean pointRange;
+            //上班
             if (BaseConst.UseType.ON_DUTY.equals(passengerRequest.getUseType())) {
-                pointRange = Tools.getDistance(homeAddress, startPoint) <= passengerRequest.getRadius();
-            } else {
-                pointRange = Tools.getDistance(homeAddress, endPoint) <= passengerRequest.getRadius();
+                pointRange = startToHomeDistance <= passengerRequest.getRadius();
+                if (startToHomeDistance > endToHomeDistance) {
+                    return false;
+                }
+            }
+            //下班
+            else {
+                pointRange = endToHomeDistance <= passengerRequest.getRadius();
+                if (endToHomeDistance > startToHomeDistance) {
+                    return false;
+                }
             }
 
             //计算是否在路径上的范围
