@@ -12,10 +12,7 @@ import com.ziroom.service.driverOrder.DriverPlanService;
 import com.ziroom.service.passenger.PassengerOrderService;
 import com.ziroom.service.user.UserRelationService;
 import com.ziroom.service.user.UserService;
-import com.ziroom.utils.APIResponse;
-import com.ziroom.utils.PointCalculateUtil;
-import com.ziroom.utils.PriceCalculateUtil;
-import com.ziroom.utils.Tools;
+import com.ziroom.utils.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -145,7 +142,7 @@ public class PassengerController extends BaseController {
     @PostMapping(value = "/joinJourney", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "加入行程单")
     public APIResponse joinJourney(@RequestParam("id") Integer id, @RequestParam("longitude") String longitude,
-                                   @RequestParam("latitude") String latitude, @RequestParam("name") String name,
+                                   @RequestParam("latitude") String latitude, @RequestParam(value = "name", required = false) String name,
                                    @RequestParam("uid") String uid) {
         DriverPlanEntity driverPlanEntity = driverPlanService.findDriverPlanById(id);
         if (driverPlanEntity == null) {
@@ -154,6 +151,11 @@ public class PassengerController extends BaseController {
 
         //乘客目的地点
         Point2D endPoint = new Point2D.Double(NumberUtils.toDouble(longitude), NumberUtils.toDouble(latitude));
+        if (StringUtils.isBlank(name)) {
+            UserEntity currentUser = UserUtils.getCurrentUser();
+            //设值目的地名称
+            name = currentUser.getHomeAddressName();
+        }
         return passengerOrderService.joinJourney(driverPlanEntity, endPoint, name);
     }
 
