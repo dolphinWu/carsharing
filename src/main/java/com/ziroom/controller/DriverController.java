@@ -75,6 +75,18 @@ public class DriverController {
 
     /**
      * @author codey
+     * @description 判断行程单是否有订单
+     * @date 2019/1/6 12:01
+     * @param
+     * @return
+     */
+    @PostMapping(value = "/checkPlanOrder",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public APIResponse checkPlanOrder(String driverNo){
+        return driverPlanService.checkPlanOrder(driverNo);
+    }
+
+    /**
+     * @author codey
      * @description 取消行程
      * @date 2019/1/3 14:54
      * @param

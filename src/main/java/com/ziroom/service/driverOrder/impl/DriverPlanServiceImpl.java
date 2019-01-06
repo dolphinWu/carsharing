@@ -166,6 +166,17 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         return APIResponse.success(driverPlan);
     }
 
+    //判断行程单是否有订单
+    @Override
+    public APIResponse checkPlanOrder(String driverNo) {
+        //查询司机订单
+        DriverOrderEntity driverOrder = driverOrderEntityMapper.selectByDriverNo(driverNo);
+        if(driverOrder == null){
+            return APIResponse.fail("没有订单，取消不扣信用分。");
+        }
+        return APIResponse.success("已有订单，取消会扣信用分哦~");
+    }
+
     //取消行程单
     @Override
     public APIResponse cancelPlan(String driverNo) {
@@ -284,4 +295,5 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     public DriverPlanResponse findDriverPlanResponseById(Integer id) {
         return driverPlanEntityMapper.selectResponseByPrimaryKey(id);
     }
+
 }
