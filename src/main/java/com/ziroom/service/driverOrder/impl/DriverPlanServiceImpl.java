@@ -106,6 +106,9 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     //创建行程单
     @Override
     public APIResponse createDriverPlan(DriverPlanRequest driverPlanReq) {
+        if (driverPlanReq.getCarCapacity() <= 0 || driverPlanReq.getCarCapacity() > 4) {
+            return APIResponse.fail("发布乘车座位数有误，请重新下单");
+        }
         //判断行程单是否存在，转态为拼车中和已出发
         List<DriverPlanEntity> list = driverPlanEntityMapper.selectExistPlan(driverPlanReq.getDriverUid());
         if(list.size() != 0){
@@ -164,6 +167,17 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         );
 
         return APIResponse.success(driverPlan);
+    }
+
+    //判断行程单是否有订单
+    @Override
+    public APIResponse checkPlanOrder(String driverNo) {
+        //查询司机订单
+        DriverOrderEntity driverOrder = driverOrderEntityMapper.selectByDriverNo(driverNo);
+        if(driverOrder == null){
+            return APIResponse.fail("没有订单，取消不扣信用分。");
+        }
+        return APIResponse.success("已有订单，取消会扣信用分哦~");
     }
 
     //取消行程单
@@ -284,4 +298,5 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     public DriverPlanResponse findDriverPlanResponseById(Integer id) {
         return driverPlanEntityMapper.selectResponseByPrimaryKey(id);
     }
+
 }

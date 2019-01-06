@@ -3,7 +3,14 @@ package com.ziroom;
 import com.ziroom.dto.request.PPointDistance;
 import com.ziroom.utils.GsonUtils;
 import com.ziroom.utils.MathUtil;
+import com.ziroom.utils.PriceCalculateUtil;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Test;
+
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Date:2019/1/2 21:45
@@ -42,5 +49,28 @@ public class CommonTest {
             System.out.println(pPointDistance+"distance="+pPointDistance.distance());
 
         }
+    }
+
+    @Test
+    public void testPriceCal() {
+
+        //起点
+        Point2D pointDS = new Point2D.Double(23.00, 24.00);
+        //终点
+        Point2D pointDE = new Point2D.Double(23.08, 24.00);
+        //乘客终点1
+        Point2D pointPE1 = new Point2D.Double(23.02, 24.00);
+        //乘客终点2
+        Point2D pointPE2 = new Point2D.Double(23.04, 24.00);
+        //乘客终点3
+        Point2D pointPE3 = new Point2D.Double(23.08, 24.00);
+
+        List<Point2D> point2DS = new ArrayList<Point2D>();
+        point2DS.add(pointPE1);
+        point2DS.add(pointPE2);
+        point2DS.add(pointPE3);
+
+        Map<Point2D, String> point2DStringMap = PriceCalculateUtil.calculatePrice("100", point2DS, pointDS, pointDE);
+        System.out.println(point2DStringMap);
     }
 }

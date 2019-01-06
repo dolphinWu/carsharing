@@ -79,4 +79,13 @@ public interface DriverPlanService {
    Integer sumMoney(String uid);
 
    DriverPlanResponse findDriverPlanResponseById(Integer id);
+
+   /**
+    * @author codey
+    * @description 判断行程单是否有订单
+    * @date 2019/1/6 12:02
+    * @param
+    * @return
+    */
+    APIResponse checkPlanOrder(String driverNo);
 }

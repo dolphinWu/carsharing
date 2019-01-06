@@ -18,7 +18,7 @@ public class PPointDistance {
     private	String endXpoint;
     private	String endYpoint;
 
-    private String unitPrice="1.00";
+    private String unitPrice="3.00";
 
     public String getStartXpoint() {
         return startXpoint;
@@ -53,7 +53,7 @@ public class PPointDistance {
     }
 
     public String totalPrice() {
-        return MathUtil.num1MultiplyNum2(unitPrice, distance())+"";
+        return MathUtil.num1DivideNum2(MathUtil.num1MultiplyNum2(unitPrice, distance()),"1000");
     }
 
     public String distance() {
