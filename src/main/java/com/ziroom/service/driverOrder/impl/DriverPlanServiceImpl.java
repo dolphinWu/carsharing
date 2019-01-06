@@ -61,7 +61,7 @@ public class DriverPlanServiceImpl implements DriverPlanService {
     //查看发布的行程单--司机首页
     @Override
     public APIResponse getShowPlan(String driverUid) {
-        List<DriverPlanEntity> driverPlanEntities = driverPlanEntityMapper.selectByUidAndStatus(driverUid,0);
+        List<DriverPlanEntity> driverPlanEntities = driverPlanEntityMapper.selectExistPlan(driverUid);
         //没有也返回
         if(driverPlanEntities.isEmpty()){
             return APIResponse.success();
