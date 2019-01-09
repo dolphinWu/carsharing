@@ -202,6 +202,11 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
                         passengerOrderEntityMapper.updateByPrimaryKeySelective(updateEntity);
                     });
                 }
+
+                DriverOrderEntity updateEntity = new DriverOrderEntity();
+                updateEntity.setId(driverOrderEntity.getId());
+                updateEntity.setPassengerCount(driverOrderEntity.getPassengerCount() - 1);
+                driverOrderEntityMapper.updateByPrimaryKeySelective(updateEntity);
             }
 
             //取消减信用分
