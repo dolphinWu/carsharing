@@ -73,4 +73,12 @@ public class CommonTest {
         Map<Point2D, String> point2DStringMap = PriceCalculateUtil.calculatePrice("100", point2DS, pointDS, pointDE,1);
         System.out.println(point2DStringMap);
     }
+
+
+    @Test
+    public void testZero() {
+
+        String s = MathUtil.num1DivideNum2("12", "0");
+        System.out.println(s);
+    }
 }

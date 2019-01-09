@@ -103,7 +103,7 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
 
             driverOrderEntity.setLastModifyDate(now);
             driverOrderEntity.setLastModifyUser(uname);
-            driverOrderEntity.setPassengerCount(passengerCount++);
+            driverOrderEntity.setPassengerCount(++passengerCount);
 
             if (driverPlanEntity.getCarCapacity().equals(passengerCount)) {
                 driverOrderEntity.setStatus(DriverOrderStatus.READY.getCode());
@@ -224,6 +224,7 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
             //查询司机订单
             DriverOrderEntity driverOrderEntity = driverOrderEntityMapper.selectByDriverOrderNo(passengerOrderEntity.getDriverOrderNo());
             if (driverOrderEntity != null) {
+                passengerOrderResponse.setPassengerCount(driverOrderEntity.getPassengerCount());
                 DriverPlanEntity driverPlanEntity = driverPlanEntityMapper.selectByNo(driverOrderEntity.getDriverNo());
                 //查询司机信息
                 UserEntity driver = userEntityMapper.selectByUId(driverPlanEntity.getDriverUid());

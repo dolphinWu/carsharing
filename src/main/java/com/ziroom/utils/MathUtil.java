@@ -67,11 +67,20 @@ public class MathUtil {
     public static String num1DivideNum2(String num1,String num2) {
         BigDecimal bigDecimal1 = new BigDecimal(num1);
         BigDecimal bigDecimal2 = new BigDecimal(num2);
-        if (BigDecimal.ZERO.equals(bigDecimal2)) {
-            return "0.00";
+        if (equalZero(num2)) {
+            throw new RuntimeException("除数不能为0");
         }
         BigDecimal multiply = bigDecimal1.divide(bigDecimal2,2,BigDecimal.ROUND_HALF_UP);
         return keep2Point(multiply);
+    }
+
+    public static boolean equalZero(String num) {
+        BigDecimal bigDecimal = new BigDecimal(num);
+        String bigDecimal1 = keep2Point(bigDecimal);
+        if (bigDecimal1.equals("0.00")) {
+            return true;
+        }
+        return  false;
     }
 
 
