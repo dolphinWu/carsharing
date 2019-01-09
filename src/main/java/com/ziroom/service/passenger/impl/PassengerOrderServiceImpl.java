@@ -118,6 +118,7 @@ public class PassengerOrderServiceImpl implements PassengerOrderService {
         passengerOrderEntity.setEndXpoint(currentPoint.getX() + "");
         passengerOrderEntity.setEndYpoint(currentPoint.getY() + "");
         passengerOrderEntity.setEndName(name);
+        passengerOrderEntity.setActualStartTime(driverPlanEntity.getPlanStartTime());
         passengerOrderEntity.setStartName(driverPlanEntity.getStartName());
         passengerOrderEntity.setStartXpoint(driverPlanEntity.getStartXpoint());
         passengerOrderEntity.setStartYpoint(driverPlanEntity.getStartYpoint());
