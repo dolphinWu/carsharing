@@ -277,11 +277,14 @@ public class DriverPlanServiceImpl implements DriverPlanService {
         //查询乘客端订单
         List<PassengerOrderEntity> passengerOrderList = passengerOrderEntityMapper.selectByDriverOrderNo(driverOrder.getOrderNo());
         passengerOrderList.forEach(passengerOrderEntity -> {
-            //更新乘客订单状态为取消
-            passengerOrderEntity.setStatus(PassengerOrderStatus.COMPLETE.getStatusCode());
-            passengerOrderEntity.setActualEndTime(new Date());
-            passengerOrderEntityMapper.updateByPrimaryKeySelective(passengerOrderEntity);
-            uidList.add(passengerOrderEntity.getPassengerUid());
+            if (PassengerOrderStatus.TRAVELING.getStatusCode().equals(passengerOrderEntity.getStatus())){
+                //更新乘客订单状态为取消
+                passengerOrderEntity.setStatus(PassengerOrderStatus.COMPLETE.getStatusCode());
+                passengerOrderEntity.setActualEndTime(new Date());
+                passengerOrderEntityMapper.updateByPrimaryKeySelective(passengerOrderEntity);
+                uidList.add(passengerOrderEntity.getPassengerUid());
+            }
+
         });
 
         for (PassengerOrderEntity passengerOrderEntity : passengerOrderList) {
