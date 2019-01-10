@@ -1,12 +1,12 @@
 package com.ziroom.service.log.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ziroom.constant.ErrorConstant;
 import com.ziroom.dao.LogDao;
 import com.ziroom.exception.BusinessException;
 import com.ziroom.model.LogDomain;
 import com.ziroom.service.log.LogService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +34,7 @@ public class LogServiceImpl implements LogService {
     @Override
     public void deleteLogById(Integer id) {
         if (null == id)
-            throw BusinessException.withErrorCode(ErrorConstant.Common.PARAM_IS_EMPTY);
+            throw BusinessException.withErrorMsg(ErrorConstant.Common.PARAM_IS_EMPTY);
         deleteLogById(id);
     }
 

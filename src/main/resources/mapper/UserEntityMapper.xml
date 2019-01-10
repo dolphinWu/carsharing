@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ziroom.dao.UserEntityMapper">
+  <resultMap id="BaseResultMap" type="com.ziroom.model.UserEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="uname" jdbcType="VARCHAR" property="uname" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="car_number" jdbcType="VARCHAR" property="carNumber" />
+    <result column="credit_score" jdbcType="INTEGER" property="creditScore" />
+    <result column="home_address_name" jdbcType="VARCHAR" property="homeAddressName" />
+    <result column="home_longitude" jdbcType="VARCHAR" property="homeLongitude" />
+    <result column="home_latitude" jdbcType="VARCHAR" property="homeLatitude" />
+    <result column="company_address_name" jdbcType="VARCHAR" property="companyAddressName" />
+    <result column="company_longitude" jdbcType="VARCHAR" property="companyLongitude" />
+    <result column="company_latitude" jdbcType="VARCHAR" property="companyLatitude" />
+    <result column="employee_no" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="job_title" jdbcType="VARCHAR" property="jobTitle" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="last_modify_user" jdbcType="VARCHAR" property="lastModifyUser" />
+    <result column="last_modify_date" jdbcType="TIMESTAMP" property="lastModifyDate" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, uname, phone_number, car_number, credit_score,
+    home_address_name,home_longitude, home_latitude, company_address_name,company_longitude, company_latitude,
+    employee_no,job_title, remark, create_user,create_date,last_modify_user,last_modify_date,is_del
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user
+    where id = #{id,jdbcType=INTEGER} and is_del = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    update tb_user set is_del = 0
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ziroom.model.UserEntity">
+    insert into tb_user (id, uid, uname, 
+      phone_number, car_number, credit_score, 
+     home_address_name,home_longitude, home_latitude, company_address_name,company_longitude, company_latitude,
+      employee_no,job_title, remark, create_user,create_date,last_modify_user,last_modify_date,is_del)
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, 
+      #{phoneNumber,jdbcType=VARCHAR}, #{carNumber,jdbcType=VARCHAR}, #{creditScore,jdbcType=INTEGER}, 
+      #{homeAddressName,jdbcType=VARCHAR}, #{hameLongitude,jdbcType=VARCHAR}, #{homeLatitude,jdbcType=VARCHAR},
+      #{companyAddressName,jdbcType=VARCHAR}, #{companyLongitude,jdbcType=VARCHAR}, #{companyLatitude,jdbcType=VARCHAR}, #{jobTitle,jdbcType=VARCHAR},
+      #{employeeNo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{lastModifyUser,jdbcType=VARCHAR},
+      #{lastModifyDate,jdbcType=TIMESTAMP},#{isDel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ziroom.model.UserEntity">
+    insert into tb_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="uname != null">
+        uname,
+      </if>
+      <if test="phoneNumber != null">
+        phone_number,
+      </if>
+      <if test="carNumber != null">
+        car_number,
+      </if>
+      <if test="creditScore != null">
+        credit_score,
+      </if>
+      <if test="homeAddressName != null">
+        home_address_name,
+      </if>
+
+      <if test="homeLongitude != null">
+        home_longitude,
+      </if>
+      <if test="homeLatitude != null">
+        home_latitude,
+      </if>
+      <if test="companyAddressName != null">
+        company_address_name,
+      </if>
+      <if test="companyLongitude != null">
+        company_longitude,
+      </if>
+      <if test="companyLatitude != null">
+        company_latitude,
+      </if>
+      <if test="employeeNo != null">
+        employee_no,
+      </if>
+      <if test="jobTitle != null">
+        job_title,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="lastModifyUser != null">
+        last_modify_user,
+      </if>
+      <if test="lastModifyDate != null">
+        last_modify_date,
+      </if>
+      <if test="isDel != null">
+        is_del
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="carNumber != null">
+        #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="creditScore != null">
+        #{creditScore,jdbcType=INTEGER},
+      </if>
+      <if test="homeAddressName != null">
+        #{homeAddressName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddressName != null">
+        #{companyAddressName,jdbcType=VARCHAR},
+      </if>
+      <if test="homeLongitude != null">
+        #{homeLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="homeLatitude != null">
+        #{homeLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="companyLongitude != null">
+        #{companyLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="companyLatitude != null">
+        #{companyLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNo != null">
+        #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null">
+        #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyUser != null">
+        #{lastModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyDate != null">
+        #{lastModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ziroom.model.UserEntity">
+    update tb_user
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="carNumber != null">
+        car_number = #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="creditScore != null">
+        credit_score = #{creditScore,jdbcType=INTEGER},
+      </if>
+      <if test="homeAddressName != null">
+        home_address_name= #{homeAddressName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddressName != null">
+        company_address_name= #{companyAddressName,jdbcType=VARCHAR},
+      </if>
+      <if test="homeLongitude != null">
+        home_longitude = #{homeLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="homeLatitude != null">
+        home_latitude = #{homeLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="companyLongitude != null">
+        company_longitude = #{companyLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="companyLatitude != null">
+        company_latitude =  #{companyLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNo != null">
+        employee_no = #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null">
+        job_title =  #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyUser != null">
+        last_modify_user = #{lastModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyDate != null">
+        last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey"  parameterType="com.ziroom.model.UserEntity">
+    update tb_user
+    set uid = #{uid,jdbcType=VARCHAR},
+      uname = #{uname,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      car_number = #{carNumber,jdbcType=VARCHAR},
+      credit_score = #{creditScore,jdbcType=INTEGER},
+      home_address_name= #{homeAddressName,jdbcType=VARCHAR},
+      company_address_name= #{companyAddressName,jdbcType=VARCHAR},
+      home_longitude = #{homeLongitude,jdbcType=VARCHAR},
+      home_latitude = #{homeLatitude,jdbcType=VARCHAR},
+      company_longitude = #{companyLongitude,jdbcType=VARCHAR},
+      company_latitude =  #{companyLatitude,jdbcType=VARCHAR},
+      employee_no = #{employeeNo,jdbcType=VARCHAR},
+      job_title =  #{jobTitle,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_modify_user = #{lastModifyUser,jdbcType=VARCHAR},
+      last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getUserInfoByEmployeeNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from tb_user
+    where employee_no = #{employeeNo,jdbcType=VARCHAR} and is_del = 0
+  </select>
+
+  <!-- 增加用户信用分 -->
+  <update id="addUserCreditScore" parameterType="java.lang.String">
+    UPDATE tb_user
+    SET credit_score = credit_score + 1 WHERE uid = #{uid,jdbcType=VARCHAR}
+  </update>
+
+  <!-- 扣除用户信用分 -->
+  <update id="deductUserCreditScore" parameterType="java.lang.String">
+    UPDATE tb_user
+    SET credit_score = credit_score - 1 WHERE uid = #{uid,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByUId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List" />
+    from tb_user
+    where uid = #{uId} and is_del = 0
+  </select>
+
+</mapper>

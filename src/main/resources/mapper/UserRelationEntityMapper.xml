@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ziroom.dao.UserRelationEntityMapper">
+  <resultMap id="BaseResultMap" type="com.ziroom.model.UserRelationEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid1" jdbcType="VARCHAR" property="uid1" />
+    <result column="uid2" jdbcType="VARCHAR" property="uid2" />
+    <result column="friendship_score" jdbcType="INTEGER" property="friendshipScore" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="last_modify_user" jdbcType="VARCHAR" property="lastModifyUser" />
+    <result column="last_modify_date" jdbcType="TIMESTAMP" property="lastModifyDate" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid1, uid2, friendship_score, create_user,create_date,last_modify_user,last_modify_date,is_del
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user_relation
+    where id = #{id,jdbcType=INTEGER} and is_del = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    update tb_user_relation set is_del = 0
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ziroom.model.UserRelationEntity">
+    insert into tb_user_relation (id, uid1, uid2, 
+      friendship_score, create_user,create_date,last_modify_user,last_modify_date,is_del)
+    values (#{id,jdbcType=INTEGER}, #{uid1,jdbcType=VARCHAR}, #{uid2,jdbcType=VARCHAR}, 
+      #{friendshipScore,jdbcType=INTEGER},
+      #{createUser,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{lastModifyUser,jdbcType=VARCHAR},
+      #{lastModifyDate,jdbcType=TIMESTAMP},#{isDel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ziroom.model.UserRelationEntity">
+    insert into tb_user_relation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid1 != null">
+        uid1,
+      </if>
+      <if test="uid2 != null">
+        uid2,
+      </if>
+      <if test="friendshipScore != null">
+        friendship_score,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="lastModifyUser != null">
+        last_modify_user,
+      </if>
+      <if test="lastModifyDate != null">
+        last_modify_date,
+      </if>
+      <if test="isDel != null">
+        is_del
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid1 != null">
+        #{uid1,jdbcType=VARCHAR},
+      </if>
+      <if test="uid2 != null">
+        #{uid2,jdbcType=VARCHAR},
+      </if>
+      <if test="friendshipScore != null">
+        #{friendshipScore,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyUser != null">
+        #{lastModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyDate != null">
+        #{lastModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ziroom.model.UserRelationEntity">
+    update tb_user_relation
+    <set>
+      <if test="uid1 != null">
+        uid1 = #{uid1,jdbcType=VARCHAR},
+      </if>
+      <if test="uid2 != null">
+        uid2 = #{uid2,jdbcType=VARCHAR},
+      </if>
+      <if test="friendshipScore != null">
+        friendship_score = #{friendshipScore,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyUser != null">
+        last_modify_user = #{lastModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyDate != null">
+        last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ziroom.model.UserRelationEntity">
+    update tb_user_relation
+    set uid1 = #{uid1,jdbcType=VARCHAR},
+      uid2 = #{uid2,jdbcType=VARCHAR},
+      friendship_score = #{friendshipScore,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_modify_user = #{lastModifyUser,jdbcType=VARCHAR},
+      last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- selectRelation -->
+  <select id="selectRelation" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM tb_user_relation WHERE uid1 = #{uid1,jdbcType=VARCHAR} AND uid2 = #{uid2,jdbcType=VARCHAR} AND is_del = 0
+  </select>
+</mapper>

@@ -1,16 +1,25 @@
 package com.ziroom.model;
 
+import lombok.*;
+
 import java.util.Date;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class BaseEntity {
 
-    private  String createUser;
+    private String createUser;
 
     private Date createDate;
 
     private String lastModifyUser;
 
     private Date lastModifyDate;
+
+    private Integer isDel;
 
     public String getCreateUser() {
         return createUser;
@@ -42,5 +51,13 @@ public class BaseEntity {
 
     public void setLastModifyDate(Date lastModifyDate) {
         this.lastModifyDate = lastModifyDate;
+    }
+
+    public Integer getIsDel() {
+        return isDel;
+    }
+
+    public void setIsDel(Integer isDel) {
+        this.isDel = isDel;
     }
 }

@@ -12,7 +12,8 @@ import java.text.MessageFormat;
 public class BusinessException extends RuntimeException {
 
     private static final Logger logger = LoggerFactory.getLogger(BusinessException.class);
-    protected String errorCode;
+    protected Integer errorCode;
+    protected String errorMsg;
     protected String[] errorMessageArguments;
     protected APIResponse apiResponse;
 
@@ -22,21 +23,21 @@ public class BusinessException extends RuntimeException {
 
     public BusinessException(String message) {
         super(message);
-        this.errorCode = "fail";
-        this.errorMessageArguments = new String[0];
+        this.errorCode = -1;
+        this.errorMsg = message;
     }
 
     public BusinessException(String message, Throwable cause) {
         super(message, cause);
-        this.errorCode = "fail";
-        this.errorMessageArguments = new String[0];
+        this.errorCode = -1;
+        this.errorMsg = message;
     }
 
-    public String getErrorCode() {
+    public Integer getErrorCode() {
         return this.errorCode;
     }
 
-    public void setErrorCode(String errorCode) {
+    public void setErrorCode(Integer errorCode) {
         this.errorCode = errorCode;
     }
 
@@ -48,9 +49,15 @@ public class BusinessException extends RuntimeException {
         this.errorMessageArguments = errorMessageArguments;
     }
 
-    public static BusinessException withErrorCode(String errorCode) {
+    public static BusinessException withErrorCode(Integer errorCode) {
         BusinessException businessException = new BusinessException();
         businessException.errorCode = errorCode;
+        return businessException;
+    }
+
+    public static BusinessException withErrorMsg(String errorMsg) {
+        BusinessException businessException = new BusinessException();
+        businessException.errorMsg = errorMsg;
         return businessException;
     }
 
@@ -76,9 +83,10 @@ public class BusinessException extends RuntimeException {
             return this.apiResponse;
         } else {
             this.apiResponse = APIResponse.widthCode(this.getErrorCode());
+            this.apiResponse.setMessage(this.errorMsg);
             if(this.getErrorMessageArguments() != null && this.getErrorMessageArguments().length > 0) {
                 try {
-                    this.apiResponse.setMsg(MessageFormat.format(this.apiResponse.getMsg(), this.getErrorMessageArguments()));
+                    this.apiResponse.setMessage(MessageFormat.format(this.apiResponse.getMessage(), this.getErrorMessageArguments()));
                 } catch (Exception var2) {
                     logger.error(var2.getMessage());
                 }
@@ -88,4 +96,11 @@ public class BusinessException extends RuntimeException {
         }
     }
 
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
 }

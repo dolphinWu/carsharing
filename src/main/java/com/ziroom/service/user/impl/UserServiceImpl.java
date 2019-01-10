@@ -1,48 +1,68 @@
 package com.ziroom.service.user.impl;
 
-import com.ziroom.constant.ErrorConstant;
-import com.ziroom.dao.UserDao;
-import com.ziroom.exception.BusinessException;
+import com.ziroom.dao.UserEntityMapper;
 import com.ziroom.model.UserEntity;
 import com.ziroom.service.user.UserService;
-import com.ziroom.utils.TaleUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserDao userDao;//这里会报错，但是并不会影响
-
+    private UserEntityMapper userEntityMapper;
 
     @Transactional
     @Override
-    public int updateUserInfo(UserEntity user) {
-        if (null == user.getId())
-            throw BusinessException.withErrorCode("用户编号不可能为空");
-        return userDao.updateUserInfo(user);
+    public int insertUserInfo(UserEntity user) {
+//        if (null == user.getId())
+//            throw BusinessException.withErrorMsg("用户编号不可能为空");
+        return userEntityMapper.insertSelective(user);
     }
 
     @Override
-    public UserEntity getUserInfoById(Integer uId) {
-        return userDao.getUserInfoById(uId);
+    public UserEntity getUserInfoByUId(String uId) {
+        return userEntityMapper.selectByUId(uId);
     }
 
+
+    public int updateUserByUid(UserEntity user){
+        return userEntityMapper.updateByPrimaryKeySelective(user);
+    }
+
+   public UserEntity getUserInfoByEmployeeNo(String employeeNo){
+       return userEntityMapper.getUserInfoByEmployeeNo(employeeNo);
+    }
+
+    /**
+     * @author codey
+     * @description 增加用户信用分
+     * @date 2019/1/5 11:32
+     * @param
+     * @return
+     */
     @Override
-    public UserEntity login(String username, String password) {
-        if (StringUtils.isBlank(username) || StringUtils.isBlank(password))
-            throw BusinessException.withErrorCode(ErrorConstant.Auth.USERNAME_PASSWORD_IS_EMPTY);
-
-        String pwd = TaleUtils.MD5encode(username + password);
-        UserEntity user = userDao.getUserInfoByCond(username, pwd);
-        if (null == user)
-            throw BusinessException.withErrorCode(ErrorConstant.Auth.USERNAME_PASSWORD_ERROR);
-
-        return user;
+    public void addUserCreditScore(List<String> uidList) {
+        uidList.forEach(uid ->{
+            userEntityMapper.addUserCreditScore(uid);
+        });
     }
 
+    /**
+     * @author codey
+     * @description 扣除用户信用分
+     * @date 2019/1/5 15:24
+     * @param
+     * @return
+     */
+    @Override
+    public void deductUserCreditScore(String... uidList) {
+        for (String uid : uidList) {
+            userEntityMapper.deductUserCreditScore(uid);
+        }
+    }
 
 }

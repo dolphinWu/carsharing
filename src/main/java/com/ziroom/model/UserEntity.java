@@ -1,95 +1,39 @@
 package com.ziroom.model;
 
-public class UserEntity {
+import lombok.Getter;
+import lombok.Setter;
 
-    /** 主键编号 */
+@Getter
+@Setter
+public class UserEntity extends BaseEntity {
     private Integer id;
-    /** 用户名 */
-    private String username;
-    /** 密码 */
-    private String password;
-    /** email */
-    private String email;
-    /**  用户显示的名称 */
-    private String screenName;
-    /** 用户注册时的GMT unix时间戳 */
-    private Integer created;
-    /** 最后活动时间 */
-    private Integer activated;
-    /** 上次登录最后活跃时间 */
-    private Integer logged;
-    /** 用户组 */
-    private String groupName;
 
-    public Integer getId() {
-        return id;
-    }
+    private String uid;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private String uname;
 
-    public String getUsername() {
-        return username;
-    }
+    private String phoneNumber;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    private String carNumber;
 
-    public String getPassword() {
-        return password;
-    }
+    private Integer creditScore;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    private String employeeNo;
 
-    public String getEmail() {
-        return email;
-    }
+    private String remark;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    private String homeAddressName;
 
-    public String getScreenName() {
-        return screenName;
-    }
+    private String homeLongitude;
 
-    public void setScreenName(String screenName) {
-        this.screenName = screenName;
-    }
+    private String homeLatitude;
 
-    public Integer getCreated() {
-        return created;
-    }
+    private String companyAddressName;
 
-    public void setCreated(Integer created) {
-        this.created = created;
-    }
+    private String companyLongitude;
 
-    public Integer getActivated() {
-        return activated;
-    }
+    private String companyLatitude;
 
-    public void setActivated(Integer activated) {
-        this.activated = activated;
-    }
+    private String jobTitle;
 
-    public Integer getLogged() {
-        return logged;
-    }
-
-    public void setLogged(Integer logged) {
-        this.logged = logged;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
 }

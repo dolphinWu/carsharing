@@ -3,7 +3,7 @@
 <mapper namespace="com.ziroom.dao.LogDao">
 
     <sql id="BASE_TABLE">
-        t_logs
+        tb_logs
     </sql>
 
     <!-- 基本列 -->
@@ -20,7 +20,7 @@
         </trim>
         <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
             #{action, jdbcType=VARCHAR}, #{data, jdbcType=VARCHAR},
-            #{authorId, jdbcType=INTEGER}, #{ip, jdbcType=VARCHAR}, UNIX_TIMESTAMP(NOW()),
+            #{authorId, jdbcType=INTEGER}, #{ip, jdbcType=VARCHAR}, NOW(),
         </trim>
     </insert>
 
