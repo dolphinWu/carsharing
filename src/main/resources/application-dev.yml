@@ -55,6 +55,11 @@ spring:
     host: redis.t.ziroom.com
     port: 6379
     timeout: 1000
+  elasticsearch:
+    jest:
+      uris: http://locahost:9200
+      read-timeout: 5000
+      connection-timeout: 20000
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.ziroom.model
@@ -81,4 +86,4 @@ cas:
 
 ehr:
   url:
-    userDetil:  http://ehrnew.t.ziroom.com/api/ehr/getUserSimple.action
+    userDetil:  http://ehrnew.q.ziroom.com/api/ehr/getUserSimple.action

@@ -1,5 +1,6 @@
 package com.ziroom.config;
 
+import com.google.gson.Gson;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -18,5 +19,10 @@ public class MainConfig {
         converters.add(customDateConverter);
         factoryBean.setConverters(converters);
         return factoryBean;
+    }
+
+    @Bean
+    public Gson gson() {
+        return new Gson();
     }
 }
