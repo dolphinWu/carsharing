@@ -1,4 +1,4 @@
-package com.ziroom.controller;
+package com.ziroom.api;
 
 import com.ziroom.dto.request.DriverPlanRequest;
 import com.ziroom.service.driverOrder.DriverPlanService;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api("司机端")
 @RestController
-@RequestMapping("/driver")
+@RequestMapping("/api/driver")
 public class DriverController {
 
     private static Logger logger = LoggerFactory.getLogger(DriverController.class);

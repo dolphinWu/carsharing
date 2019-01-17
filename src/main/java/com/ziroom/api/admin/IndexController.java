@@ -1,6 +1,6 @@
-package com.ziroom.controller.admin;
+package com.ziroom.api.admin;
 
-import com.ziroom.controller.BaseController;
+import com.ziroom.api.BaseController;
 import com.ziroom.service.log.LogService;
 import com.ziroom.service.user.UserService;
 import io.swagger.annotations.Api;

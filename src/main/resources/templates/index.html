@@ -3,8 +3,8 @@
 <head>
     <!-- Required meta tags-->
     <meta charset="utf-8">
-    <meta http-equiv="Content-Security-Policy"
-          content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
+    <!--<meta http-equiv="Content-Security-Policy"
+          content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">-->
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,18 +32,15 @@
         <div class="toolbar tabbar-labels toolbar-bottom-md">
             <div class="toolbar-inner">
                 <a href="#view-home" class="tab-link tab-link-active">
-                    <i class="icon f7-icons ios-only">home</i>
-                    <i class="icon f7-icons icon-ios-fill">home_fill</i>
+                    <i class="icon f7-icons ios-only icon-ios-fill">home_fill</i>
                     <span class="tabbar-label">首页</span>
                 </a>
                 <a href="#view-catalog" class="tab-link">
-                    <i class="icon f7-icons ios-only">list</i>
-                    <i class="icon f7-icons icon-ios-fill">list_fill</i>
+                    <i class="icon f7-icons ios-only icon-ios-fill">list_fill</i>
                     <span class="tabbar-label">订单</span>
                 </a>
                 <a href="#view-settings" class="tab-link">
-                    <i class="icon f7-icons ios-only">person</i>
-                    <i class="icon f7-icons icon-ios-fill">person_fill</i>
+                    <i class="icon f7-icons ios-only icon-ios-fill">person_fill</i>
                     <span class="tabbar-label">我的</span>
                 </a>˙
             </div>
@@ -66,14 +63,6 @@
                 <!-- Scrollable page content-->
                 <div class="page-content">
                     <div id="container" style="width: 100%;height: 100%;"></div>
-                    <div class="info">
-                        <div class="input-item">
-                            <div class="input-item-prepend">
-                                <span class="input-item-text" style="width:10rem;">请输入关键字</span>
-                            </div>
-                            <input id='input' type="text" value='北京'>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -104,27 +93,27 @@
         center: [116.397428, 39.90923] //初始化地图中心点
     });
 
-    // 获取输入提示信息
-    function autoInput() {
-        var keywords = document.getElementById("input").value;
-        AMap.plugin('AMap.Autocomplete', function () {
-            // 实例化Autocomplete
-            var autoOptions = {
-                city: '全国'
-            }
-            var autoComplete = new AMap.Autocomplete(autoOptions);
-            autoComplete.search(keywords, function (status, result) {
-                // 搜索成功时，result即是对应的匹配数据
-                var node = new PrettyJSON.view.Node({
-                    el: document.querySelector("#input-info"),
-                    data: result
-                });
-            })
-        })
-    }
-
-    autoInput();
-    document.getElementById("input").oninput = autoInput;
+//    // 获取输入提示信息
+//    function autoInput() {
+//        var keywords = document.getElementById("input").value;
+//        AMap.plugin('AMap.Autocomplete', function () {
+//            // 实例化Autocomplete
+//            var autoOptions = {
+//                city: '全国'
+//            }
+//            var autoComplete = new AMap.Autocomplete(autoOptions);
+//            autoComplete.search(keywords, function (status, result) {
+//                // 搜索成功时，result即是对应的匹配数据
+//                var node = new PrettyJSON.view.Node({
+//                    el: document.querySelector("#input-info"),
+//                    data: result
+//                });
+//            })
+//        })
+//    }
+//
+//    autoInput();
+//    document.getElementById("input").oninput = autoInput;
 </script>
 </body>
 </html>

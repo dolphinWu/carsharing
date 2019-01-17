@@ -1,4 +1,4 @@
-package com.ziroom.controller;
+package com.ziroom.api;
 
 
 import com.github.pagehelper.PageInfo;

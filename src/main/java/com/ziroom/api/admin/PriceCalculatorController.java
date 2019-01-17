@@ -1,4 +1,4 @@
-package com.ziroom.controller.admin;
+package com.ziroom.api.admin;
 
 import com.github.pagehelper.PageInfo;
 import com.ziroom.dto.request.PPointDistance;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("priceCalculator")
+@RequestMapping("/api/priceCalculator")
 public class PriceCalculatorController {
 
     @Autowired

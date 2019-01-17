@@ -1,4 +1,4 @@
-package com.ziroom.controller.admin;
+package com.ziroom.api.admin;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
