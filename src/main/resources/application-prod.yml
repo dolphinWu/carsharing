@@ -11,9 +11,9 @@ spring:
           filters: stat
           driver-class-name: com.mysql.jdbc.Driver
           #基本属性
-          url: jdbc:mysql://45.77.68.83:3306/car_sharing?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
-          username: dev
-          password: ziroom
+          url: jdbc:mysql://127.0.0.1:3306/carSharing?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+          username: root
+          password: root
           #配置初始化大小/最小/最大
           initial-size: 1
           min-idle: 1
