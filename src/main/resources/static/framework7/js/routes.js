@@ -1,15 +1,31 @@
 routes = [
     {
         path: '/',
-        url: './index.html',
+        url: './index.ftl',
     },
     {
         path: '/order/orderPage',
-        url: '/order/orderPage',
+        async: function (routeTo, routeFrom, resolve, reject) {
+            // Router instance
+            var router = this;
+            // App instance
+            var app = router.app;
+            app.request.get('/order/orderPage', {rnd: Math.random()}, function(data) {
+                $$('#view-order').html(data);
+            });
+        }
     },
     {
-        path: '/form/',
-        url: './pages/form.html',
+        path: '/message/messageList',
+        async: function (routeTo, routeFrom, resolve, reject) {
+            // Router instance
+            var router = this;
+            // App instance
+            var app = router.app;
+            app.request.get('/message/messageList', {rnd: Math.random()}, function(data) {
+                $$('#view-message').html(data);
+            });
+        }
     },
     // Page Loaders & Router
     {

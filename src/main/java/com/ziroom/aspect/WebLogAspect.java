@@ -33,7 +33,7 @@ public class WebLogAspect {
 
     ThreadLocal<Long> startTime = new ThreadLocal<>();
 
-    @Pointcut("execution(public * com.ziroom.controller..*.*(..))")
+    @Pointcut("execution(public * com.ziroom.controller..*.*(..)) || execution(public * com.ziroom.api..*.*(..))")
     public void webLog() {
     }
 
@@ -60,7 +60,7 @@ public class WebLogAspect {
         LOGGER.info("uid : " + uid);
         try {
             //记录日志
-            logService.addLog(classMethod, args, ipAddr, NumberUtils.toInt(uid, -1));
+            //logService.addLog(classMethod, args, ipAddr, NumberUtils.toInt(uid, -1));
         } catch (Exception e) {
             LOGGER.error("日志记录失败", e);
         }

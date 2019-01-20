@@ -14,12 +14,18 @@
 }
 
 #pickerInput {
-    width: 200px;
+    width: 250px;
     padding: 5px 5px;
 }
 
 #poiInfo {
     background: #fff;
+}
+
+.patternBtn {
+    background: #fff;
+    margin-top: 5px;
+    border-radius: 7px;
 }
 
 #indexButtons {
@@ -30,10 +36,15 @@
     width: 50px;
 }
 
+.orderBtnRow-2 {
+    width: 200px;
+    margin-right: 10px;
+}
+
 .amap_lib_placeSearch .poibox.highlight {
     background-color: #CAE1FF;
 }
 
 .amap_lib_placeSearch .poi-more {
-    display: none!important;
+    display: none !important;
 }
