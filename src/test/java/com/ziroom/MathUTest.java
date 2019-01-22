@@ -10,4 +10,8 @@ public class MathUTest {
     public void test23() {
 
     }
+
+    public void test24() {
+
+    }
 }
