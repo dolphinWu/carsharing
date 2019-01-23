@@ -1,4 +1,4 @@
-package com.ziroom.dao.elasticesearch;
+package com.ziroom.otherDao.elasticesearch;
 
 /**
  * @Author wudaoping

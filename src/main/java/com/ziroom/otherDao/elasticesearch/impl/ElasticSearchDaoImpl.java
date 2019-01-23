@@ -1,9 +1,9 @@
-package com.ziroom.dao.elasticesearch.impl;
+package com.ziroom.otherDao.elasticesearch.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.ziroom.dao.elasticesearch.ElasticSearchDao;
+import com.ziroom.otherDao.elasticesearch.ElasticSearchDao;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
 import io.searchbox.cluster.Health;
