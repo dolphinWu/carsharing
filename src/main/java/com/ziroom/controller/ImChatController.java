@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Date 19-1-23 下午8:55
  */
 @Controller
-@RequestMapping("/im")
-public class ImController {
+@RequestMapping("/imChat")
+public class ImChatController {
 
 
     @RequestMapping("/index")
     public String index() {
+
         return "im";
     }
 

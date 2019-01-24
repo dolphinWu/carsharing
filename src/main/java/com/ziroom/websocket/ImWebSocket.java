@@ -21,15 +21,26 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 @ServerEndpoint("/im/{userId}")
 @Component
-public class ImController {
+public class ImWebSocket {
 
-    //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
+    /**
+     * 静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
+     */
     private static int onlineCount = 0;
-    //与某个客户端的连接会话，需要通过它来给客户端发送数据
+
+    /**
+     * 与某个客户端的连接会话，需要通过它来给客户端发送数据
+     */
     private Session session;
-    //新：使用map对象，便于根据userId来获取对应的WebSocket
-    private static ConcurrentHashMap<String, ImController> websocketList = new ConcurrentHashMap<>();
-    //接收sid
+
+    /**
+     * 使用map对象，便于根据userId来获取对应的WebSocket
+     */
+    private static ConcurrentHashMap<String, ImWebSocket> websocketList = new ConcurrentHashMap<>();
+
+    /**
+     * 接收sid
+     */
     private String userId = "";
 
     /**
@@ -39,10 +50,9 @@ public class ImController {
     public void onOpen(Session session, @PathParam("userId") String userId) {
         this.session = session;
         websocketList.put(userId, this);
-        log.info("websocketList->" + JSON.toJSONString(websocketList));
-        //webSocketSet.add(this);     //加入set中
+        log.info("websocketList->{}", websocketList);
         addOnlineCount();           //在线数加1
-        log.info("有新窗口开始监听:" + userId + ",当前在线人数为" + getOnlineCount());
+        log.info("有用户加入:" + userId + ",当前在线人数为" + getOnlineCount());
         this.userId = userId;
         try {
             sendMessage(JSON.toJSONString(APIResponse.success("连接成功")));
@@ -58,8 +68,8 @@ public class ImController {
     public void onClose() {
         if (websocketList.get(this.userId) != null) {
             websocketList.remove(this.userId);
-            //webSocketSet.remove(this);  //从set中删除
-            subOnlineCount();           //在线数减1
+            //在线数减1
+            subOnlineCount();
             log.info("有一连接关闭！当前在线人数为" + getOnlineCount());
         }
     }
@@ -81,12 +91,13 @@ public class ImController {
                     String toUserId = object.getString("toUserId");
                     String contentText = object.getString("contentText");
                     object.put("fromUserId", this.userId);
+                    object.put("contentText", contentText);
                     //传送给对应用户的websocket
                     if (StringUtils.isNotBlank(toUserId) && StringUtils.isNotBlank(contentText)) {
-                        ImController socketx = websocketList.get(toUserId);
+                        ImWebSocket socketTo = websocketList.get(toUserId);
                         //需要进行转换，userId
-                        if (socketx != null) {
-                            socketx.sendMessage(JSON.toJSONString(APIResponse.success(object)));
+                        if (socketTo != null) {
+                            socketTo.sendMessage(JSON.toJSONString(APIResponse.success(object)), socketTo);
                             //此处可以放置相关业务代码，例如存储到数据库
                         }
                     }
@@ -114,6 +125,13 @@ public class ImController {
         this.session.getBasicRemote().sendText(message);
     }
 
+    /**
+     * 实现服务器主动推送
+     */
+    public void sendMessage(String message, ImWebSocket imWebSocket) throws IOException {
+        imWebSocket.getSession().getBasicRemote().sendText(message);
+    }
+
 
     /**
      * 群发自定义消息
@@ -138,10 +156,15 @@ public class ImController {
     }
 
     public static synchronized void addOnlineCount() {
-        ImController.onlineCount++;
+        ImWebSocket.onlineCount++;
     }
 
     public static synchronized void subOnlineCount() {
-        ImController.onlineCount--;
+        ImWebSocket.onlineCount--;
+    }
+
+
+    public Session getSession() {
+        return session;
     }
 }

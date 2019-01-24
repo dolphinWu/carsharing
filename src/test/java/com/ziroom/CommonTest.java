@@ -74,11 +74,4 @@ public class CommonTest {
         System.out.println(point2DStringMap);
     }
 
-
-    @Test
-    public void testZero() {
-
-        String s = MathUtil.num1DivideNum2("12", "0");
-        System.out.println(s);
-    }
 }

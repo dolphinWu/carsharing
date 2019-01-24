@@ -34,13 +34,14 @@ spring:
       #打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false
       pool-prepared-statements: false
       max-pool-prepared-statement-per-connection-size: 20
-  thymeleaf:
-    prefix: classpath:/templates/
-    check-template-location: true
-    suffix: .html
-    encoding: UTF-8
-    mode: LEGACYHTML5
-    cache: false
+  freemarker:
+    request-context-attribute: req  #req访问request
+    suffix: .ftl  #后缀名
+    content-type: text/html
+    enabled: true
+    cache: false #缓存配置
+    template-loader-path: classpath:/templates/ #模板加载路径 按需配置
+    charset: UTF-8 #编码格式
   aop:
     auto: true
     proxy-target-class: true
@@ -57,7 +58,7 @@ spring:
     timeout: 1000
   elasticsearch:
     jest:
-      uris: http://locahost:9200
+      uris: http://localhost:9200
       read-timeout: 5000
       connection-timeout: 20000
 mybatis:

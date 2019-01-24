@@ -5,7 +5,11 @@
 
     <groupId>com.ziroom</groupId>
     <artifactId>carsharing</artifactId>
+    <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>common</module>
+    </modules>
     <name>carsharing</name>
     <description>ziroom</description>
 
@@ -32,7 +36,7 @@
             <optional>true</optional>
         </dependency>
 
-        <!--thymeleaf-->
+        <!--freemarker-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
